@@ -1,4 +1,4 @@
-﻿{
+{
   "userSecretsId": "aspnet-Tata-69e22a49-8100-4750-bf70-8727c340c3f4",
 
   "dependencies": {
@@ -6,9 +6,6 @@
       "version": "1.0.1",
       "type": "platform"
     },
-    "Microsoft.ApplicationInsights.AspNetCore": "1.0.0",
-    "Microsoft.AspNetCore.Authentication.Cookies": "1.0.0",
-    "Microsoft.AspNetCore.Diagnostics": "1.0.0",
     "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": "1.0.0",
     "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "1.0.0",
     "Microsoft.AspNetCore.Mvc": "1.0.1",
@@ -30,9 +27,9 @@
       "type": "build"
     },
     "Microsoft.Extensions.Configuration.EnvironmentVariables": "1.0.0",
-    "Microsoft.Extensions.Configuration.Json": "1.0.0",
+    "Microsoft.Extensions.Configuration.Json": "1.1.0",
     "Microsoft.Extensions.Configuration.UserSecrets": "1.0.0",
-    "Microsoft.Extensions.Logging": "1.0.0",
+    "Microsoft.Extensions.Logging": "1.1.0",
     "Microsoft.Extensions.Logging.Console": "1.0.0",
     "Microsoft.Extensions.Logging.Debug": "1.0.0",
     "Microsoft.Extensions.Options.ConfigurationExtensions": "1.0.0",
@@ -45,11 +42,11 @@
       "version": "1.0.0-preview2-final",
       "type": "build"
     },
-    "Digipolis.DataAccess": "2.5.1"
-  },
+    "Digipolis.DataAccess": "2.5.1",
+    "Microsoft.ApplicationInsights.AspNetCore": "1.0.2",
+    "Microsoft.AspNetCore.Diagnostics": "1.1.0" },
 
   "tools": {
-    "BundlerMinifier.Core": "2.0.238",
     "Microsoft.AspNetCore.Razor.Tools": "1.0.0-preview2-final",
     "Microsoft.AspNetCore.Server.IISIntegration.Tools": "1.0.0-preview2-final",
     "Microsoft.EntityFrameworkCore.Tools": "1.0.0-preview2-final",

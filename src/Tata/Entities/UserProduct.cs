@@ -6,7 +6,7 @@ using Tata.Models;
 
 namespace Tata.Entities
 {
-    public class UserProduct
+    public class UserProduct : Tracking
     {
         public DateTime InvoiceDate { get; set; }
         public DateTime DueDate { get; set; }

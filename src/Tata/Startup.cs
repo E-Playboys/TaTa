@@ -12,6 +12,8 @@ using Microsoft.Extensions.Logging;
 using Tata.Data;
 using Tata.Models;
 using Tata.Services;
+using Digipolis.DataAccess;
+using Digipolis.DataAccess.Uow;
 
 namespace Tata
 {
@@ -57,6 +59,7 @@ namespace Tata
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -78,22 +78,22 @@ namespace Tata.Data.Migrations
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserLogin<string>", b =>
-                {
-                    b.Property<string>("LoginProvider");
+            {
+                b.Property<string>("LoginProvider");
 
-                    b.Property<string>("ProviderKey");
+                b.Property<string>("ProviderKey");
 
-                    b.Property<string>("ProviderDisplayName");
+                b.Property<string>("ProviderDisplayName");
 
-                    b.Property<string>("UserId")
-                        .IsRequired();
+                b.Property<string>("UserId")
+                    .IsRequired();
 
-                    b.HasKey("LoginProvider", "ProviderKey");
+                b.HasKey("LoginProvider", "ProviderKey");
 
-                    b.HasIndex("UserId");
+                b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserLogins");
-                });
+                b.ToTable("AspNetUserLogins");
+            });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserRole<string>", b =>
                 {
@@ -191,12 +191,12 @@ namespace Tata.Data.Migrations
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserLogin<string>", b =>
-                {
-                    b.HasOne("Tata.Models.ApplicationUser")
-                        .WithMany("Logins")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
+            {
+                b.HasOne("OnePiece.Web.DataAccess.Entities.User")
+                    .WithMany("Logins")
+                    .HasForeignKey("UserId")
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserRole<string>", b =>
                 {
