@@ -2,22 +2,31 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Digipolis.DataAccess;
 using Microsoft.AspNetCore.Mvc;
+using Tata.Entities;
+using Tata.Data;
+using TaTa.DataAccess;
 
 namespace Tata.Controllers
 {
     public class HomeController : Controller
     {
-        private IUnitOfWork _unitOfWork;
-        public HomeController(IUnitOfWork unitOfWork)
+        private IUowProvider _uowProvider;
+
+        public HomeController(IUowProvider uowProvider)
         {
-            _unitOfWork = unitOfWork;
+            _uowProvider = uowProvider;
         }
 
         public IActionResult Index()
         {
-            return View();
+            using (var uow = _uowProvider.CreateUnitOfWork())
+            {
+                var repo = uow.GetRepository<ProductCategory>();
+                IEnumerable<ProductCategory> test;
+                test = repo.GetAll();
+                return new JsonResult(test);
+            }
         }
 
         public IActionResult About()

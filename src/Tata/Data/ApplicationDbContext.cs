@@ -5,15 +5,26 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Tata.Models;
+using Tata.Entities;
+using TaTa.DataAccess.Context;
 
 namespace Tata.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public class ApplicationDbContext : EntityContextBase<ApplicationDbContext>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
         }
+
+        public DbSet<Billing> Billings { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<ProductCategory> ProductCategories { get; set; }
+        public DbSet<ProductPrice> ProductPrices { get; set; }
+        public DbSet<ProductProperty> ProductProperties { get; set; }
+        public DbSet<UserProduct> UserProducts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
