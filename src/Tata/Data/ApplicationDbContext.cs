@@ -5,12 +5,12 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Tata.Models;
-using Digipolis.DataAccess.Context;
 using Tata.Entities;
+using TaTa.DataAccess.Context;
 
 namespace Tata.Data
 {
-    public class ApplicationDbContext : ApplicationEntityContextBase<ApplicationDbContext>
+    public class ApplicationDbContext : EntityContextBase<ApplicationDbContext>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -24,7 +24,7 @@ namespace Tata.Data
         public DbSet<ProductCategory> ProductCategories { get; set; }
         public DbSet<ProductPrice> ProductPrices { get; set; }
         public DbSet<ProductProperty> ProductProperties { get; set; }
-        //public DbSet<UserProduct> UserProducts { get; set; }
+        public DbSet<UserProduct> UserProducts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -32,13 +32,6 @@ namespace Tata.Data
             // Customize the ASP.NET Identity model and override the defaults if needed.
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
-        }
-    }
-
-    public class ApplicationEntityContextBase<TContext> : IdentityDbContext<ApplicationUser> where TContext : DbContext
-    {
-        public ApplicationEntityContextBase(DbContextOptions<TContext> options) : base(options)
-        {
         }
     }
 }

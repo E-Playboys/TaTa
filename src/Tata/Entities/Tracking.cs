@@ -1,6 +1,6 @@
 ﻿using System;
-using Digipolis.DataAccess.Entities;
 using Tata.Models;
+using TaTa.DataAccess.Entities;
 
 namespace Tata.Entities
 {

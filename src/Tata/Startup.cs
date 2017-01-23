@@ -12,8 +12,11 @@ using Microsoft.Extensions.Logging;
 using Tata.Data;
 using Tata.Models;
 using Tata.Services;
-using Digipolis.DataAccess;
-using Digipolis.DataAccess.Uow;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Tata.Entities;
+using TaTa.DataAccess;
+using TaTa.DataAccess.Uow;
 
 namespace Tata
 {
@@ -54,12 +57,14 @@ namespace Tata
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
+            services.AddDataAccess<ApplicationDbContext>();
+
             services.AddMvc();
 
             // Add application services.
+            services.AddTransient<IUowProvider, UowProvider>();
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
-            services.AddTransient<IUnitOfWork, UnitOfWork>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -95,6 +100,16 @@ namespace Tata
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+        }
+
+        public class ApplicationDbContextFactory : IDbContextFactory<ApplicationDbContext>
+        {
+            public ApplicationDbContext Create(DbContextFactoryOptions options)
+            {
+                var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
+                builder.UseSqlServer("Data Source=.\\MSSQLSERVER2012;Initial Catalog=TaTa;Integrated Security=True");
+                return new ApplicationDbContext(builder.Options);
+            }
         }
     }
 }
