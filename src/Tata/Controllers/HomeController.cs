@@ -25,7 +25,7 @@ namespace Tata.Controllers
                 var repo = uow.GetRepository<ProductCategory>();
                 IEnumerable<ProductCategory> test;
                 test = repo.GetAll();
-                return new JsonResult(test);
+                return View(test);
             }
         }
 
