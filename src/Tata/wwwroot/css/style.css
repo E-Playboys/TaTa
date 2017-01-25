@@ -2685,6 +2685,10 @@ a.edit i:before {
   background: #1b92bd;
 }
 
+.social .icon-youtube {
+  background: #c81818;
+}
+
 /* Filter */
 /* line 425, ../sass/_helper-classes.scss */
 .filter-elements-wrapper {
