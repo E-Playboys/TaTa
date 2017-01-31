@@ -25,6 +25,7 @@ namespace Tata.Data
         public DbSet<ProductPrice> ProductPrices { get; set; }
         public DbSet<ProductProperty> ProductProperties { get; set; }
         public DbSet<UserProduct> UserProducts { get; set; }
+        public DbSet<Setting> Settings { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
