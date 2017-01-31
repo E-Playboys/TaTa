@@ -100,6 +100,11 @@ namespace Tata
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            // Seed data, use only one time
+            //var dbFactory = new ApplicationDbContextFactory();
+            //var dbContext = dbFactory.Create(new DbContextFactoryOptions());
+            //DbSeeder.Seed(dbContext);
         }
 
         public class ApplicationDbContextFactory : IDbContextFactory<ApplicationDbContext>
@@ -107,7 +112,7 @@ namespace Tata
             public ApplicationDbContext Create(DbContextFactoryOptions options)
             {
                 var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
-                builder.UseSqlServer("Data Source=.\\MSSQLSERVER2012;Initial Catalog=TaTa;Integrated Security=True");
+                builder.UseSqlServer("Data Source=.;Initial Catalog=TaTa;Integrated Security=True");
                 return new ApplicationDbContext(builder.Options);
             }
         }

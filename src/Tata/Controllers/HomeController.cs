@@ -22,10 +22,10 @@ namespace Tata.Controllers
         {
             using (var uow = _uowProvider.CreateUnitOfWork())
             {
-                var repo = uow.GetRepository<ProductCategory>();
-                IEnumerable<ProductCategory> test;
-                test = repo.GetAll();
-                return View(test);
+                var repo = uow.GetRepository<Setting>();
+                IEnumerable<Setting> homePageSettings;
+                homePageSettings = repo.GetAll();
+                return View(homePageSettings);
             }
         }
 
@@ -37,6 +37,41 @@ namespace Tata.Controllers
         }
 
         public IActionResult Contact()
+        {
+            ViewData["Message"] = "Your contact page.";
+
+            return View();
+        }
+
+        public IActionResult Domain()
+        {
+            ViewData["Message"] = "Your contact page.";
+
+            return View();
+        }
+
+        public IActionResult Partner()
+        {
+            ViewData["Message"] = "Your contact page.";
+
+            return View();
+        }
+
+        public IActionResult Promotion()
+        {
+            ViewData["Message"] = "Your contact page.";
+
+            return View();
+        }
+
+        public IActionResult Support()
+        {
+            ViewData["Message"] = "Your contact page.";
+
+            return View();
+        }
+
+        public IActionResult VpsPage()
         {
             ViewData["Message"] = "Your contact page.";
 
