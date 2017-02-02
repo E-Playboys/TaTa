@@ -113,8 +113,8 @@
                     </div>
                 </div><!-- .header-wrapper -->
             </header><!-- .header -->
-            @await Html.PartialAsync("_SliderPartial")
-            @await Html.PartialAsync("_TopCarouselPartial")
+            @await Html.PartialAsync("_SliderPartial", ViewData)
+            @await Html.PartialAsync("_TopCarouselPartial", ViewData)
             <div class="clearfix"></div>
             <section id="main">
                 @RenderBody()
