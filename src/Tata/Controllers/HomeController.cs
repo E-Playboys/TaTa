@@ -9,13 +9,15 @@ using TaTa.DataAccess;
 
 namespace Tata.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         private IUowProvider _uowProvider;
 
         public HomeController(IUowProvider uowProvider)
         {
             _uowProvider = uowProvider;
+            ViewData["BannerDisplay"] = false;
+            ViewData["SliderDisplay"] = false;
         }
 
         public IActionResult Index()
@@ -25,6 +27,10 @@ namespace Tata.Controllers
                 var repo = uow.GetRepository<Setting>();
                 IEnumerable<Setting> homePageSettings;
                 homePageSettings = repo.GetAll();
+
+                ViewData["BannerDisplay"] = true;
+                ViewData["SliderDisplay"] = true;
+
                 return View(homePageSettings);
             }
         }

@@ -4539,7 +4539,7 @@
   },
   "libraries": {
     "Libuv/1.9.0": {
-      "sha512": "XptzjFEOdiT2S5LgxKbXBEvHKKKafdO3NydS3XXIVvpKFsDp2ieP/YkapJUV8roV+mQ105y4rij4br0r0IhpfQ==",
+      "sha512": "9Q7AaqtQhS8JDSIvRBt6ODSLWDBI4c8YxNxyCQemWebBFUtBbc6M5Vi5Gz1ZyIUlTW3rZK9bIr5gnVyv0z7a2Q==",
       "type": "package",
       "path": "Libuv/1.9.0",
       "files": [
@@ -5898,7 +5898,7 @@
       ]
     },
     "Microsoft.NETCore.App/1.0.1": {
-      "sha512": "n+PfFIg45qFFAoRViUIBWQBxGP+STNtum17RwRz2NvFmCAD0MoXeuUG7RrQBVMJ4UPxpWX0U8qOFLF33amT/mg==",
+      "sha512": "M3iH7u95LntTkJtI/DqN/96MRlb8Wa0SjnXldxHA4FjlvEqghOhwK087bDZAZaTN9C4YHckvaYH3ka9eYWZZZw==",
       "type": "package",
       "path": "Microsoft.NETCore.App/1.0.1",
       "files": [
@@ -11550,6 +11550,20 @@
           "lib/netcoreapp1.0/dotnet-user-secrets.dll": {}
         }
       },
+      "BundlerMinifier.Core/2.0.238": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.NETCore.App": "1.0.0",
+          "NUglify": "1.5.0",
+          "Newtonsoft.Json": "9.0.1"
+        },
+        "compile": {
+          "lib/netcoreapp1.0/dotnet-bundle.dll": {}
+        },
+        "runtime": {
+          "lib/netcoreapp1.0/dotnet-bundle.dll": {}
+        }
+      },
       "Microsoft.VisualStudio.Web.CodeGeneration.Tools/1.0.0-preview2-final": {
         "type": "package",
         "dependencies": {
@@ -11567,6 +11581,7 @@
   },
   "projectFileToolGroups": {
     ".NETCoreApp,Version=v1.0": [
+      "BundlerMinifier.Core >= 2.0.238",
       "Microsoft.AspNetCore.Razor.Tools >= 1.0.0-preview2-final",
       "Microsoft.AspNetCore.Server.IISIntegration.Tools >= 1.0.0-preview2-final",
       "Microsoft.EntityFrameworkCore.Tools >= 1.0.0-preview2-final",
