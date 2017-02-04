@@ -22,17 +22,57 @@ namespace Tata.Controllers
 
         public IActionResult Index()
         {
-            using (var uow = _uowProvider.CreateUnitOfWork())
-            {
-                var repo = uow.GetRepository<Setting>();
-                IEnumerable<Setting> homePageSettings;
-                homePageSettings = repo.GetAll();
+            return View();
+        }
 
-                ViewData["BannerDisplay"] = true;
-                ViewData["SliderDisplay"] = true;
+        public IActionResult DomainAccount()
+        {
+            return View();
+        }
 
-                return View(homePageSettings);
-            }
+        public IActionResult DomainCheck()
+        {
+            return View();
+        }
+
+        public IActionResult DomainCheckList()
+        {
+            return View();
+        }
+
+        public IActionResult DomainRegister()
+        {
+            return View();
+        }
+
+        public IActionResult DomainTransfer()
+        {
+            return View();
+        }
+
+        public IActionResult FreeDns()
+        {
+            return View();
+        }
+
+        public IActionResult Hosting()
+        {
+            return View();
+        }
+
+        public IActionResult ProDns()
+        {
+            return View();
+        }
+
+        public IActionResult SecureSocketsLayer()
+        {
+            return View();
+        }
+
+        public IActionResult VirtualPrivateServer()
+        {
+            return View();
         }
 
         public IActionResult Error()

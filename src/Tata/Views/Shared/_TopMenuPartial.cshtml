@@ -12,7 +12,7 @@
         @Html.ActionLink("TATA HOSTING", "Index")
       </li>
       <li class="parent megamenu promo">
-        <a href="#">VPS<span class="item-new">Hot</span></a>
+        <a href="@Url.Content("~/Home/VpsPage")">VPS<span class="item-new">Hot</span></a>
         <ul class="sub">
           <li class="sub-wrapper">
             <div class="sub-list">
@@ -107,7 +107,7 @@
               <div class="box">
                 <ul>
                   <li>
-                    <a href="@Url.Content("Service/DomainPriceList")"><i class="fa fa-th-list"></i> Bảng giá tên miền</a>
+                    <a href="@Url.Content("Home/DomainPriceList")"><i class="fa fa-th-list"></i> Bảng giá tên miền</a>
                   </li>
                   <li>
                     <a href="@Url.Content("Service/DomainAccount")"><i class="fa fa-user"></i> Bảo mật thông tin chủ thể</a>

@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Tata.Entities;
 using Tata.Data;
 using TaTa.DataAccess;
+using Tata.Models;
+using TaTa.DataAccess.Repositories;
 
 namespace Tata.Controllers
 {
@@ -20,67 +22,59 @@ namespace Tata.Controllers
             ViewData["SliderDisplay"] = false;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            using (var uow = _uowProvider.CreateUnitOfWork())
+            using (IUnitOfWork uow = _uowProvider.CreateUnitOfWork())
             {
-                var repo = uow.GetRepository<Setting>();
-                IEnumerable<Setting> homePageSettings;
-                homePageSettings = repo.GetAll();
+                IRepository<Setting> repo = uow.GetRepository<Setting>();
+                HomeViewModels model = new HomeViewModels();
+
+                model.CommonSettings = await repo.QueryAsync(s => s.Section == "Common");
 
                 ViewData["BannerDisplay"] = true;
                 ViewData["SliderDisplay"] = true;
 
-                return View(homePageSettings);
+                return View(model);
             }
+        }
+
+        public IActionResult DomainPriceList()
+        {
+            return View();
         }
 
         public IActionResult About()
         {
-            ViewData["Message"] = "Your application description page.";
-
             return View();
         }
 
         public IActionResult Contact()
         {
-            ViewData["Message"] = "Your contact page.";
-
             return View();
         }
 
         public IActionResult Domain()
         {
-            ViewData["Message"] = "Your contact page.";
-
             return View();
         }
 
         public IActionResult Partner()
         {
-            ViewData["Message"] = "Your contact page.";
-
             return View();
         }
 
         public IActionResult Promotion()
         {
-            ViewData["Message"] = "Your contact page.";
-
             return View();
         }
 
         public IActionResult Support()
         {
-            ViewData["Message"] = "Your contact page.";
-
             return View();
         }
 
         public IActionResult VpsPage()
         {
-            ViewData["Message"] = "Your contact page.";
-
             return View();
         }
 

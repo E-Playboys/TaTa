@@ -11,6 +11,7 @@ namespace Tata.Models
     {
         public static void Seed(ApplicationDbContext dbContext)
         {
+            
         }
     }
 }
