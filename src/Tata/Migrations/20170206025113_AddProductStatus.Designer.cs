@@ -8,9 +8,10 @@ using Tata.Data;
 namespace Tata.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170206025113_AddProductStatus")]
+    partial class AddProductStatus
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.0-rtm-22752")
@@ -293,8 +294,6 @@ namespace Tata.Migrations
                     b.Property<int>("Priority");
 
                     b.Property<int>("ProductCategoryId");
-
-                    b.Property<int>("Quantity");
 
                     b.Property<int>("Status");
 

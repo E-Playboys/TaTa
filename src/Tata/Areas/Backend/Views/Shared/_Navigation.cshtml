@@ -11,8 +11,8 @@
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                         <span class="clear">
                             <span class="block m-t-xs">
-                                <strong class="font-bold">David Williams</strong>
-                            </span> <span class="text-muted text-xs block">Art Director <b class="caret"></b></span>
+                                <strong class="font-bold">Troy Lee</strong>
+                            </span> <span class="text-muted text-xs block">Project Manager <b class="caret"></b></span>
                         </span>
                     </a>
                     <ul class="dropdown-menu animated fadeInRight m-t-xs">
@@ -24,14 +24,14 @@
                     </ul>
                 </div>
                 <div class="logo-element">
-                    IN+
+                    TaTa
                 </div>
             </li>
             <li class="@Html.IsSelected(controller: "Product")">
-                <a href="#"><i class="fa fa-shopping-cart"></i> <span class="nav-label" data-i18n="nav.ecommerce">E-commerce</span><span class="fa arrow"></span></a>
+                <a href="#"><i class="fa fa-shopping-cart"></i> <span class="nav-label" data-i18n="nav.ecommerce">Product</span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Product", cssClass: "in")">
-                    <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "Product")">Products list</a></li>
-                    <li class="@Html.IsSelected(action: "Edit")"><a href="@Url.Action("Edit", "Product")">Product edit</a></li>
+                    <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "Product")">List</a></li>
+                    <li class="@Html.IsSelected(action: "Edit")"><a href="@Url.Action("Edit", "Product")">Edit</a></li>
                 </ul>
             </li>
         </ul>
