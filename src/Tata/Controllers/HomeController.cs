@@ -13,7 +13,7 @@ namespace Tata.Controllers
 {
     public class HomeController : BaseController
     {
-        private IUowProvider _uowProvider;
+        private readonly IUowProvider _uowProvider;
 
         public HomeController(IUowProvider uowProvider)
         {
