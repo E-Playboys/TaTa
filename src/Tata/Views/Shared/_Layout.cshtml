@@ -86,7 +86,7 @@
                                     </div><!-- .header-icons -->
 
                                     <div class="primary">
-                                        @await Html.PartialAsync("_TopMenuPartial");
+                                        @await Html.PartialAsync("_TopMenuPartial")
                                     </div><!-- .primary -->
                                 </div>
                             </div>
@@ -114,15 +114,15 @@
                     </div>
                 </div><!-- .header-wrapper -->
             </header><!-- .header -->
-            @await Html.PartialAsync("_SliderPartial", ViewData);
-            @await Html.PartialAsync("_TopCarouselPartial", ViewData);
+            @await Html.PartialAsync("_SliderPartial", ViewData)
+            @await Html.PartialAsync("_TopCarouselPartial", ViewData)
             <div class="clearfix"></div>
             <section id="main">
                 @RenderBody()
             </section><!-- #main -->
         </div><!-- .page-box-content -->
     </div><!-- .page-box -->
-    @await Component.InvokeAsync("FooterComponent");
+    @await Component.InvokeAsync("FooterComponent")
     <div class="clearfix"></div>
     <environment names="Development">
         <!--[if (!IE)|(gt IE 8)]><!-->
