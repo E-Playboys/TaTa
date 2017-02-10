@@ -13,7 +13,7 @@ namespace Tata.Controllers
 {
     public class HomeController : BaseController
     {
-        private IUowProvider _uowProvider;
+        private readonly IUowProvider _uowProvider;
 
         public HomeController(IUowProvider uowProvider)
         {
@@ -29,8 +29,6 @@ namespace Tata.Controllers
                 IRepository<Setting> repo = uow.GetRepository<Setting>();
                 HomeViewModels model = new HomeViewModels();
 
-                model.CommonSettings = await repo.QueryAsync(s => s.Section == "Common");
-
                 ViewData["BannerDisplay"] = true;
                 ViewData["SliderDisplay"] = true;
 
@@ -43,9 +41,24 @@ namespace Tata.Controllers
             return View();
         }
 
-        public IActionResult About()
+        public async Task<IActionResult> About()
         {
-            return View();
+            using (IUnitOfWork uow = _uowProvider.CreateUnitOfWork())
+            {
+                IRepository<Setting> repo = uow.GetRepository<Setting>();
+                AboutViewModel model = new AboutViewModel();
+                IEnumerable<Setting> aboutSettings = await repo.QueryAsync(s => s.Section == "About");
+
+                model.AboutExcert = aboutSettings.SingleOrDefault(s => s.Name == "AboutExcert").Value;
+                model.AboutServices = aboutSettings.Where(s => s.Name == "AboutService")
+                    .OrderBy(s => s.Priority)
+                    .ToList();
+                model.AboutPartners = aboutSettings.Where(s => s.Name == "AboutPartner")
+                    .OrderBy(s => s.Priority)
+                    .ToList();
+
+                return View(model);
+            }
         }
 
         public IActionResult Contact()
