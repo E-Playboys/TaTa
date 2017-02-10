@@ -211,3 +211,4 @@ Logs/
 
 *.orig 
 sh.exe.stackdump
+src/Tata/project.lock.json
