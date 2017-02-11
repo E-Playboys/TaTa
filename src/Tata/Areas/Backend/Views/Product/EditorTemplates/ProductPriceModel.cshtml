@@ -1,0 +1,31 @@
+﻿@model ProductPriceModel
+
+<tr class="priceItem">
+  <td>
+    <input asp-for="Id" type="hidden"/>
+    <input asp-for="NeedDelete" type="hidden" class="mark-for-delete"/>
+    <input asp-for="Name" type="text" class="form-control" placeholder="Ex: Yearly">
+  </td>
+  <td>
+    <input asp-for="Price" type="text" class="form-control numeric" placeholder="0">
+  </td>
+  <td style="width: 10%">
+    <select asp-for="Currency" asp-items="(SelectList) ViewBag.Currencies" class="form-control">
+    </select>
+  </td>
+  <td>
+    <input asp-for="Unit" class="form-control" placeholder="Ex: Months">
+  </td>
+  <td>
+    <input asp-for="UnitQuantity" type="text" class="form-control numeric" placeholder="0">
+  </td>
+  <td>
+    <input asp-for="Priority" type="text" class="form-control numeric" placeholder="0">
+  </td>
+  <td>
+    <switch asp-for="IsDefault"/>
+  </td>
+  <td>
+    <inline-remove-button class="btn btn-white" asp-container-element="tr.priceItem" asp-mark-element="input.mark-for-delete"><i class="fa fa-trash"></i></inline-remove-button>
+  </td>
+</tr>

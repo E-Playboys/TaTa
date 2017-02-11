@@ -1,0 +1,214 @@
+﻿@using Tata.Entities.Enums
+@model IEnumerable<OrderModel>
+
+@{
+    ViewData["Title"] = "Orders List";
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+  <div class="col-lg-10">
+    <h2>Order list</h2>
+    <ol class="breadcrumb">
+      <li>
+        <a href="@Url.Action("Index", "Order")">Home</a>
+      </li>
+      <li>
+        <a>Order</a>
+      </li>
+      <li class="active">
+        <strong>List</strong>
+      </li>
+    </ol>
+  </div>
+  <div class="col-lg-2">
+
+  </div>
+</div>
+
+<div class="wrapper wrapper-content animated fadeInRight ecommerce">
+
+  <div class="ibox-content m-b-sm border-bottom">
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="form-group">
+          <label class="control-label" for="order_number">Order Number</label>
+          <input type="text" id="order_number" name="order_number" value="" placeholder="Order Number" class="form-control">
+        </div>
+      </div>
+      <div class="col-sm-2">
+        <div class="form-group">
+          <label class="control-label" for="order_code">Order Code</label>
+          <input type="text" id="order_code" name="order_code" value="" placeholder="Order Code" class="form-control">
+        </div>
+      </div>
+      <div class="col-sm-2">
+        <div class="form-group">
+          <label class="control-label" for="billing_info">Billing Info</label>
+          <input type="text" id="billing_info" name="billing_info" value="" placeholder="Billing Info" class="form-control">
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-group">
+          <label class="control-label" for="status">Status</label>
+          <select name="status" id="status" class="form-control">
+            <option value="1" selected>Enabled</option>
+            <option value="0">Disabled</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="ibox">
+        @*<div class="ibox-heading">
+            <a class="btn btn-primary col-lg-12 m-b-sm" href="@Url.Action("Details", "Product", new {id = 0})">Add new product</a>
+          </div>*@
+        <div class="ibox-content">
+
+          <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="10">
+            <thead>
+              <tr>
+                <th data-toggle="true">Order Number</th>
+                <th data-hide="phone">Order Code</th>
+                <th data-hide="all">Billing Info</th>
+                <th data-hide="phone">Order Items</th>
+                <th data-hide="phone">Status</th>
+                @*<th class="text-right" data-sort-ignore="true">Action</th>*@
+              </tr>
+            </thead>
+            <tbody>
+              @foreach (var model in Model)
+              {
+                  <tr>
+                    <td>
+                      @(model.OrderNumber)
+                    </td>
+                    <td>
+                      @(model.OrderCode)
+                    </td>
+                    <td>
+                      <ul>
+                        <li>@(model.Billing.FirstName) @(model.Billing.LastName)</li>
+                        <li>@(model.Billing.Phone)</li>
+                        <li>@(model.Billing.Email)</li>
+                        <li>@(model.Billing.Address)</li>
+                      </ul>
+                    </td>
+                    <td>
+                      <ul>
+                        @foreach (var item in model.OrderItems)
+                        {
+                            <li>@(item.ProductPrice.ProductName) - @(item.ProductPrice.Name) - @(item.Quantity * item.ProductPrice.Price) @(item.ProductPrice.Currency.ToString())</li>
+                        }
+                      </ul>
+                    </td>
+                    <td>
+                      <span class="label label-@GetStatusClass(model.OrderStatus)" data-toggle="modal" data-target="#categoryModal_@(model.Id)">@(model.OrderStatus.ToString())</span>
+
+                      <div class="modal inmodal" id="categoryModal_@(model.Id)" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog">
+                          <div class="modal-content animated bounceInRight">
+                            <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                              <h4 class="modal-title">Confirmation</h4>
+                            </div>
+                            <div class="modal-body">
+                              Do you want to change order status to @(model.OrderStatus == OrderStatus.Paid ? "UNPAID" : "PAID")?
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-white" data-dismiss="modal">No</button>
+                              <button type="button" class="btn btn-primary" onclick="javascript:updateOrderStatus(@(model.Id),@((int)model.OrderStatus)); return false;">Yes</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    @*<td class="text-right">
+                        <div class="btn-group">
+                          <a class="btn-white btn btn-xs" href="@Url.Action("Details", "Product", new {id = @model.Id})">View</a>
+                          <a class="btn-white btn btn-xs" href="@Url.Action("Details", "Product", new {id = @model.Id})">Edit</a>
+                        </div>
+                      </td>*@
+                  </tr>
+              }
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="6">
+                  <ul class="pagination pull-right"></ul>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
+@functions{
+    public string GetStatusClass(OrderStatus status)
+    {
+      if (status == OrderStatus.Paid)
+        return "primary";
+
+      return "danger";
+    }
+}
+
+
+@section Styles {
+  <link rel="stylesheet" href="~/backend/lib/footable/css/footable.core.css" />
+  @*<environment names="Development">
+      <link rel="stylesheet" href="~/lib/footable/css/footable.core.css" />
+    </environment>
+    <environment names="Staging,Production">
+      <link rel="stylesheet" href="~/lib/footable/css/footable.core.min.css" />
+    </environment>*@
+}
+
+@section Scripts {
+  <script src="~/backend/lib/footable/dist/footable.all.min.js"></script>
+  @*<environment names="Development,Staging,Production">
+      <script src="~/lib/footable/dist/footable.all.min.js"></script>
+    </environment>*@
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+
+      $('.footable').footable();
+
+    });
+
+    function gettoken() {
+      var token = '@Html.AntiForgeryToken()';
+      token = $(token).val();
+      return token;
+    }
+
+    function updateOrderStatus(orderId, currentStatus) {
+      var headers = {};
+      headers['__RequestVerificationToken'] = gettoken();
+
+      $.ajax({
+        type: 'PUT',
+        url: '@Url.Action("UpdateOrderStatus", "Order")',
+        //headers: headers,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        data: JSON.stringify({ orderId: orderId, currentStatus: currentStatus }),
+        success: function() {
+          // TODO: implement ajax reload
+          window.location.reload();
+        },
+        error: function () { alert('Error happened'); }
+      });
+    }
+  </script>
+}
+
