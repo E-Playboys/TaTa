@@ -15,6 +15,7 @@ using Tata.Models;
 using Tata.Services;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Tata.Areas.Backend.Models.Order;
 using Tata.Areas.Backend.Models.Product;
 using Tata.Entities;
 using TaTa.DataAccess;
@@ -65,7 +66,7 @@ namespace Tata
 
             services.AddMvc(options =>
             {
-                options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+                //options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
             });
 
             // Add application services.
@@ -128,11 +129,20 @@ namespace Tata
                 cfg.CreateMap<ProductProperty, ProductPropertyModel>();
                 cfg.CreateMap<ProductPropertyModel, ProductProperty>();
 
-                cfg.CreateMap<ProductPrice, ProductPriceModel>();
+                cfg.CreateMap<ProductPrice, ProductPriceModel>().ForMember(x => x.ProductName, o => o.MapFrom(m => m.Product.Name));
                 cfg.CreateMap<ProductPriceModel, ProductPrice>();
 
                 cfg.CreateMap<ProductCategory, ProductCategoryModel>();
                 cfg.CreateMap<ProductCategoryModel, ProductCategory>();
+
+                cfg.CreateMap<Order, OrderModel>();
+                cfg.CreateMap<OrderModel, Order>();
+
+                cfg.CreateMap<OrderItem, OrderItemModel>();
+                cfg.CreateMap<OrderItemModel, OrderItem>();
+
+                cfg.CreateMap<Billing, BillingModel>();
+                cfg.CreateMap<BillingModel, Billing>();
             });
         }
 

@@ -17,6 +17,7 @@ namespace Tata.Areas.Backend.Models.Product
         public int Priority { get; set; }
         public bool IsDefault { get; set; }
         public bool IsDisabled { get; set; }
+        public string ProductName { get; set; }
 
         public bool NeedDelete { get; set; }
     }
