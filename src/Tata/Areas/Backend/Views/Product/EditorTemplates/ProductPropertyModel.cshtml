@@ -1,0 +1,24 @@
+﻿@model ProductPropertyModel
+
+<tr class="propertyItem">
+  <td>
+    <input asp-for="Id" type="hidden" />
+    <input asp-for="NeedDelete" type="hidden" class="mark-for-delete"/>
+    <input asp-for="Name" class="form-control" placeholder="Ex: Cloud Storage"/>
+  </td>
+  <td>
+    <input asp-for="Value" class="form-control" placeholder="Ex: 40" />
+  </td>
+  <td>
+    <input asp-for="Unit" class="form-control" placeholder="Ex: GB" />
+  </td>
+  <td>
+    <input asp-for="Priority" type="text" class="form-control numeric" placeholder="0"/>
+  </td>
+  <td>
+    <switch asp-for="IsHighlight" />
+  </td>
+  <td>
+    <inline-remove-button class="btn btn-white" asp-container-element="tr.propertyItem" asp-mark-element="input.mark-for-delete"><i class="fa fa-trash"></i></inline-remove-button>
+  </td>
+</tr>

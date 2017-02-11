@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,6 +15,7 @@ using Tata.Models;
 using Tata.Services;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Tata.Areas.Backend.Models.Product;
 using Tata.Entities;
 using TaTa.DataAccess;
 using TaTa.DataAccess.Uow;
@@ -40,6 +42,8 @@ namespace Tata
 
             builder.AddEnvironmentVariables();
             Configuration = builder.Build();
+
+            ConfigureAutoMapper();
         }
 
         public IConfigurationRoot Configuration { get; }
@@ -59,7 +63,10 @@ namespace Tata
 
             services.AddDataAccess<ApplicationDbContext>();
 
-            services.AddMvc();
+            services.AddMvc(options =>
+            {
+                options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+            });
 
             // Add application services.
             services.AddTransient<IUowProvider, UowProvider>();
@@ -109,6 +116,24 @@ namespace Tata
             //var dbFactory = new ApplicationDbContextFactory();
             //var dbContext = dbFactory.Create(new DbContextFactoryOptions());
             //DbSeeder.Seed(dbContext);
+        }
+
+        private void ConfigureAutoMapper()
+        {
+            AutoMapper.Mapper.Initialize(cfg =>
+            {
+                cfg.CreateMap<Product, ProductModel>();
+                cfg.CreateMap<ProductModel, Product>();
+
+                cfg.CreateMap<ProductProperty, ProductPropertyModel>();
+                cfg.CreateMap<ProductPropertyModel, ProductProperty>();
+
+                cfg.CreateMap<ProductPrice, ProductPriceModel>();
+                cfg.CreateMap<ProductPriceModel, ProductPrice>();
+
+                cfg.CreateMap<ProductCategory, ProductCategoryModel>();
+                cfg.CreateMap<ProductCategoryModel, ProductCategory>();
+            });
         }
 
         public class ApplicationDbContextFactory : IDbContextFactory<ApplicationDbContext>
