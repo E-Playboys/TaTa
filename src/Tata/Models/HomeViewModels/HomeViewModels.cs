@@ -9,7 +9,10 @@ namespace Tata.Models
 {
     public class HomeViewModels
     {
-        public IEnumerable<Setting> PageSettings { get; set; }
+        public List<Product> HomeProductFeature { get; set; }
+        public List<Setting> HomeSliderBox { get; set; }
+        public List<Setting> HomeSliderBanner { get; set; }
+        public List<Setting> HomeSliderLink { get; set; }
     }
 
     public class AboutViewModel

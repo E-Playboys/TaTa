@@ -8,6 +8,8 @@ using Tata.Data;
 using TaTa.DataAccess;
 using Tata.Models;
 using TaTa.DataAccess.Repositories;
+using TaTa.DataAccess.Query;
+using Microsoft.EntityFrameworkCore;
 
 namespace Tata.Controllers
 {
@@ -26,11 +28,37 @@ namespace Tata.Controllers
         {
             using (IUnitOfWork uow = _uowProvider.CreateUnitOfWork())
             {
-                IRepository<Setting> repo = uow.GetRepository<Setting>();
+                IRepository<Setting> settingRepo = uow.GetRepository<Setting>();
+                IRepository<Product> productRepo = uow.GetRepository<Product>();
                 HomeViewModels model = new HomeViewModels();
+                IEnumerable<Setting> homeSettings = await settingRepo.QueryAsync(s => s.Section == "Home");
+                string productFeatureIds;
 
                 ViewData["BannerDisplay"] = true;
                 ViewData["SliderDisplay"] = true;
+
+                model.HomeSliderBox = homeSettings.Where(s => s.Name == "HomeSliderBox")
+                    .OrderBy(s => s.Priority)
+                    .ToList();
+
+                model.HomeSliderLink = homeSettings.Where(s => s.Name == "HomeSliderLink")
+                    .OrderBy(s => s.Priority)
+                    .ToList();
+
+                model.HomeSliderBanner = homeSettings.Where(s => s.Name == "HomeSliderBanner")
+                    .OrderBy(s => s.Priority)
+                    .ToList();
+
+                productFeatureIds = homeSettings.SingleOrDefault(s => s.Name == "HomeProductFeature").Value;
+                Includes<Product> productInclude = new Includes<Product>(query => 
+                {
+                    return query.Include(p => p.ProductProperties)
+                                .Include(p => p.ProductPrices);
+                });
+
+                model.HomeProductFeature = (await productRepo.QueryAsync(p => productFeatureIds.Contains(p.Id.ToString()),
+                                                                        null,
+                                                                        productInclude.Expression)).ToList();
 
                 return View(model);
             }
