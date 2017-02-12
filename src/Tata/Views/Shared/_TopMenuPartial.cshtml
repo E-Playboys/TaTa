@@ -8,11 +8,8 @@
 
   <nav class="collapse collapsing navbar-collapse">
     <ul class="nav navbar-nav navbar-center">
-      <li class="item-info item-bg">
-        @Html.ActionLink("TATA HOSTING", "Index")
-      </li>
-      <li class="parent megamenu promo">
-        <a href="@Url.Content("~/Home/VpsPage")">VPS<span class="item-new">Hot</span></a>
+      <li class="parent megamenu">
+        <a href="@Url.Action("VpsPage", "Home")">VPS</a>
         <ul class="sub">
           <li class="sub-wrapper">
             <div class="sub-list">
@@ -83,8 +80,8 @@
           </li>
         </ul><!-- .sub -->
       </li>
-      <li class="parent megamenu promo">
-        @Html.ActionLink("TÊN MIỀN", "Domain", "Service")
+      <li class="parent megamenu">
+        @Html.ActionLink("TÊN MIỀN", "Domain", "Home")
         <ul class="sub">
           <li class="sub-wrapper">
             <div class="sub-list">
@@ -134,8 +131,8 @@
       <li class="item-info item-bg">
         @Html.ActionLink("HỖ TRỢ", "Support", "Home")
       </li>
-      <li class="item-info item-bg">
-        @Html.ActionLink("KHUYẾN MÃI", "Promotion", "Home")
+      <li class="item-info item-bg promo">
+        <a href="@Url.Action("Promotion", "Home")">KHUYẾN MÃI<span class="item-new">Hot</span></a>
       </li>
       <li class="item-info item-bg">
         @Html.ActionLink("GIỚI THIỆU", "About", "Home")
