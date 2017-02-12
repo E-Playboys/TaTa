@@ -2,6 +2,13 @@
 {
     public enum SettingValueType
     {
-        TEXT, HTML, IMAGE, NUMBER
+        TEXT,
+        HTML,
+        IMAGE,
+        NUMBER,
+        ARRAY,
+        IDS,
+        JSON,
+        URL
     }
 }

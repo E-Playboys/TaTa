@@ -1,0 +1,245 @@
+﻿@model ProductModel
+
+@{
+    ViewData["Title"] = "Product Details";
+}
+
+@using (Html.BeginForm(true))
+{
+    <input asp-for="Id" type="hidden" />
+
+    <div class="row wrapper border-bottom white-bg page-heading">
+      <div class="col-lg-10">
+        <h2>Product edit</h2>
+        <ol class="breadcrumb">
+          <li>
+            <a href="@Url.Action("Index", "Product")">Home</a>
+          </li>
+          <li>
+            <a>Product</a>
+          </li>
+          <li class="active">
+            <strong>Edit</strong>
+          </li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="wrapper wrapper-content animated fadeInRight ecommerce">
+
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="tabs-container">
+            <ul class="nav nav-tabs">
+              <li class="active"><a data-toggle="tab" href="#tab-1"> Info</a></li>
+              <li class=""><a data-toggle="tab" href="#tab-2"> Properties</a></li>
+              <li class=""><a data-toggle="tab" href="#tab-3"> Prices</a></li>
+            </ul>
+            <div class="tab-content">
+              <div id="tab-1" class="tab-pane active">
+                <div class="panel-body">
+
+                  <fieldset class="form-horizontal">
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">Name:</label>
+                      <div class="col-sm-10">
+                        <input asp-for="Name" class="form-control" placeholder="Product name"/>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">Category:</label>
+                      <div class="col-sm-10">
+                        <div class="input-group">
+                          <select asp-for="ProductCategoryId" asp-items="(SelectList) ViewBag.Categories" class = "chosen-select" tabindex = "2">
+                            <option>Select a category</option>
+                          </select>
+                          <span class="input-group-btn">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#categoryModal">
+                              Add
+                            </button>
+                          </span>
+                        </div>
+                        <div class="modal inmodal" id="categoryModal" tabindex="-1" role="dialog" aria-hidden="true">
+                          <div class="modal-dialog">
+                            <div class="modal-content animated bounceInRight">
+                              <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                <i class="fa fa-folder-o modal-icon"></i>
+                                <h4 class="modal-title">Category</h4>
+                                <small class="font-bold">Add new product category</small>
+                              </div>
+                              <div class="modal-body">
+                                <div class="form-group"><label>Name</label> <input type="text" placeholder="Category name" class="form-control"></div>
+                                <div class="form-group"><label>Discription</label> <textarea placeholder="Category description" class="form-control"></textarea></div>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Save changes</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">Description:</label>
+                      <div class="col-sm-10">
+                        <textarea asp-for="Description" class="summernote"></textarea>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">Meta Tag Title:</label>
+                      <div class="col-sm-10">
+                        <input asp-for="MetaTagTitle" class="form-control" placeholder="..."/>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">Meta Tag Description:</label>
+                      <div class="col-sm-10">
+                        <input asp-for="MetaTagDescription" class="form-control" placeholder="..." />
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">Meta Tag Keywords:</label>
+                      <div class="col-sm-10">
+                        <input asp-for="MetaTagKeywords" class="form-control" placeholder="..." />
+                      </div>
+                    </div>
+                  </fieldset>
+
+                </div>
+              </div>
+              <div id="tab-2" class="tab-pane">
+                <div class="panel-body">
+
+                  <div class="table-responsive">
+                    <table class="table table-stripped table-bordered">
+
+                      <thead>
+                        <tr>
+                          <th>
+                            Name
+                          </th>
+                          <th>
+                            Value
+                          </th>
+                          <th>
+                            Unit
+                          </th>
+                          <th style="width: 12%">
+                            Priority
+                          </th>
+                          <th>
+                            Highlight
+                          </th>
+                          <th>
+                            Actions
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody id="productPropertiesContainer">
+                        @Html.EditorFor(m => m.ProductProperties)
+                      </tbody>
+
+                    </table>
+                  </div>
+                  
+                  <inline-add-button class="btn btn-primary col-md-12 addMore" asp-container-element="#productPropertiesContainer" asp-for="ProductProperties" asp-content="@Html.EditorFor(m => m.ProductProperties[0])"><i class="fa fa-plus"></i> Add more</inline-add-button>
+                </div>
+              </div>
+              <div id="tab-3" class="tab-pane">
+                <div class="panel-body">
+
+                  <div class="table-responsive">
+                    <table class="table table-stripped table-bordered">
+
+                      <thead>
+                        <tr>
+                          <th>
+                            Name
+                          </th>
+                          <th>
+                            Price
+                          </th>
+                          <th>
+                            Currency
+                          </th>
+                          <th>
+                            Unit
+                          </th>
+                          <th>
+                            Unit Quantity
+                          </th>
+                          <th style="width: 12%">
+                            Priority
+                          </th>
+                          <th>
+                            Default
+                          </th>
+                          <th>
+                            Actions
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody id="productPricesContainer">
+                        @Html.EditorFor(m => m.ProductPrices)
+                      </tbody>
+
+                    </table>
+                  </div>
+                  
+                  <inline-add-button class="btn btn-primary col-md-12 addMore" asp-container-element="#productPricesContainer" asp-for="ProductPrices" asp-content="@Html.EditorFor(m => m.ProductPrices[0])"><i class="fa fa-plus"></i> Add more</inline-add-button>
+                </div>
+              </div>
+
+              <div>
+                <input type="submit" value="Submit" class="btn btn-primary pull-right" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+}
+
+@section Styles {
+  <link rel="stylesheet" href="~/backend/lib/summernote/summernote.css" />
+  <link rel="stylesheet" href="~/backend/lib/summernote/summernote-bs3.css" />
+  <link rel="stylesheet" href="~/backend/lib/chosen/bootstrap-chosen.css" />
+  <link rel="stylesheet" href="~/backend/lib_bower/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.css" />
+  @*<environment names="Development,Staging,Production">
+        <link rel="stylesheet" href="~/backend/lib/summernote/summernote.css" />
+        <link rel="stylesheet" href="~/backend/lib/summernote/summernote-bs3.css" />
+    </environment>*@
+
+}
+
+@section Scripts {
+
+  <script src="~/backend/lib/summernote/summernote.min.js"></script>
+  <script src="~/backend/lib/chosen/chosen.jquery.js"></script>
+  <script src="~/backend/lib_bower/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.js"></script>
+  @*<environment names="Development,Staging,Production">
+        <script src="~/backend/lib/summernote/summernote.min.js"></script>
+    </environment>*@
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+
+      $('.summernote').summernote();
+
+      $('.chosen-select').chosen({ width: "100%" });
+
+      $(".numeric").TouchSpin({
+        buttondown_class: 'btn btn-white',
+        buttonup_class: 'btn btn-white'
+      });
+    });
+
+    $(document).on('click', '.addMore', function() {
+      $(".numeric").TouchSpin();
+    });
+
+    </script>
+}

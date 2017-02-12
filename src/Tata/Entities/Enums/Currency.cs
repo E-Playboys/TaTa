@@ -7,6 +7,7 @@ namespace Tata.Entities.Enums
 {
     public enum Currency
     {
-        VND, US_DOLLAR
+        VND,
+        USD
     }
 }
