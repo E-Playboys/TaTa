@@ -20,8 +20,6 @@ namespace Tata.Controllers
         public HomeController(IUowProvider uowProvider)
         {
             _uowProvider = uowProvider;
-            ViewData["BannerDisplay"] = false;
-            ViewData["SliderDisplay"] = false;
         }
 
         public async Task<IActionResult> Index()
@@ -34,31 +32,31 @@ namespace Tata.Controllers
                 IEnumerable<Setting> homeSettings = await settingRepo.QueryAsync(s => s.Section == "Home");
                 string productFeatureIds;
 
-                ViewData["BannerDisplay"] = true;
-                ViewData["SliderDisplay"] = true;
-
-                model.HomeSliderBox = homeSettings.Where(s => s.Name == "HomeSliderBox")
-                    .OrderBy(s => s.Priority)
-                    .ToList();
-
-                model.HomeSliderLink = homeSettings.Where(s => s.Name == "HomeSliderLink")
-                    .OrderBy(s => s.Priority)
-                    .ToList();
-
-                model.HomeSliderBanner = homeSettings.Where(s => s.Name == "HomeSliderBanner")
-                    .OrderBy(s => s.Priority)
-                    .ToList();
-
-                productFeatureIds = homeSettings.SingleOrDefault(s => s.Name == "HomeProductFeature").Value;
-                Includes<Product> productInclude = new Includes<Product>(query => 
+                if (homeSettings.Any())
                 {
-                    return query.Include(p => p.ProductProperties)
-                                .Include(p => p.ProductPrices);
-                });
+                    model.HomeSliderBox = homeSettings.Where(s => s.Name == "HomeSliderBox")
+                        .OrderBy(s => s.Priority)
+                        .ToList();
 
-                model.HomeProductFeature = (await productRepo.QueryAsync(p => productFeatureIds.Contains(p.Id.ToString()),
-                                                                        null,
-                                                                        productInclude.Expression)).ToList();
+                    model.HomeSliderLink = homeSettings.Where(s => s.Name == "HomeSliderLink")
+                        .OrderBy(s => s.Priority)
+                        .ToList();
+
+                    model.HomeSliderBanner = homeSettings.Where(s => s.Name == "HomeSliderBanner")
+                        .OrderBy(s => s.Priority)
+                        .ToList();
+
+                    productFeatureIds = homeSettings.SingleOrDefault(s => s.Name == "HomeProductFeature").Value;
+                    Includes<Product> productInclude = new Includes<Product>(query =>
+                    {
+                        return query.Include(p => p.ProductProperties)
+                                    .Include(p => p.ProductPrices);
+                    });
+
+                    model.HomeProductFeature = (await productRepo.QueryAsync(p => productFeatureIds.Contains(p.Id.ToString()),
+                                                                            null,
+                                                                            productInclude.Expression)).ToList();
+                }
 
                 return View(model);
             }
@@ -77,13 +75,16 @@ namespace Tata.Controllers
                 AboutViewModel model = new AboutViewModel();
                 IEnumerable<Setting> aboutSettings = await repo.QueryAsync(s => s.Section == "About");
 
-                model.AboutExcert = aboutSettings.SingleOrDefault(s => s.Name == "AboutExcert").Value;
-                model.AboutServices = aboutSettings.Where(s => s.Name == "AboutService")
-                    .OrderBy(s => s.Priority)
-                    .ToList();
-                model.AboutPartners = aboutSettings.Where(s => s.Name == "AboutPartner")
-                    .OrderBy(s => s.Priority)
-                    .ToList();
+                if (aboutSettings.Any())
+                {
+                    model.AboutExcert = aboutSettings.SingleOrDefault(s => s.Name == "AboutExcert").Value;
+                    model.AboutServices = aboutSettings.Where(s => s.Name == "AboutService")
+                        .OrderBy(s => s.Priority)
+                        .ToList();
+                    model.AboutPartners = aboutSettings.Where(s => s.Name == "AboutPartner")
+                        .OrderBy(s => s.Priority)
+                        .ToList();
+                }
 
                 return View(model);
             }
