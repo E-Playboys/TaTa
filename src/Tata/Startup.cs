@@ -20,6 +20,7 @@ using Tata.Areas.Backend.Models.Product;
 using Tata.Entities;
 using TaTa.DataAccess;
 using TaTa.DataAccess.Uow;
+using TaTa.DataAccess.Entities;
 
 namespace Tata
 {
@@ -58,7 +59,7 @@ namespace Tata
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
+            services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
@@ -67,6 +68,29 @@ namespace Tata
             services.AddMvc(options =>
             {
                 //options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+            });
+
+            // Config application authentication
+            services.Configure<IdentityOptions>(options => 
+            {
+                // Password settings
+                options.Password.RequireDigit = true;
+                options.Password.RequiredLength = 8;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = true;
+                options.Password.RequireLowercase = false;
+
+                // Lockout settings
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
+                options.Lockout.MaxFailedAccessAttempts = 10;
+
+                // Cookie settings
+                options.Cookies.ApplicationCookie.ExpireTimeSpan = TimeSpan.FromDays(150);
+                options.Cookies.ApplicationCookie.LoginPath = "/Account/Login";
+                options.Cookies.ApplicationCookie.LogoutPath = "/Account/Logoff";
+
+                // User settings
+                options.User.RequireUniqueEmail = true;
             });
 
             // Add application services.
@@ -112,11 +136,6 @@ namespace Tata
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
-
-            // Seed data, use only one time
-            //var dbFactory = new ApplicationDbContextFactory();
-            //var dbContext = dbFactory.Create(new DbContextFactoryOptions());
-            //DbSeeder.Seed(dbContext);
         }
 
         private void ConfigureAutoMapper()
@@ -151,7 +170,7 @@ namespace Tata
             public ApplicationDbContext Create(DbContextFactoryOptions options)
             {
                 var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
-                builder.UseSqlServer("Data Source=.;Initial Catalog=TaTa;Integrated Security=True");
+                builder.UseSqlServer("Data Source=.\\MSSQLSERVER2012;Initial Catalog=TaTa;Integrated Security=True");
                 return new ApplicationDbContext(builder.Options);
             }
         }

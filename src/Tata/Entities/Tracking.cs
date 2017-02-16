@@ -12,7 +12,7 @@ namespace Tata.Entities
         }
 
         public string CreatedUserId { get; set; }
-        public ApplicationUser CreatedUser { get; set; }
+        public User CreatedUser { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime? UpdatedDate { get; set; }
     }

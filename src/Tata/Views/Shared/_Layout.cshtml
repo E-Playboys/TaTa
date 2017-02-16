@@ -75,11 +75,11 @@
                             <li>
                                 @Html.ActionLink("Checkout", "Checkout", "Manage", null)
                             </li>
-                            <li><a href="@Url.Action("Logout", "Account", null)">Thoát <i class="fa fa-sign-out after"></i></a></li>
+                            <li><a href="@Url.Action("Logoff", "Account", null)">Thoát <i class="fa fa-sign-out after"></i></a></li>
                         }
                         else
                         {
-                            <li><a href="@Url.Action("Login", "Account", null)">Đăng nhập <i class="fa fa-lock after"></i></a></li>
+                            <li><a href="@Url.Action("Login", "Account", new { returnUrl = Context.Request.Host.Value + Context.Request.Path.Value })">Đăng nhập <i class="fa fa-lock after"></i></a></li>
                         }
                     </ul>
                   </nav>
