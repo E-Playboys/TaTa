@@ -20,6 +20,7 @@ using Tata.Areas.Backend.Models.Product;
 using Tata.Entities;
 using TaTa.DataAccess;
 using TaTa.DataAccess.Uow;
+using TaTa.DataAccess.Entities;
 
 namespace Tata
 {
@@ -58,7 +59,7 @@ namespace Tata
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
+            services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
@@ -151,7 +152,7 @@ namespace Tata
             public ApplicationDbContext Create(DbContextFactoryOptions options)
             {
                 var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
-                builder.UseSqlServer("Data Source=.;Initial Catalog=TaTa;Integrated Security=True");
+                builder.UseSqlServer("Data Source=.\\MSSQLSERVER2012;Initial Catalog=TaTa;Integrated Security=True");
                 return new ApplicationDbContext(builder.Options);
             }
         }

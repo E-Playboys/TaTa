@@ -79,7 +79,7 @@
                         }
                         else
                         {
-                            <li><a href="@Url.Action("Login", "Account", null)">Đăng nhập <i class="fa fa-lock after"></i></a></li>
+                            <li><a href="@Url.Action("Login", "Account", new { returnUrl = Context.Request.Host.Value + Context.Request.Path.Value })">Đăng nhập <i class="fa fa-lock after"></i></a></li>
                         }
                     </ul>
                   </nav>

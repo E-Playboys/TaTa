@@ -1,8 +1,9 @@
 ﻿@using System.Collections.Generic
 @using Microsoft.AspNetCore.Http
 @using Microsoft.AspNetCore.Http.Authentication
+@using TaTa.DataAccess.Entities
 @model LoginViewModel
-@inject SignInManager<ApplicationUser> SignInManager
+@inject SignInManager<User> SignInManager
 
 @{
     ViewData["Title"] = "Đăng nhập";
