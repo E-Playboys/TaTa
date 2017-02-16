@@ -16,7 +16,8 @@
                 <div class="rotation">
                     <div class="front-end">
                         <div class="form-content">
-                            <form class="form-box login-form form-validator">
+                            @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { Class = "form-box login-form form-validator" }))
+                            {
                                 <h3 class="title">Đăng nhập <small>hoặc <a asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]">Đăng ký</a></small></h3>
                                 <p>Nếu bạn đã có tài khoản, vui lòng đăng nhập.</p>
 
@@ -43,7 +44,7 @@
                                     <button type="submit" class="btn btn-default">Đăng nhập</button>
                                     <a asp-action="ForgotPassword" class="forgot">Quên mật khẩu ?</a>
                                 </div>
-                            </form>
+                            }
                         </div>
                     </div>
                 </div>

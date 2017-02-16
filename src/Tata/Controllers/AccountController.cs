@@ -56,11 +56,14 @@ namespace Tata.Controllers
         public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
+
             if (ModelState.IsValid)
             {
-                // This doesn't count login failures towards account lockout
-                // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+                // This doesn't count login failures towards account Logoff
+                // To enable password failures to trigger account Logoff, set lockoutOnFailure: true
+                var user = await _userManager.FindByEmailAsync(model.Email);
+                var result = await _signInManager.PasswordSignInAsync(user.UserName, model.Password, model.RememberMe, lockoutOnFailure: false);
+
                 if (result.Succeeded)
                 {
                     _logger.LogInformation(1, "User logged in.");
@@ -73,7 +76,7 @@ namespace Tata.Controllers
                 if (result.IsLockedOut)
                 {
                     _logger.LogWarning(2, "User account locked out.");
-                    return View("Lockout");
+                    return View("Logoff");
                 }
                 else
                 {
@@ -129,9 +132,9 @@ namespace Tata.Controllers
 
         //
         // POST: /Account/LogOff
-        [HttpPost]
+        [HttpGet]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> LogOff()
+        public async Task<IActionResult> Logoff()
         {
             await _signInManager.SignOutAsync();
             _logger.LogInformation(4, "User logged out.");
@@ -181,7 +184,7 @@ namespace Tata.Controllers
             }
             if (result.IsLockedOut)
             {
-                return View("Lockout");
+                return View("Logoff");
             }
             else
             {
@@ -428,7 +431,7 @@ namespace Tata.Controllers
             if (result.IsLockedOut)
             {
                 _logger.LogWarning(7, "User account locked out.");
-                return View("Lockout");
+                return View("Logoff");
             }
             else
             {

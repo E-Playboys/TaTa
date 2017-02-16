@@ -70,6 +70,29 @@ namespace Tata
                 //options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
             });
 
+            // Config application authentication
+            services.Configure<IdentityOptions>(options => 
+            {
+                // Password settings
+                options.Password.RequireDigit = true;
+                options.Password.RequiredLength = 8;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = true;
+                options.Password.RequireLowercase = false;
+
+                // Lockout settings
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
+                options.Lockout.MaxFailedAccessAttempts = 10;
+
+                // Cookie settings
+                options.Cookies.ApplicationCookie.ExpireTimeSpan = TimeSpan.FromDays(150);
+                options.Cookies.ApplicationCookie.LoginPath = "/Account/Login";
+                options.Cookies.ApplicationCookie.LogoutPath = "/Account/Logoff";
+
+                // User settings
+                options.User.RequireUniqueEmail = true;
+            });
+
             // Add application services.
             services.AddTransient<IUowProvider, UowProvider>();
             services.AddTransient<IEmailSender, AuthMessageSender>();
@@ -113,11 +136,6 @@ namespace Tata
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
-
-            // Seed data, use only one time
-            //var dbFactory = new ApplicationDbContextFactory();
-            //var dbContext = dbFactory.Create(new DbContextFactoryOptions());
-            //DbSeeder.Seed(dbContext);
         }
 
         private void ConfigureAutoMapper()
