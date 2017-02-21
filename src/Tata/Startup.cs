@@ -161,11 +161,15 @@ namespace Tata
 
         public class ApplicationDbContextFactory : IDbContextFactory<ApplicationDbContext>
         {
-            public IConfigurationRoot Configuration { get; }
-
             public ApplicationDbContext Create(DbContextFactoryOptions options)
             {
+                var config = new ConfigurationBuilder()
+                                .SetBasePath(options.ContentRootPath)
+                                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                                .AddJsonFile($"appsettings.{options.EnvironmentName}.json", optional: true);
                 var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
+                var Configuration = config.Build();
+
                 builder.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
                 return new ApplicationDbContext(builder.Options);
             }

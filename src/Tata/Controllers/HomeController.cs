@@ -90,6 +90,11 @@ namespace Tata.Controllers
             }
         }
 
+        public IActionResult Article()
+        {
+            return View();
+        }
+
         public IActionResult Contact()
         {
             return View();

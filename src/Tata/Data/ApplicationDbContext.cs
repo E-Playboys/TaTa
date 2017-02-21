@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-using Tata.Models;
+﻿using Microsoft.EntityFrameworkCore;
 using Tata.Entities;
 using TaTa.DataAccess.Context;
 
@@ -17,6 +11,7 @@ namespace Tata.Data
         {
         }
 
+        public DbSet<Article> Articles { get; set; }
         public DbSet<Billing> Billings { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
