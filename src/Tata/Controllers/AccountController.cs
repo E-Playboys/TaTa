@@ -12,6 +12,7 @@ using Tata.Models;
 using Tata.Models.AccountViewModels;
 using Tata.Services;
 using TaTa.DataAccess.Entities;
+using Tata.Entities.Enums;
 
 namespace Tata.Controllers
 {
@@ -109,10 +110,14 @@ namespace Tata.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                var user = new User { UserName = model.Email, Email = model.Email };
+                var user = new User { UserName = model.UserName, Email = model.Email, EmailConfirmed = true };
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    // By default all user is standard user
+                    await _userManager.AddToRoleAsync(user, UserRoles.Standard);
+                    await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, UserRoles.Standard));
+
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=532713
                     // Send an email with this link
                     //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -133,12 +138,11 @@ namespace Tata.Controllers
         //
         // POST: /Account/LogOff
         [HttpGet]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logoff()
         {
             await _signInManager.SignOutAsync();
             _logger.LogInformation(4, "User logged out.");
-            return RedirectToAction(nameof(HomeController.Index), "Home");
+            return RedirectToAction("Index", "Home");
         }
 
         //

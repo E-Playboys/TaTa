@@ -1,19 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Tata.Data;
-using Tata.Models;
 using Tata.Services;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Tata.Areas.Backend.Models.Order;
 using Tata.Areas.Backend.Models.Product;
@@ -167,10 +161,12 @@ namespace Tata
 
         public class ApplicationDbContextFactory : IDbContextFactory<ApplicationDbContext>
         {
+            public IConfigurationRoot Configuration { get; }
+
             public ApplicationDbContext Create(DbContextFactoryOptions options)
             {
                 var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
-                builder.UseSqlServer("Data Source=.\\MSSQLSERVER2012;Initial Catalog=TaTa;Integrated Security=True");
+                builder.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
                 return new ApplicationDbContext(builder.Options);
             }
         }
