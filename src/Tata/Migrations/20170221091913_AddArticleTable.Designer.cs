@@ -8,9 +8,10 @@ using Tata.Data;
 namespace Tata.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170221091913_AddArticleTable")]
+    partial class AddArticleTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.0-rtm-22752")
@@ -171,37 +172,6 @@ namespace Tata.Migrations
                         .HasName("UserNameIndex");
 
                     b.ToTable("AspNetUsers");
-                });
-
-            modelBuilder.Entity("Tata.Entities.Article", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("ArtType");
-
-                    b.Property<string>("Content")
-                        .HasColumnType("ntext");
-
-                    b.Property<DateTime>("CreatedDate");
-
-                    b.Property<string>("CreatedUserId");
-
-                    b.Property<string>("Excerpt");
-
-                    b.Property<string>("FeatureImg");
-
-                    b.Property<int>("Priority");
-
-                    b.Property<string>("Title");
-
-                    b.Property<DateTime?>("UpdatedDate");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatedUserId");
-
-                    b.ToTable("Articles");
                 });
 
             modelBuilder.Entity("Tata.Entities.Billing", b =>
@@ -518,13 +488,6 @@ namespace Tata.Migrations
                         .WithMany("Roles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Tata.Entities.Article", b =>
-                {
-                    b.HasOne("TaTa.DataAccess.Entities.User", "CreatedUser")
-                        .WithMany()
-                        .HasForeignKey("CreatedUserId");
                 });
 
             modelBuilder.Entity("Tata.Entities.Billing", b =>

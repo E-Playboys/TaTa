@@ -10,10 +10,12 @@ using Tata.Areas.Backend.Models.Product;
 using Tata.Entities;
 using Tata.Entities.Enums;
 using TaTa.DataAccess;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Tata.Areas.Backend.Controllers
 {
     [Area("Backend")]
+    [Authorize(Roles = "Administrator")]
     public class OrderController : Controller
     {
         private readonly IUowProvider _uowProvider;

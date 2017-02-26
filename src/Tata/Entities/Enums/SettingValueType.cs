@@ -9,6 +9,7 @@
         ARRAY,
         IDS,
         JSON,
-        URL
+        URL,
+        SCRIPT
     }
 }

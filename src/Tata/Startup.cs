@@ -15,6 +15,7 @@ using Tata.Entities;
 using TaTa.DataAccess;
 using TaTa.DataAccess.Uow;
 using TaTa.DataAccess.Entities;
+using Microsoft.AspNetCore.Http;
 
 namespace Tata
 {
@@ -53,19 +54,8 @@ namespace Tata
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<User, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();
-
-            services.AddDataAccess<ApplicationDbContext>();
-
-            services.AddMvc(options =>
-            {
-                //options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
-            });
-
             // Config application authentication
-            services.Configure<IdentityOptions>(options => 
+            services.AddIdentity<User, IdentityRole>(options => 
             {
                 // Password settings
                 options.Password.RequireDigit = true;
@@ -85,6 +75,15 @@ namespace Tata
 
                 // User settings
                 options.User.RequireUniqueEmail = true;
+
+            }).AddEntityFrameworkStores<ApplicationDbContext>()
+              .AddDefaultTokenProviders();
+
+            services.AddDataAccess<ApplicationDbContext>();
+
+            services.AddMvc(options =>
+            {
+                //options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
             });
 
             // Add application services.
@@ -119,6 +118,15 @@ namespace Tata
             app.UseIdentity();
 
             // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
+            app.UseCookieAuthentication(new CookieAuthenticationOptions()
+            {
+                AuthenticationScheme = "TaTaHosingAuthentication",
+                AccessDeniedPath = "/Home/AccessDenied",
+                LoginPath = "/Account/Login",
+                LogoutPath = "/Account/Logoff",
+                AutomaticAuthenticate = true,
+                AutomaticChallenge = true
+            });
 
             app.UseMvc(routes =>
             {
@@ -161,11 +169,15 @@ namespace Tata
 
         public class ApplicationDbContextFactory : IDbContextFactory<ApplicationDbContext>
         {
-            public IConfigurationRoot Configuration { get; }
-
             public ApplicationDbContext Create(DbContextFactoryOptions options)
             {
+                var config = new ConfigurationBuilder()
+                                .SetBasePath(options.ContentRootPath)
+                                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                                .AddJsonFile($"appsettings.{options.EnvironmentName}.json", optional: true);
                 var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
+                var Configuration = config.Build();
+
                 builder.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
                 return new ApplicationDbContext(builder.Options);
             }
