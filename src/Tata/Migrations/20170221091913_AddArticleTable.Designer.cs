@@ -8,9 +8,10 @@ using Tata.Data;
 namespace Tata.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170221091913_AddArticleTable")]
+    partial class AddArticleTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.0-rtm-22752")
@@ -173,37 +174,6 @@ namespace Tata.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("Tata.Entities.Article", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("ArtType");
-
-                    b.Property<string>("Content")
-                        .HasColumnType("ntext");
-
-                    b.Property<DateTime>("CreatedDate");
-
-                    b.Property<string>("CreatedUserId");
-
-                    b.Property<string>("Excerpt");
-
-                    b.Property<string>("FeatureImg");
-
-                    b.Property<int>("Priority");
-
-                    b.Property<string>("Title");
-
-                    b.Property<DateTime?>("UpdatedDate");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatedUserId");
-
-                    b.ToTable("Articles");
-                });
-
             modelBuilder.Entity("Tata.Entities.Billing", b =>
                 {
                     b.Property<int>("Id")
@@ -295,8 +265,6 @@ namespace Tata.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("CategoryId");
-
                     b.Property<DateTime>("CreatedDate");
 
                     b.Property<string>("CreatedUserId");
@@ -313,6 +281,8 @@ namespace Tata.Migrations
 
                     b.Property<int>("Priority");
 
+                    b.Property<int>("ProductCategoryId");
+
                     b.Property<int>("Quantity");
 
                     b.Property<int>("Status");
@@ -321,9 +291,9 @@ namespace Tata.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
-
                     b.HasIndex("CreatedUserId");
+
+                    b.HasIndex("ProductCategoryId");
 
                     b.ToTable("Products");
                 });
@@ -375,9 +345,9 @@ namespace Tata.Migrations
 
                     b.Property<int>("ProductId");
 
-                    b.Property<int>("Quantity");
-
                     b.Property<string>("Unit");
+
+                    b.Property<int>("UnitQuantity");
 
                     b.Property<DateTime?>("UpdatedDate");
 
@@ -399,107 +369,29 @@ namespace Tata.Migrations
 
                     b.Property<string>("CreatedUserId");
 
-                    b.Property<int>("Currency");
-
-                    b.Property<string>("Description");
-
                     b.Property<bool>("IsDisabled");
 
                     b.Property<bool>("IsHighlight");
 
                     b.Property<string>("Name");
 
-                    b.Property<int?>("OrderItemId");
-
-                    b.Property<decimal>("Price");
-
                     b.Property<int>("Priority");
 
                     b.Property<int>("ProductId");
 
-                    b.Property<int>("Type");
-
                     b.Property<string>("Unit");
 
                     b.Property<DateTime?>("UpdatedDate");
 
-                    b.Property<string>("Value");
+                    b.Property<decimal>("Value");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CreatedUserId");
-
-                    b.HasIndex("OrderItemId");
 
                     b.HasIndex("ProductId");
 
                     b.ToTable("ProductProperties");
-                });
-
-            modelBuilder.Entity("Tata.Entities.ProductPropertyGroup", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("CreatedDate");
-
-                    b.Property<string>("CreatedUserId");
-
-                    b.Property<string>("Description");
-
-                    b.Property<bool>("ForDefaultSetup");
-
-                    b.Property<bool>("ForUserCustomize");
-
-                    b.Property<string>("Name");
-
-                    b.Property<int>("ProductCategoryId");
-
-                    b.Property<int>("Type");
-
-                    b.Property<DateTime?>("UpdatedDate");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatedUserId");
-
-                    b.HasIndex("ProductCategoryId");
-
-                    b.ToTable("ProductPropertyGroup");
-                });
-
-            modelBuilder.Entity("Tata.Entities.ProductPropertyGroupValue", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("CreatedDate");
-
-                    b.Property<string>("CreatedUserId");
-
-                    b.Property<int>("Currency");
-
-                    b.Property<string>("Description");
-
-                    b.Property<int>("GroupId");
-
-                    b.Property<string>("Name");
-
-                    b.Property<decimal>("Price");
-
-                    b.Property<string>("Unit");
-
-                    b.Property<DateTime?>("UpdatedDate");
-
-                    b.Property<string>("Value");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatedUserId");
-
-                    b.HasIndex("GroupId");
-
-                    b.ToTable("ProductPropertyGroupValue");
                 });
 
             modelBuilder.Entity("Tata.Entities.Setting", b =>
@@ -598,13 +490,6 @@ namespace Tata.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Tata.Entities.Article", b =>
-                {
-                    b.HasOne("TaTa.DataAccess.Entities.User", "CreatedUser")
-                        .WithMany()
-                        .HasForeignKey("CreatedUserId");
-                });
-
             modelBuilder.Entity("Tata.Entities.Billing", b =>
                 {
                     b.HasOne("TaTa.DataAccess.Entities.User", "CreatedUser")
@@ -643,14 +528,14 @@ namespace Tata.Migrations
 
             modelBuilder.Entity("Tata.Entities.Product", b =>
                 {
-                    b.HasOne("Tata.Entities.ProductCategory", "Category")
-                        .WithMany("Products")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("TaTa.DataAccess.Entities.User", "CreatedUser")
                         .WithMany()
                         .HasForeignKey("CreatedUserId");
+
+                    b.HasOne("Tata.Entities.ProductCategory", "ProductCategory")
+                        .WithMany("Products")
+                        .HasForeignKey("ProductCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Tata.Entities.ProductCategory", b =>
@@ -667,7 +552,7 @@ namespace Tata.Migrations
                         .HasForeignKey("CreatedUserId");
 
                     b.HasOne("Tata.Entities.Product", "Product")
-                        .WithMany("Prices")
+                        .WithMany("ProductPrices")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -678,37 +563,9 @@ namespace Tata.Migrations
                         .WithMany()
                         .HasForeignKey("CreatedUserId");
 
-                    b.HasOne("Tata.Entities.OrderItem")
-                        .WithMany("ExtraProperties")
-                        .HasForeignKey("OrderItemId");
-
                     b.HasOne("Tata.Entities.Product", "Product")
-                        .WithMany("Properties")
+                        .WithMany("ProductProperties")
                         .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Tata.Entities.ProductPropertyGroup", b =>
-                {
-                    b.HasOne("TaTa.DataAccess.Entities.User", "CreatedUser")
-                        .WithMany()
-                        .HasForeignKey("CreatedUserId");
-
-                    b.HasOne("Tata.Entities.ProductCategory", "ProductCategory")
-                        .WithMany("PropertyGroups")
-                        .HasForeignKey("ProductCategoryId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Tata.Entities.ProductPropertyGroupValue", b =>
-                {
-                    b.HasOne("TaTa.DataAccess.Entities.User", "CreatedUser")
-                        .WithMany()
-                        .HasForeignKey("CreatedUserId");
-
-                    b.HasOne("Tata.Entities.ProductPropertyGroup", "Group")
-                        .WithMany("Values")
-                        .HasForeignKey("GroupId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
