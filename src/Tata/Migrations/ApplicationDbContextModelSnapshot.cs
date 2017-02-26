@@ -264,6 +264,8 @@ namespace Tata.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int>("CategoryId");
+
                     b.Property<DateTime>("CreatedDate");
 
                     b.Property<string>("CreatedUserId");
@@ -280,8 +282,6 @@ namespace Tata.Migrations
 
                     b.Property<int>("Priority");
 
-                    b.Property<int>("ProductCategoryId");
-
                     b.Property<int>("Quantity");
 
                     b.Property<int>("Status");
@@ -290,9 +290,9 @@ namespace Tata.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CreatedUserId");
+                    b.HasIndex("CategoryId");
 
-                    b.HasIndex("ProductCategoryId");
+                    b.HasIndex("CreatedUserId");
 
                     b.ToTable("Products");
                 });
@@ -344,9 +344,9 @@ namespace Tata.Migrations
 
                     b.Property<int>("ProductId");
 
-                    b.Property<string>("Unit");
+                    b.Property<int>("Quantity");
 
-                    b.Property<int>("UnitQuantity");
+                    b.Property<string>("Unit");
 
                     b.Property<DateTime?>("UpdatedDate");
 
@@ -368,29 +368,107 @@ namespace Tata.Migrations
 
                     b.Property<string>("CreatedUserId");
 
+                    b.Property<int>("Currency");
+
+                    b.Property<string>("Description");
+
                     b.Property<bool>("IsDisabled");
 
                     b.Property<bool>("IsHighlight");
 
                     b.Property<string>("Name");
 
+                    b.Property<int?>("OrderItemId");
+
+                    b.Property<decimal>("Price");
+
                     b.Property<int>("Priority");
 
                     b.Property<int>("ProductId");
+
+                    b.Property<int>("Type");
 
                     b.Property<string>("Unit");
 
                     b.Property<DateTime?>("UpdatedDate");
 
-                    b.Property<decimal>("Value");
+                    b.Property<string>("Value");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CreatedUserId");
 
+                    b.HasIndex("OrderItemId");
+
                     b.HasIndex("ProductId");
 
                     b.ToTable("ProductProperties");
+                });
+
+            modelBuilder.Entity("Tata.Entities.ProductPropertyGroup", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<string>("CreatedUserId");
+
+                    b.Property<string>("Description");
+
+                    b.Property<bool>("ForDefaultSetup");
+
+                    b.Property<bool>("ForUserCustomize");
+
+                    b.Property<string>("Name");
+
+                    b.Property<int>("ProductCategoryId");
+
+                    b.Property<int>("Type");
+
+                    b.Property<DateTime?>("UpdatedDate");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedUserId");
+
+                    b.HasIndex("ProductCategoryId");
+
+                    b.ToTable("ProductPropertyGroup");
+                });
+
+            modelBuilder.Entity("Tata.Entities.ProductPropertyGroupValue", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<string>("CreatedUserId");
+
+                    b.Property<int>("Currency");
+
+                    b.Property<string>("Description");
+
+                    b.Property<int>("GroupId");
+
+                    b.Property<string>("Name");
+
+                    b.Property<decimal>("Price");
+
+                    b.Property<string>("Unit");
+
+                    b.Property<DateTime?>("UpdatedDate");
+
+                    b.Property<string>("Value");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedUserId");
+
+                    b.HasIndex("GroupId");
+
+                    b.ToTable("ProductPropertyGroupValue");
                 });
 
             modelBuilder.Entity("Tata.Entities.Setting", b =>
@@ -527,14 +605,14 @@ namespace Tata.Migrations
 
             modelBuilder.Entity("Tata.Entities.Product", b =>
                 {
+                    b.HasOne("Tata.Entities.ProductCategory", "Category")
+                        .WithMany("Products")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("TaTa.DataAccess.Entities.User", "CreatedUser")
                         .WithMany()
                         .HasForeignKey("CreatedUserId");
-
-                    b.HasOne("Tata.Entities.ProductCategory", "ProductCategory")
-                        .WithMany("Products")
-                        .HasForeignKey("ProductCategoryId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Tata.Entities.ProductCategory", b =>
@@ -551,7 +629,7 @@ namespace Tata.Migrations
                         .HasForeignKey("CreatedUserId");
 
                     b.HasOne("Tata.Entities.Product", "Product")
-                        .WithMany("ProductPrices")
+                        .WithMany("Prices")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -562,9 +640,37 @@ namespace Tata.Migrations
                         .WithMany()
                         .HasForeignKey("CreatedUserId");
 
+                    b.HasOne("Tata.Entities.OrderItem")
+                        .WithMany("ExtraProperties")
+                        .HasForeignKey("OrderItemId");
+
                     b.HasOne("Tata.Entities.Product", "Product")
-                        .WithMany("ProductProperties")
+                        .WithMany("Properties")
                         .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Tata.Entities.ProductPropertyGroup", b =>
+                {
+                    b.HasOne("TaTa.DataAccess.Entities.User", "CreatedUser")
+                        .WithMany()
+                        .HasForeignKey("CreatedUserId");
+
+                    b.HasOne("Tata.Entities.ProductCategory", "ProductCategory")
+                        .WithMany("PropertyGroups")
+                        .HasForeignKey("ProductCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Tata.Entities.ProductPropertyGroupValue", b =>
+                {
+                    b.HasOne("TaTa.DataAccess.Entities.User", "CreatedUser")
+                        .WithMany()
+                        .HasForeignKey("CreatedUserId");
+
+                    b.HasOne("Tata.Entities.ProductPropertyGroup", "Group")
+                        .WithMany("Values")
+                        .HasForeignKey("GroupId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

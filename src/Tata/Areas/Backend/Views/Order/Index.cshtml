@@ -27,38 +27,6 @@
 
 <div class="wrapper wrapper-content animated fadeInRight ecommerce">
 
-  <div class="ibox-content m-b-sm border-bottom">
-    <div class="row">
-      <div class="col-sm-4">
-        <div class="form-group">
-          <label class="control-label" for="order_number">Order Number</label>
-          <input type="text" id="order_number" name="order_number" value="" placeholder="Order Number" class="form-control">
-        </div>
-      </div>
-      <div class="col-sm-2">
-        <div class="form-group">
-          <label class="control-label" for="order_code">Order Code</label>
-          <input type="text" id="order_code" name="order_code" value="" placeholder="Order Code" class="form-control">
-        </div>
-      </div>
-      <div class="col-sm-2">
-        <div class="form-group">
-          <label class="control-label" for="billing_info">Billing Info</label>
-          <input type="text" id="billing_info" name="billing_info" value="" placeholder="Billing Info" class="form-control">
-        </div>
-      </div>
-      <div class="col-sm-4">
-        <div class="form-group">
-          <label class="control-label" for="status">Status</label>
-          <select name="status" id="status" class="form-control">
-            <option value="1" selected>Enabled</option>
-            <option value="0">Disabled</option>
-          </select>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <div class="row">
     <div class="col-lg-12">
       <div class="ibox">
@@ -67,7 +35,7 @@
           </div>*@
         <div class="ibox-content">
 
-          <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="10">
+          <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="10" data-paging="true" data-filtering="true" data-sorting="true">
             <thead>
               <tr>
                 <th data-toggle="true">Order Number</th>
@@ -163,7 +131,6 @@
 
 
 @section Styles {
-  <link rel="stylesheet" href="~/backend/lib/footable/css/footable.core.css" />
   @*<environment names="Development">
       <link rel="stylesheet" href="~/lib/footable/css/footable.core.css" />
     </environment>
@@ -173,7 +140,6 @@
 }
 
 @section Scripts {
-  <script src="~/backend/lib/footable/dist/footable.all.min.js"></script>
   @*<environment names="Development,Staging,Production">
       <script src="~/lib/footable/dist/footable.all.min.js"></script>
     </environment>*@

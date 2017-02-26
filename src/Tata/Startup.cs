@@ -139,6 +139,15 @@ namespace Tata
                 cfg.CreateMap<Product, ProductModel>();
                 cfg.CreateMap<ProductModel, Product>();
 
+                cfg.CreateMap<Product, ProductDetailsViewModel>();
+                cfg.CreateMap<ProductDetailsViewModel, Product>();
+
+                cfg.CreateMap<ProductPropertyGroup, ProductPropertyGroupModel>();
+                cfg.CreateMap<ProductPropertyGroupModel, ProductPropertyGroup>();
+
+                cfg.CreateMap<ProductPropertyGroupValue, ProductPropertyGroupValueModel>();
+                cfg.CreateMap<ProductPropertyGroupValueModel, ProductPropertyGroupValue>();
+
                 cfg.CreateMap<ProductProperty, ProductPropertyModel>();
                 cfg.CreateMap<ProductPropertyModel, ProductProperty>();
 
@@ -166,7 +175,7 @@ namespace Tata
             public ApplicationDbContext Create(DbContextFactoryOptions options)
             {
                 var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
-                builder.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+                builder.UseSqlServer("Data Source=.;Initial Catalog=TaTa;Integrated Security=True");
                 return new ApplicationDbContext(builder.Options);
             }
         }

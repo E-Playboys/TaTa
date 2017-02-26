@@ -1,0 +1,55 @@
+﻿@using Tata.Entities.Enums
+@model ProductPropertyGroupModel
+
+<input asp-for="Id" type="hidden" />
+<input asp-for="Type" type="hidden" />
+@if (Model.ForDefaultSetup)
+{
+  if (Model.Type == ProductPropertyGroupType.OperatingSystem)
+  {
+        <div>
+          <label>@Model.Name</label>
+          <select asp-for="SelectedValue" asp-items="@(new SelectList(Model.Values, nameof(ProductPropertyGroupValueModel.Id), nameof(ProductPropertyGroupValueModel.Name)))" class="form-control">
+            <option>Select an option ...</option>
+          </select>
+        </div>
+  }
+  else if (Model.Type == ProductPropertyGroupType.AdministrationService)
+  {
+        <div>
+          <label>@Model.Name</label>
+          @foreach (var item in Model.Values)
+          {
+              <div class="radio">
+                <label><input asp-for="SelectedValue" type="radio" value="@item.Id" />@item.Name</label>
+              </div>
+          }
+        </div>
+  }
+  else if (Model.Type == ProductPropertyGroupType.Ram
+           || Model.Type == ProductPropertyGroupType.Strorage
+           || Model.Type == ProductPropertyGroupType.Ip
+           || Model.Type == ProductPropertyGroupType.Cpu)
+  {
+    var sliderTicks = Model.Values.Select(x => (Model.Values.IndexOf(x)).ToString()).Aggregate((x, y) => x + "," + y);
+    var sliderTickLabels = Model.Values.Select(x => '"' + x.Value.ToString() + x.Unit + '"').Aggregate((x, y) => x + "," + y);
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label">@Model.Name</label>
+          <div class="col-sm-10">
+            <input asp-for="SelectedValue" type="text" class="slider" 
+                   data-provide="slider" data-slider-ticks="[@sliderTicks]" 
+                   data-slider-ticks-labels='[@sliderTickLabels]' 
+                   data-slider-min="1" 
+                   data-slider-max="@(Model.Values.Count - 1)" 
+                   data-slider-step="1"
+                   data-slider-value="@Model.SelectedValue" 
+                   data-slider-tooltip="hide"/>
+          </div>
+        </div>
+  }
+}
+  
+
+
+

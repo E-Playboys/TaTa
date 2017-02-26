@@ -12,5 +12,7 @@ namespace Tata.Entities
         public int Priority { get; set; }
 
         public List<Product> Products { get; set; }
+
+        public List<ProductPropertyGroup> PropertyGroups { get; set; }
     }
 }
