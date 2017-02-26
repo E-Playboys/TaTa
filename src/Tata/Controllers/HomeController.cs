@@ -10,6 +10,7 @@ using Tata.Models;
 using TaTa.DataAccess.Repositories;
 using TaTa.DataAccess.Query;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Tata.Controllers
 {
@@ -126,6 +127,11 @@ namespace Tata.Controllers
         }
 
         public IActionResult Error()
+        {
+            return View();
+        }
+
+        public IActionResult AccessDenied()
         {
             return View();
         }

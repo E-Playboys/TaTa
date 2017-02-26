@@ -11,10 +11,12 @@ using Tata.Entities;
 using Tata.Entities.Enums;
 using TaTa.DataAccess;
 using Tata.Helpers;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Tata.Areas.Backend.Controllers
 {
     [Area("Backend")]
+    [Authorize(Roles = "Administrator")]
     public class ProductController : Controller
     {
         private readonly IUowProvider _uowProvider;
