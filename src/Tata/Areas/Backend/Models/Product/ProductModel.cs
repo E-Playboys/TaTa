@@ -18,47 +18,47 @@ namespace Tata.Areas.Backend.Models.Product
         public int Priority { get; set; }
         public ProductStatus Status { get; set; }
 
-        public int ProductCategoryId { get; set; }
-        public ProductCategoryModel ProductCategory { get; set; }
+        public int CategoryId { get; set; }
+        public ProductCategoryModel Category { get; set; }
 
-        private List<ProductPropertyModel> _productProperties;
-        public List<ProductPropertyModel> ProductProperties
+        private List<ProductPropertyModel> _properties;
+        public List<ProductPropertyModel> Properties
         {
             get
             {
-                if(_productProperties == null)
-                    _productProperties = new List<ProductPropertyModel>();
+                if(_properties == null)
+                    _properties = new List<ProductPropertyModel>();
 
                 // Always have an empty row here for the user to input 
                 // and Add More button can also leverage this empty row to clone a new row
-                if (_productProperties.All(x => x.Id != 0))
+                if (_properties.All(x => x.Id != 0))
                 {
-                    _productProperties.Add(new ProductPropertyModel());
+                    _properties.Add(new ProductPropertyModel());
                 }
                 
-                return _productProperties;
+                return _properties;
             }
-            set { _productProperties = value; }
+            set { _properties = value; }
         }
 
-        private List<ProductPriceModel> _productPrices;
-        public List<ProductPriceModel> ProductPrices
+        private List<ProductPriceModel> _prices;
+        public List<ProductPriceModel> Prices
         {
             get
             {
-                if (_productPrices == null)
-                    _productPrices = new List<ProductPriceModel>();
+                if (_prices == null)
+                    _prices = new List<ProductPriceModel>();
 
                 // Always have an empty row here for the user to input 
                 // and Add More button can also leverage this empty row to clone a new row
-                if (_productPrices.All(x => x.Id != 0))
+                if (_prices.All(x => x.Id != 0))
                 {
-                    _productPrices.Add(new ProductPriceModel());
+                    _prices.Add(new ProductPriceModel());
                 }
                 
-                return _productPrices;
+                return _prices;
             }
-            set { _productPrices = value; }
+            set { _prices = value; }
         }
     }
 }

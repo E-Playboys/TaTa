@@ -17,9 +17,21 @@ namespace Tata.Entities
         public int Priority { get; set; }
         public ProductStatus Status { get; set; }
 
-        public int ProductCategoryId { get; set; }
-        public ProductCategory ProductCategory { get; set; }
-        public List<ProductProperty> ProductProperties { get; set; }
-        public List<ProductPrice> ProductPrices { get; set; }
+        public int CategoryId { get; set; }
+        public ProductCategory Category { get; set; }
+
+        private List<ProductProperty> _properties;
+        public List<ProductProperty> Properties
+        {
+            get { return _properties ?? (_properties = new List<ProductProperty>()); }
+            set { _properties = value; }
+        }
+
+        private List<ProductPrice> _prices;
+        public List<ProductPrice> Prices
+        {
+            get { return _prices ?? (_prices = new List<ProductPrice>()); }
+            set { _prices = value; }
+        }
     }
 }

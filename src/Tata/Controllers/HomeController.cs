@@ -50,8 +50,8 @@ namespace Tata.Controllers
                     productFeatureIds = homeSettings.SingleOrDefault(s => s.Name == "HomeProductFeature").Value;
                     Includes<Product> productInclude = new Includes<Product>(query =>
                     {
-                        return query.Include(p => p.ProductProperties)
-                                    .Include(p => p.ProductPrices);
+                        return query.Include(p => p.Properties)
+                                    .Include(p => p.Prices);
                     });
 
                     model.HomeProductFeature = (await productRepo.QueryAsync(p => productFeatureIds.Contains(p.Id.ToString()),

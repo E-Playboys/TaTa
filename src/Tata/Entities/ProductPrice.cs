@@ -11,7 +11,7 @@ namespace Tata.Entities
         public string Name { get; set; }
         public decimal Price { get; set; }
         public Currency Currency { get; set; }
-        public int UnitQuantity { get; set; }
+        public int Quantity { get; set; }
         public string Unit { get; set; }
         public int Priority { get; set; }
         public bool IsDefault { get; set; }

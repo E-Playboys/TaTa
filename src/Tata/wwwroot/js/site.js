@@ -10,11 +10,11 @@ function handleInlineAddButtonTagHelper(containerElement, propertyName, htmlCont
     var $container = $(containerElement);
     var nextIndex = $container.children().length;
 
-    // Update index for name attribute, ex: "name=ProductProperties[1]"
+    // Update index for name attribute, ex: "name=Properties[1]"
     var pattern = new RegExp(propertyName + "\\[(\\d+)\\]", "gi");
     var contentHtml = htmlContent.replace(pattern, propertyName + "[" + nextIndex + "]");
     
-    // Update index for id attribute, ex: "name=ProductProperties_1"
+    // Update index for id attribute, ex: "name=Properties_1"
     pattern = new RegExp(propertyName + "_(\\d+)", "gi");
     contentHtml = contentHtml.replace(pattern, propertyName + "_" + nextIndex);
     

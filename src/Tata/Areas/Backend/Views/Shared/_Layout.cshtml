@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="~/backend/lib_bower/metisMenu/dist/metisMenu.css" />
     <link rel="stylesheet" href="~/backend/css/animate.css" />
     <link rel="stylesheet" href="~/backend/css/style.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/backend/lib/footable/footable.bootstrap.css" />
   </environment>
   <environment names="Staging,Production">
     <link rel="stylesheet" href="~/backend/lib/bootstrap/dist/css/bootstrap.min.css" />
@@ -25,6 +26,7 @@
     <link rel="stylesheet" href="~/backend/lib_bower/metisMenu/dist/metisMenu.min.css" />
     <link rel="stylesheet" href="~/backend/css/animate.css" />
     <link rel="stylesheet" href="~/backend/css/style.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/backend/lib/footable/footable.bootstrap.min.css" />
   </environment>
 
 </head>
@@ -56,28 +58,31 @@
   </div>
   <!-- End wrapper-->
   <script src="~/backend/lib/jquery/dist/jquery.js"></script>
+  <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+  <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
   <script src="~/backend/lib/bootstrap/dist/js/bootstrap.js"></script>
   <script src="~/backend/lib_bower/metisMenu/dist/metisMenu.js"></script>
   <script src="~/backend/lib_bower/slimScroll/jquery.slimscroll.js"></script>
   <script src="~/backend/lib_bower/pace/pace.js"></script>
+  <script src="~/backend/lib/footable/footable.min.js"></script>
   <script src="~/backend/js/script.js"></script>
   <script src="~/js/site.js" asp-append-version="true"></script>
   @*<environment names="Development">
-    <script src="~/backend/lib/jquery/dist/jquery.js"></script>
-    <script src="~/backend/lib/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="~/backend/lib_bower/metisMenu/dist/metisMenu.js"></script>
-    <script src="~/backend/lib_bower/slimScroll/jquery.slimscroll.js"></script>
-    <script src="~/backend/lib_bower/pace/pace.js"></script>
-    <script src="~/backend/js/script.js"></script>
-  </environment>
-  <environment names="Staging,Production">
-    <script src="~/backend/lib/jquery/dist/jquery.js"></script>
-    <script src="~/backend/lib/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="~/backend/lib_bower/metisMenu/dist/metisMenu.min.js"></script>
-    <script src="~/backend/lib_bower/pace/pace.min.js"></script>
-    <script src="~/backend/lib_bower/slimScroll/jquery.slimscroll.min.js"></script>
-    <script src="~/backend/js/script.js" asp-append-version="true"></script>
-  </environment>*@
+      <script src="~/backend/lib/jquery/dist/jquery.js"></script>
+      <script src="~/backend/lib/bootstrap/dist/js/bootstrap.js"></script>
+      <script src="~/backend/lib_bower/metisMenu/dist/metisMenu.js"></script>
+      <script src="~/backend/lib_bower/slimScroll/jquery.slimscroll.js"></script>
+      <script src="~/backend/lib_bower/pace/pace.js"></script>
+      <script src="~/backend/js/script.js"></script>
+    </environment>
+    <environment names="Staging,Production">
+      <script src="~/backend/lib/jquery/dist/jquery.js"></script>
+      <script src="~/backend/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+      <script src="~/backend/lib_bower/metisMenu/dist/metisMenu.min.js"></script>
+      <script src="~/backend/lib_bower/pace/pace.min.js"></script>
+      <script src="~/backend/lib_bower/slimScroll/jquery.slimscroll.min.js"></script>
+      <script src="~/backend/js/script.js" asp-append-version="true"></script>
+    </environment>*@
 
   @RenderSection("scripts", required: false)
 </body>

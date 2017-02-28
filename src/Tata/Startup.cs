@@ -147,6 +147,15 @@ namespace Tata
                 cfg.CreateMap<Product, ProductModel>();
                 cfg.CreateMap<ProductModel, Product>();
 
+                cfg.CreateMap<Product, ProductDetailsViewModel>();
+                cfg.CreateMap<ProductDetailsViewModel, Product>();
+
+                cfg.CreateMap<ProductPropertyGroup, ProductPropertyGroupModel>();
+                cfg.CreateMap<ProductPropertyGroupModel, ProductPropertyGroup>();
+
+                cfg.CreateMap<ProductPropertyGroupValue, ProductPropertyGroupValueModel>();
+                cfg.CreateMap<ProductPropertyGroupValueModel, ProductPropertyGroupValue>();
+
                 cfg.CreateMap<ProductProperty, ProductPropertyModel>();
                 cfg.CreateMap<ProductPropertyModel, ProductProperty>();
 
@@ -176,9 +185,9 @@ namespace Tata
                                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                                 .AddJsonFile($"appsettings.{options.EnvironmentName}.json", optional: true);
                 var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
-                var Configuration = config.Build();
+                var configuration = config.Build();
 
-                builder.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+                builder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
                 return new ApplicationDbContext(builder.Options);
             }
         }

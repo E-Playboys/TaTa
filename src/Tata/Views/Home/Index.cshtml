@@ -47,14 +47,14 @@
                   @Html.ActionLink(product.Name, "VpsPage", "Home", new { Id = product.Id }, null)
                 </div>
                 <div class="price-box">
-                  <div class="price">@product.ProductPrices.SingleOrDefault(pr => pr.IsDefault).Price.ToString("N0")<span>vnđ /tháng</span></div>
+                  <div class="price">@product.Prices.SingleOrDefault(pr => pr.IsDefault).Price.ToString("N0")<span>vnđ /tháng</span></div>
                 </div>
                 <ul class="options">
-                  @foreach (var property in product.ProductProperties)
+                  @foreach (var property in product.Properties)
                   {
                       <li class="active"><span><i class="fa fa-check"></i></span>@property.Name</li>
                   }
-                  @foreach (var price in product.ProductPrices)
+                  @foreach (var price in product.Prices)
                   {
                     if (price.IsDefault)
                     {
