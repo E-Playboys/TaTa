@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Tata.Migrations
 {
-    public partial class Initial : Migration
+    public partial class MergedDatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -146,6 +146,33 @@ namespace Tata.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Articles",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    ArtType = table.Column<int>(nullable: false),
+                    Content = table.Column<string>(type: "ntext", nullable: true),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    CreatedUserId = table.Column<string>(nullable: true),
+                    Excerpt = table.Column<string>(nullable: true),
+                    FeatureImg = table.Column<string>(nullable: true),
+                    Priority = table.Column<int>(nullable: false),
+                    Title = table.Column<string>(nullable: true),
+                    UpdatedDate = table.Column<DateTime>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Articles", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Articles_AspNetUsers_CreatedUserId",
+                        column: x => x.CreatedUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -407,6 +434,7 @@ namespace Tata.Migrations
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     CreatedUserId = table.Column<string>(nullable: true),
                     Currency = table.Column<int>(nullable: false),
+                    Description = table.Column<string>(nullable: true),
                     GroupId = table.Column<int>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     Price = table.Column<decimal>(nullable: false),
@@ -476,6 +504,7 @@ namespace Tata.Migrations
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     CreatedUserId = table.Column<string>(nullable: true),
                     Currency = table.Column<int>(nullable: false),
+                    Description = table.Column<string>(nullable: true),
                     IsDisabled = table.Column<bool>(nullable: false),
                     IsHighlight = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(nullable: true),
@@ -483,6 +512,7 @@ namespace Tata.Migrations
                     Price = table.Column<decimal>(nullable: false),
                     Priority = table.Column<int>(nullable: false),
                     ProductId = table.Column<int>(nullable: false),
+                    Type = table.Column<int>(nullable: false),
                     Unit = table.Column<string>(nullable: true),
                     UpdatedDate = table.Column<DateTime>(nullable: true),
                     Value = table.Column<string>(nullable: true)
@@ -546,6 +576,11 @@ namespace Tata.Migrations
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Articles_CreatedUserId",
+                table: "Articles",
+                column: "CreatedUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Billings_CreatedUserId",
@@ -674,6 +709,9 @@ namespace Tata.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "Articles");
 
             migrationBuilder.DropTable(
                 name: "ProductProperties");

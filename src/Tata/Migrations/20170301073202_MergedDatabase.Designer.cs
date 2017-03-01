@@ -8,8 +8,8 @@ using Tata.Data;
 namespace Tata.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20170226090901_Add_Type_For_ProductProperty")]
-    partial class Add_Type_For_ProductProperty
+    [Migration("20170301073202_MergedDatabase")]
+    partial class MergedDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -172,6 +172,37 @@ namespace Tata.Migrations
                         .HasName("UserNameIndex");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("Tata.Entities.Article", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("ArtType");
+
+                    b.Property<string>("Content")
+                        .HasColumnType("ntext");
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<string>("CreatedUserId");
+
+                    b.Property<string>("Excerpt");
+
+                    b.Property<string>("FeatureImg");
+
+                    b.Property<int>("Priority");
+
+                    b.Property<string>("Title");
+
+                    b.Property<DateTime?>("UpdatedDate");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedUserId");
+
+                    b.ToTable("Articles");
                 });
 
             modelBuilder.Entity("Tata.Entities.Billing", b =>
@@ -566,6 +597,13 @@ namespace Tata.Migrations
                         .WithMany("Roles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Tata.Entities.Article", b =>
+                {
+                    b.HasOne("TaTa.DataAccess.Entities.User", "CreatedUser")
+                        .WithMany()
+                        .HasForeignKey("CreatedUserId");
                 });
 
             modelBuilder.Entity("Tata.Entities.Billing", b =>
