@@ -508,6 +508,7 @@ function loginRegister() {
     });
 
     form.css('height', height)
+    $('.login-register').css('min-height', height)
 
     $('.switch-form').click(function (e) {
         var button = $(this);
@@ -517,9 +518,15 @@ function loginRegister() {
         if (button.hasClass('forgot')) {
             $('.form-content').removeClass('hidden');
             $('.register-form').closest('.form-content').addClass('hidden');
+            $('.login-form').closest('.form-content').addClass('hidden');
         } else if (button.hasClass('sing-up')) {
             $('.form-content').removeClass('hidden');
             $('.forgot-form').closest('.form-content').addClass('hidden');
+            $('.login-form').closest('.form-content').addClass('hidden');
+        } else {
+            $('.form-content').removeClass('hidden');
+            $('.forgot-form').closest('.form-content').addClass('hidden');
+            $('.register-form').closest('.form-content').addClass('hidden');
         }
 
         $('.login-register .rotation').toggleClass('hover');
