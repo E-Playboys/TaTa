@@ -146,6 +146,11 @@ namespace Tata.Controllers
             return View();
         }
 
+        public IActionResult PaymentType()
+        {
+            return View();
+        }
+
         public IActionResult ExtendProduct()
         {
             return View();
