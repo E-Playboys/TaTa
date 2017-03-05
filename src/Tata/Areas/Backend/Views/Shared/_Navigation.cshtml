@@ -28,7 +28,7 @@
         </div>
       </li>
       <li class="@Html.IsSelected(controller: "Product")">
-        <a href="#"><i class="fa fa-shopping-cart"></i> <span class="nav-label" data-i18n="nav.ecommerce">Product</span><span class="fa arrow"></span></a>
+        <a href="#"><i class="fa fa-product-hunt"></i> <span class="nav-label" data-i18n="nav.ecommerce">Product</span><span class="fa arrow"></span></a>
         <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Product", cssClass: "in")">
           <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "Product")">List</a></li>
         </ul>
@@ -37,6 +37,12 @@
         <a href="#"><i class="fa fa-shopping-cart"></i> <span class="nav-label" data-i18n="nav.ecommerce">Order</span><span class="fa arrow"></span></a>
         <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Order", cssClass: "in")">
           <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "Order")">List</a></li>
+        </ul>
+      </li>
+      <li class="@Html.IsSelected(controller: "Setting")">
+        <a href="#"><i class="fa fa-gears"></i> <span class="nav-label" data-i18n="nav.ecommerce">Settings</span><span class="fa arrow"></span></a>
+        <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Setting", cssClass: "in")">
+          <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "Setting")">List</a></li>
         </ul>
       </li>
     </ul>

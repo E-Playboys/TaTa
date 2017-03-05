@@ -16,6 +16,7 @@ using TaTa.DataAccess;
 using TaTa.DataAccess.Uow;
 using TaTa.DataAccess.Entities;
 using Microsoft.AspNetCore.Http;
+using Tata.Areas.Backend.Models.Setting;
 
 namespace Tata
 {
@@ -173,6 +174,9 @@ namespace Tata
 
                 cfg.CreateMap<Billing, BillingModel>();
                 cfg.CreateMap<BillingModel, Billing>();
+
+                cfg.CreateMap<Setting, SettingModel>();
+                cfg.CreateMap<SettingModel, Setting>();
             });
         }
 

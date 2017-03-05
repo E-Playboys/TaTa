@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Tata.Entities.Enums;
 
 namespace Tata.Areas.Backend.Helpers
 {
@@ -27,6 +28,20 @@ namespace Tata.Areas.Backend.Helpers
         {
             string currentAction = (string)htmlHelper.ViewContext.RouteData.Values["action"];
             return currentAction;
+        }
+
+        public static string GetStatusClass(this IHtmlHelper html, string status)
+        {
+            switch (status)
+            {
+                case "Enable":
+                case "Paid":
+                    return "primary";
+                case "LowStock":
+                    return "warning";
+                default:
+                    return "danger";
+            }
         }
     }
 }
