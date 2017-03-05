@@ -1,4 +1,6 @@
-﻿@using Tata.Entities.Enums
+﻿@using System.Threading.Tasks
+@using Tata.Entities.Enums
+@using Tata.Models.ProductModels
 @model ProductPropertyGroupModel
 
 <input asp-for="Id" type="hidden" />
@@ -27,7 +29,7 @@
         </div>
   }
   else if (Model.Type == ProductPropertyGroupType.Ram
-           || Model.Type == ProductPropertyGroupType.Strorage
+           || Model.Type == ProductPropertyGroupType.Storage
            || Model.Type == ProductPropertyGroupType.Ip
            || Model.Type == ProductPropertyGroupType.Cpu)
   {

@@ -1,0 +1,102 @@
+﻿@using System.Threading.Tasks
+@using Tata.Models.ConfigureProduct
+@model ConfigureVpsViewModel
+
+@{
+    ViewBag.Title = "Cấu hình máy chủ";
+    Layout = "_Layout";
+}
+
+@using (Html.BeginForm(true))
+{
+    <header class="page-header">
+      <div class="container">
+        <h1 class="title">Cấu hình máy chủ</h1>
+      </div>
+    </header>
+
+    <input asp-for="ProductId" type="hidden"/>
+    <div class="container">
+      <div class="row">
+        <article class="content col-sm-12 col-md-8">
+          <div class="panel-group multi-collapse" id="accordion2">
+            @for (var i = 0; i < Model.RequiredPropertyGroups.Count; i++)
+            {
+                @Html.EditorFor(x => Model.RequiredPropertyGroups[i], nameof(ConfigureVpsViewModel.RequiredPropertyGroups))
+            }
+
+            <div class="panel panel-default active">
+              <div class="panel-heading">
+                <div class="panel-title">
+                  <a data-toggle="collapse" data-parent="#accordion2" href="#collapse23">
+                    Dịch vụ cộng thêm
+                  </a>
+                </div>
+              </div>
+              <div id="collapse23" class="panel-collapse collapse">
+                <div class="panel-body bottom-padding-mini">
+                  @for (var i = 0; i < Model.OptionalPropertyGroups.Count; i++)
+                  {
+                      @Html.EditorFor(x => Model.OptionalPropertyGroups[i], nameof(ConfigureVpsViewModel.OptionalPropertyGroups))
+                  }
+                </div>
+              </div>
+            </div>
+          </div>
+        </article><!-- .content -->
+        <div id="car-bottom" class="col-sm-12 col-md-4">
+          <div class="car-bottom-box bg total">
+            <h5 class="text-left">Cloud S1 Window</h5>
+            <p class="text-left">Cấu hình mua thêm</p>
+            <table class="col-sm-12">
+              <tbody>
+                <tr>
+                  <td class="text-left">RAM</td>
+                  <td><span id="optional_ram" class="price">0GB</span></td>
+                </tr>
+                <tr>
+                  <td class="text-left">Lưu trữ</td>
+                  <td><span id="optional_storage" class="price">0GB</span></td>
+                </tr>
+                <tr>
+                  <td class="text-left">IP</td>
+                  <td><span id="optional_ip" class="price">0IP</span></td>
+                </tr>
+              </tbody>
+            </table>
+            <button type="submit" class="btn btn-default">Cho vào giỏ</button>
+          </div>
+        </div>
+      </div>
+    </div>
+}
+
+@section Scripts {
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $('input.slider').bind('slideStop', function (ev) {
+        var mySlider = $(this).bootstrapSlider();
+        var value = mySlider.bootstrapSlider('getValue');
+
+        var label = mySlider.bootstrapSlider('getAttribute').ticks_labels[value];
+        var price = $(this).attr('data-prices').split('|')[value];
+        var priceElement = $(this).attr('data-price-element');
+        var type = $(this).attr('data-group-type').toLowerCase();
+
+        $(priceElement).text(price);
+        $("#optional_" + type).text(label);
+      });
+    });
+
+    $(document).on('click', 'div.list-group-item > div > input:radio', function () {
+      var listItemElement = $(this).parents('div.list-group-item');
+
+      listItemElement.siblings().removeClass('active');
+      listItemElement.addClass('active');
+    });
+
+    $(document).on('click', '[data-toggle]', function () {
+      $("input.slider").slider('refresh');
+    });
+  </script>
+}

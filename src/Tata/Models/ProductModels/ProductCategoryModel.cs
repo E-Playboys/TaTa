@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using Tata.Areas.Backend.Models.Product;
 
-namespace Tata.Areas.Backend.Models.Product
+namespace Tata.Models.ProductModels
 {
     public class ProductCategoryModel
     {

@@ -1,0 +1,30 @@
+﻿@model Tata.Models.ProductModels.ProductPropertyGroupModel
+
+@{
+    var sliderTicks = Model.Values.Select(x => (Model.Values.IndexOf(x)).ToString()).Aggregate((x, y) => x + "," + y);
+    var sliderTickLabels = Model.Values.Select(x => '"' + x.Value.ToString() + x.Unit + '"').Aggregate((x, y) => x + "," + y);
+    var sliderTickPrices = Model.Values.Select(x => x.Price.ToString("N0")).Aggregate((x, y) => x + "|" + y);
+}
+
+<input asp-for="Id" type="hidden" />
+<input asp-for="Type" type="hidden" />
+<div class="slider-bar-header">
+  <strong class="slider-bar-name">@Model.Name</strong>
+  <span class="pull-right">
+    <strong class="text-primary slider-bar-lg-text"><span id="slider_price_@(Model.Id)">0</span> @(Model.Values[0].Currency.ToString())</strong>/Tháng
+</span>
+</div>
+<div class="slider-bar">
+  <input asp-for="SelectedValue" type="text" class="slider"
+         data-provide="slider" data-slider-ticks="[@sliderTicks]"
+         data-slider-ticks-labels='[@sliderTickLabels]'
+         data-slider-min="1"
+         data-slider-max="@(Model.Values.Count - 1)"
+         data-slider-step="1"
+         data-slider-value="@Model.SelectedValue"
+         data-slider-tooltip="hide" 
+         data-prices="@sliderTickPrices"
+         data-price-element="#slider_price_@(Model.Id)"
+         data-group-type="@Model.Type.ToString()" />
+</div>
+

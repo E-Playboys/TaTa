@@ -1,0 +1,108 @@
+﻿@model Tata.Models.PaymentModels.PaymentCartViewModel
+
+<div class="table-box">
+  <table id="shopping-cart-table" class="shopping-cart-table table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th></th>
+        <th class="td-name">Gói dịch vụ</th>
+        <th></th>
+        <th class="td-price">Giá cơ bản</th>
+        <th class="td-qty">Thời hạn (tháng)</th>
+        <th class="td-total">Thành tiền</th>
+        <th class="td-remove"></th>
+      </tr>
+    </thead>
+    <tbody>
+      @foreach (var item in Model.Items)
+      {
+          <tr>
+            <td class="td-images">
+              <a href="shop-product-view.html" class="product-image">
+                <img class="replace-2x" src="content/img/product-1.jpg" alt="" title="" width="70" height="70">
+              </a>
+            </td>
+            <td class="td-name">
+              <h2 class="product-name">
+                <a href="shop-product-view.html">@item.Name</a>
+              </h2>
+              <br />
+              @item.Description
+            </td>
+            <td class="td-edit">
+              <a href="@Url.Action("Vps", "ConfigureProduct", new { productId = item.ProductId })" class="edit"><i class="fa fa-pencil"></i> Edit</a>
+            </td>
+            <td class="td-price">
+              <div class="price">@item.Price.Price.ToString("N0") @item.Price.Currency.ToString()</div>
+            </td>
+            <td class="td-qty">
+              <input class="form-control" type="text" value="@item.Quantity" data-product-id="@item.ProductId">
+            </td>
+            <td class="td-total">
+              <div class="price">@((item.Price.Price*item.Quantity).ToString("N0")) @item.Price.Currency.ToString()</div>
+            </td>
+            <td class="td-remove">
+              <a href="#" class="product-remove">
+                <svg x="0" y="0" width="16px" height="16px" viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve">
+                <g>
+                <path fill="#7f7f7f" d="M6,13c0.553,0,1-0.447,1-1V7c0-0.553-0.447-1-1-1S5,6.447,5,7v5C5,12.553,5.447,13,6,13z"></path>
+                <path fill="#7f7f7f" d="M10,13c0.553,0,1-0.447,1-1V7c0-0.553-0.447-1-1-1S9,6.447,9,7v5C9,12.553,9.447,13,10,13z"></path>
+                <path fill="#7f7f7f" d="M14,3h-1V1c0-0.552-0.447-1-1-1H4C3.448,0,3,0.448,3,1v2H2C1.447,3,1,3.447,1,4s0.447,1,1,1
+						c0,0.273,0,8.727,0,9c0,1.104,0.896,2,2,2h8c1.104,0,2-0.896,2-2c0-0.273,0-8.727,0-9c0.553,0,1-0.447,1-1S14.553,3,14,3z M5,2h6v1
+						H5V2z M12,14H4V5h8V14z"></path>
+                    </g>
+                  </svg>
+              </a><!-- .product-remove -->
+            </td>
+          </tr>
+
+        foreach (var subItem in item.SubItems)
+        {
+              <tr>
+                <td class="td-images">
+                  <a href="shop-product-view.html" class="product-image">
+                    <img class="replace-2x" src="content/img/product-1.jpg" alt="" title="" width="70" height="70">
+                  </a>
+                </td>
+                <td class="td-name">
+                  <h2 class="product-name">
+                    <a href="shop-product-view.html">@subItem.Name</a>
+                  </h2>
+                  <br />
+                  @subItem.Description
+                </td>
+                <td class="td-edit"></td>
+                <td class="td-price">
+                  <div class="price">@subItem.Price.Price.ToString("N0") @subItem.Price.Currency.ToString()</div>
+                </td>
+                <td class="td-qty">
+                  <label>@subItem.Quantity</label>
+                </td>
+                <td class="td-total">
+                  <div class="price">@((subItem.Price.Price * subItem.Quantity).ToString("N0")) @subItem.Price.Currency.ToString()</div>
+                </td>
+                <td class="td-remove"></td>
+              </tr>
+        }
+      }
+    </tbody>
+  </table><!-- .shopping-cart-table -->
+
+  <table class="pull-right">
+    <tbody>
+      <tr>
+        <td>Tổng</td>
+        <td><span class="price">@Model.NetTotal.ToString("N0") @Model.Currency.ToString()</span></td>
+      </tr>
+      <tr>
+        <td>VAT (10%)</td>
+        <td><span class="price">@Model.Vat.ToString("N0") @Model.Currency.ToString()</span></td>
+      </tr>
+      <tr class="tr-total">
+        <td>Tổng sau VAT</td>
+        <td><span class="price">@Model.GrossTotal.ToString("N0") @Model.Currency.ToString()</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
