@@ -1,4 +1,5 @@
 ﻿@using Tata.Entities.Enums
+@using Tata.Areas.Backend.Helpers
 @model IEnumerable<ProductModel>
 
 @{
@@ -59,7 +60,7 @@
                       @(model.Description)
                     </td>
                     <td>
-                      <span class="label label-@GetStatusClass(model.Status)">@(model.Status.ToString())</span>
+                      <span class="label label-@Html.GetStatusClass(model.Status.ToString())">@(model.Status.ToString())</span>
                     </td>
                     <td class="text-right">
                       <div class="btn-group">
@@ -86,20 +87,6 @@
 
 
 </div>
-
-@functions{
-    public string GetStatusClass(ProductStatus status)
-    {
-      if (status == ProductStatus.Enable)
-        return "primary";
-
-      if (status == ProductStatus.LowStock)
-        return "warning";
-
-      return "danger";
-    }
-}
-
 
 @section Styles {
   

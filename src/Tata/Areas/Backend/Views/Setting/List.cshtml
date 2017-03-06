@@ -63,12 +63,12 @@
                       @(setting.TypeValue)
                     </td>
                     <td width="30%">
-                      @(setting.Value)
+                      @(Html.Raw(setting.Value))
                     </td>
                     <td class="text-right">
                       <div class="btn-group">
-                        <a class="btn-white btn btn-xs" href="@Url.Action("Details", "Product", new {id = @setting.Id})">View</a>
-                        <a class="btn-white btn btn-xs" href="@Url.Action("Details", "Product", new {id = @setting.Id})">Edit</a>
+                        <a class="btn-white btn btn-xs" href="@Url.Action("Details", "Setting", new {id = @setting.Id})">View</a>
+                        <a class="btn-white btn btn-xs" href="@Url.Action("Details", "Setting", new {id = @setting.Id})">Edit</a>
                       </div>
                     </td>
                   </tr>
