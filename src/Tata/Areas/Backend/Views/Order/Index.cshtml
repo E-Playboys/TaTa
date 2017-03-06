@@ -1,4 +1,5 @@
 ﻿@using Tata.Entities.Enums
+@using Tata.Areas.Backend.Helpers
 @model IEnumerable<OrderModel>
 
 @{
@@ -73,7 +74,7 @@
                       </ul>
                     </td>
                     <td>
-                      <span class="label label-@GetStatusClass(model.OrderStatus)" data-toggle="modal" data-target="#categoryModal_@(model.Id)">@(model.OrderStatus.ToString())</span>
+                      <span class="label label-@Html.GetStatusClass(model.OrderStatus.ToString())" data-toggle="modal" data-target="#categoryModal_@(model.Id)">@(model.OrderStatus.ToString())</span>
 
                       <div class="modal inmodal" id="categoryModal_@(model.Id)" tabindex="-1" role="dialog" aria-hidden="true">
                         <div class="modal-dialog">
@@ -115,19 +116,7 @@
       </div>
     </div>
   </div>
-
-
 </div>
-
-@functions{
-    public string GetStatusClass(OrderStatus status)
-    {
-      if (status == OrderStatus.Paid)
-        return "primary";
-
-      return "danger";
-    }
-}
 
 
 @section Styles {
