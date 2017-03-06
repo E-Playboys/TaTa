@@ -508,6 +508,7 @@ function loginRegister() {
     });
 
     form.css('height', height)
+    $('.login-register').css('min-height', height)
 
     $('.switch-form').click(function (e) {
         var button = $(this);
@@ -517,9 +518,15 @@ function loginRegister() {
         if (button.hasClass('forgot')) {
             $('.form-content').removeClass('hidden');
             $('.register-form').closest('.form-content').addClass('hidden');
+            $('.login-form').closest('.form-content').addClass('hidden');
         } else if (button.hasClass('sing-up')) {
             $('.form-content').removeClass('hidden');
             $('.forgot-form').closest('.form-content').addClass('hidden');
+            $('.login-form').closest('.form-content').addClass('hidden');
+        } else {
+            $('.form-content').removeClass('hidden');
+            $('.forgot-form').closest('.form-content').addClass('hidden');
+            $('.register-form').closest('.form-content').addClass('hidden');
         }
 
         $('.login-register .rotation').toggleClass('hover');
@@ -1051,34 +1058,38 @@ function isotopFilter() {
                 filter: selector,
                 layoutMode: 'fitRows'
             });
-            buttonBox.find('.dropdown-toggle').html(filterBox.find('.filter-buttons .active').text() + '<span class="caret"></span>')
         }
     
-        buttonBox.find('a').on('click', function(e){
-            var selector = $(this).attr('data-filter');
-            e.preventDefault();
-            
-            if (!$(this).hasClass('active')) {
-                buttonBox.find('a').removeClass('active');
-                $(this).addClass('active');
-                buttonBox.find('.dropdown-toggle').html($(this).text() + '<span class="caret"></span>');
-        
-                if (filterBox.hasClass('accordions-filter')) {
-                    filterElems.children().not(selector)
-                        .animate({ height : 0 })
-                        .addClass('e-hidden');
-                    filterElems.children(selector)
-                        .animate({ height : '100%' })
-                        .removeClass('e-hidden');
-                } else {
-                    filterElems.isotope({
-                        filter: selector,
-                        layoutMode: 'fitRows'
-                    });
-                }
-            }
+        buttonBox.find('a').on('click', function(e) {
+            filter(e, $(this), buttonBox, filterBox, filterElems);
         });
+
+        filter(null, $(buttonBox.find('a')[0]), buttonBox, filterBox, filterElems);
   });
+
+  function filter(e, self, buttonBox, filterBox, filterElems) {
+      var selector = self.attr('data-filter');
+        if(e) e.preventDefault();
+
+        if (!self.hasClass('active')) {
+            buttonBox.find('a').removeClass('active');
+            self.addClass('active');
+
+            if (filterBox.hasClass('accordions-filter')) {
+                filterElems.children().not(selector)
+                    .animate({ height: 0 })
+                    .addClass('e-hidden');
+                filterElems.children(selector)
+                    .animate({ height: '100%' })
+                    .removeClass('e-hidden');
+            } else {
+                filterElems.isotope({
+                    filter: selector,
+                    layoutMode: 'fitRows'
+                });
+            }
+        }
+    }
 }
 //Portfolio Filter End
 

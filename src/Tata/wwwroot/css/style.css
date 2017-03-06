@@ -5006,6 +5006,10 @@ a.edit i:before {
   color: #fff;
 }
 
+.title-box.title-red .title {
+  color: #c10841;
+}
+
 /* line 92, ../sass/_main.scss */
 .title-box.no-margin,
 .no-margin {
@@ -5018,10 +5022,21 @@ a.edit i:before {
   border-color: rgba(255, 255, 255, 0.3);
 }
 
+
+.title-box.title-red,
+.page-header.white {
+  border-color: rgba(193, 8, 65, 0.3);
+}
+
 /* line 100, ../sass/_main.scss */
 .title-box.title-white:before,
 .page-header.white .container:before {
   background: #fff;
+}
+
+.title-box.title-red:before,
+.page-header.white .container:before {
+  background: #c10841;
 }
 
 /******************************************************************************
@@ -8373,7 +8388,6 @@ a.edit i:before {
   font-size: 12px;
   line-height: 18px;
   margin: 0 auto 40px;
-  max-width: 350px;
   padding: 27px 30px 30px;
 }
 /* line 1335, ../sass/_shop.scss */
