@@ -8,5 +8,7 @@ namespace Tata.Helpers
     public class SessionConstants
     {
         public const string ORDER_ITEMS_SESSION_MODEL_NAME = "OrderItems";
+
+        public const string PAYMENT_SESSION_MODEL_NAME = "Payment";
     }
 }

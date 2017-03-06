@@ -107,7 +107,7 @@
           <div class="car-bottom-box bg total">
             
             <div>
-              <a href="/checkout.html" class="btn checkout btn-default btn-lg">Thanh toán</a>
+              <a href="@Url.Action("Account", "Payment")" class="btn checkout btn-default btn-lg">Tiếp Tục</a>
             </div>
             <a href="" class="multiple no-border">Thanh toán với đa dạng cách thức</a>
           </div>
@@ -135,7 +135,7 @@
             });
 
           $.ajax({
-            url: '@Url.Action("UpdatePaymentCart", "Payment")',
+            url: '@Url.Action("UpdateCart", "Payment")',
             type: "GET",
             data: { data: data },
             success: function(data) {

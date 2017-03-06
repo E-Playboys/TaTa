@@ -1,17 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Tata.Entities;
+using Tata.Entities.Enums;
 using Tata.Helpers;
+using Tata.Models.AccountViewModels;
 using Tata.Models.PaymentModels;
 using Tata.Models.SessionModels;
+using TaTa.DataAccess;
+using TaTa.DataAccess.Entities;
 
 namespace Tata.Controllers
 {
     public class PaymentController : BaseController
     {
-        public IActionResult PaymentCart()
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
+        private readonly IUowProvider _uowProvider;
+
+        public PaymentController(UserManager<User> userManager, SignInManager<User> signInManager, IUowProvider uowProvider)
+        {
+            _userManager = userManager;
+            _signInManager = signInManager;
+            _uowProvider = uowProvider;
+        }
+
+        #region Cart
+
+        public IActionResult Cart()
         {
             var orderItemsSessionModel = HttpContext.Session.Get<List<OrderItemSessionModel>>(SessionConstants.ORDER_ITEMS_SESSION_MODEL_NAME);
             if (orderItemsSessionModel == null)
@@ -22,7 +42,7 @@ namespace Tata.Controllers
             return View(viewModel);
         }
 
-        public IActionResult UpdatePaymentCart(string data)
+        public IActionResult UpdateCart(string data)
         {
             var orderItemsSessionModel = HttpContext.Session.Get<List<OrderItemSessionModel>>(SessionConstants.ORDER_ITEMS_SESSION_MODEL_NAME);
             if (orderItemsSessionModel == null)
@@ -42,6 +62,8 @@ namespace Tata.Controllers
 
             var viewModel = PopulateViewModel(orderItemsSessionModel, quantityData);
 
+            HttpContext.Session.Set(SessionConstants.ORDER_ITEMS_SESSION_MODEL_NAME, orderItemsSessionModel);
+
             return PartialView("_CartItem", viewModel);
         }
 
@@ -52,7 +74,9 @@ namespace Tata.Controllers
 
             foreach (var orderItemSessionModel in orderItemsSessionModel)
             {
-                var quantity = quantityData?.Single(x => x.Key == orderItemSessionModel.Product.Id).Value ?? 1;
+                var quantity = quantityData?.Single(x => x.Key == orderItemSessionModel.Product.Id).Value ?? orderItemSessionModel.Quantity;
+                orderItemSessionModel.Quantity = quantity;
+
                 var item = new PaymentCartItem
                 {
                     ProductId = orderItemSessionModel.Product.Id,
@@ -90,7 +114,174 @@ namespace Tata.Controllers
             viewModel.NetTotal = netTotal;
             viewModel.Currency = orderItemsSessionModel[0].Product.Price.Currency;
 
+            var paymentSessionModel = new PaymentSessionModel
+            {
+                GrossTotal = grossTotal,
+                Vat = vat,
+                NetTotal = netTotal,
+                Currency = viewModel.Currency
+            };
+
+            HttpContext.Session.Set(SessionConstants.PAYMENT_SESSION_MODEL_NAME, paymentSessionModel);
+
             return viewModel;
         }
+
+        #endregion
+
+        #region Login
+
+        public IActionResult Account()
+        {
+            var paymentSessionModel = HttpContext.Session.Get<PaymentSessionModel>(SessionConstants.PAYMENT_SESSION_MODEL_NAME);
+            if (paymentSessionModel == null)
+                return RedirectToActionPermanent("Index", "Home");
+
+            var viewModel = new PaymentAccountViewModel
+            {
+                GrossTotal = paymentSessionModel.GrossTotal,
+                Vat = paymentSessionModel.Vat,
+                NetTotal = paymentSessionModel.NetTotal,
+                Currency = paymentSessionModel.Currency
+            };
+
+            return View(viewModel);
+        }
+
+        public async Task<IActionResult> Login(LoginViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return new BadRequestResult();
+
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            var result = await _signInManager.PasswordSignInAsync(user.UserName, model.Password, model.RememberMe, lockoutOnFailure: false);
+
+            if (result.Succeeded)
+            {
+                return new JsonResult(new { success = true });
+            }
+
+            return new JsonResult(new { success = false, error = "Username or password is incorrect" });
+        }
+
+        public async Task<IActionResult> Register(RegisterViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return new BadRequestResult();
+
+            var user = new User { UserName = model.UserName, Email = model.Email, EmailConfirmed = true, FullName = model.FullName, Address = model.Address, PhoneNumber = model.PhoneNumber };
+            var result = await _userManager.CreateAsync(user, model.Password);
+            if (result.Succeeded)
+            {
+                // By default all user is standard user
+                await _userManager.AddToRoleAsync(user, UserRoles.Standard);
+                await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, UserRoles.Standard));
+
+                // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=532713
+                // Send an email with this link
+                //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                //var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
+                //await _emailSender.SendEmailAsync(model.Email, "Confirm your account",
+                //    $"Please confirm your account by clicking this link: <a href='{callbackUrl}'>link</a>");
+                await _signInManager.SignInAsync(user, isPersistent: false);
+                return new JsonResult(new { success = true });
+            }
+
+            return new JsonResult(new { success = false, error = GetErrors(result) });
+        }
+
+        private string GetErrors(IdentityResult result)
+        {
+            var errorString = "";
+            foreach (var error in result.Errors)
+            {
+                errorString += error.Description;
+            }
+
+            return errorString;
+        }
+
+        #endregion
+
+        #region Payment Selection
+
+        [HttpGet]
+        public async Task<IActionResult> Selection()
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+
+            var viewModel = new PaymentSelectionViewModel
+            {
+                PhoneNumber = user.PhoneNumber,
+                Email = user.Email,
+                ClientName = user.FullName
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Selection(PaymentSelectionViewModel model)
+        {
+            var orderItemsSessionModel = HttpContext.Session.Get<List<OrderItemSessionModel>>(SessionConstants.ORDER_ITEMS_SESSION_MODEL_NAME);
+            var paymentSessionModel = HttpContext.Session.Get<PaymentSessionModel>(SessionConstants.PAYMENT_SESSION_MODEL_NAME);
+
+            if (paymentSessionModel == null || orderItemsSessionModel == null)
+                return RedirectToActionPermanent("Index", "Home");
+
+            using (IUnitOfWork uow = _uowProvider.CreateUnitOfWork())
+            {
+                var orderRepo = uow.GetRepository<Order>();
+
+                var order = new Order
+                {
+                    PaymentType = model.PaymentType,
+                    GrossTotal = paymentSessionModel.GrossTotal,
+                    NetTotal = paymentSessionModel.NetTotal,
+                    OrderItems = new List<OrderItem>()
+                };
+
+                foreach (var item in orderItemsSessionModel)
+                {
+                    var orderItem = new OrderItem
+                    {
+                        ProductId = item.Product.Id,
+                        Currency = item.Product.Price.Currency,
+                        Price = item.Product.Price.Price,
+                        Quantity = item.Quantity,
+                        ExtraProperties = new List<ProductProperty>()
+                    };
+
+                    foreach (var extraProperty in item.Properties)
+                    {
+                        var productProperty = new ProductProperty
+                        {
+                            Currency = extraProperty.Price.Currency,
+                            Price = extraProperty.Price.Price,
+                            Description = extraProperty.Description,
+                            Name = extraProperty.Name,
+                            Type = extraProperty.Type,
+                            Value = extraProperty.Value,
+                            Unit = extraProperty.Unit
+                        };
+
+                        orderItem.ExtraProperties.Add(productProperty);
+                    }
+
+                    order.OrderItems.Add(orderItem);
+                }
+
+                orderRepo.Add(order);
+                await uow.SaveChangesAsync();
+            }
+
+            paymentSessionModel.PaymentType = model.PaymentType;
+
+            HttpContext.Session.Set(SessionConstants.PAYMENT_SESSION_MODEL_NAME, paymentSessionModel);
+
+            return View(model);
+        }
+
+        #endregion
     }
 }

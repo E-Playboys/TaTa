@@ -1,8 +1,8 @@
-﻿@model dynamic
+﻿@model Tata.Models.PaymentModels.PaymentAccountViewModel
 
 @{
-  ViewBag.Title = "Đăng nhập tài khoản";
-  Layout = "_Layout";
+    ViewBag.Title = "Đăng nhập tài khoản";
+    Layout = "_Layout";
 }
 
 
@@ -68,22 +68,18 @@
         <h5 class="text-left text-error">TT5627HCM</h5>
         <table class="col-sm-12">
           <tbody>
-          <tr>
-            <td class="text-left">Tổng tiền</td>
-            <td><span class="price">31,000,000 VND</span></td>
-          </tr>
-          <tr>
-            <td class="text-left">Giảm giá</td>
-            <td><span class="price">-1,000,000 VND</span></td>
-          </tr>
-          <tr>
-            <td class="text-left">VAT</td>
-            <td><span class="price">3,000,000 VND</span></td>
-          </tr>
-          <tr class="tr-total">
-            <td class="text-left">Thành tiền</td>
-            <td><span class="price text-error">33,000,000 VND</span></td>
-          </tr>
+            <tr>
+              <td class="text-left">Tổng tiền</td>
+              <td><span class="price">@Model.NetTotal.ToString("N0") @Model.Currency.ToString()</span></td>
+            </tr>
+            <tr>
+              <td class="text-left">VAT</td>
+              <td><span class="price">@Model.Vat.ToString("N0") @Model.Currency.ToString()</span></td>
+            </tr>
+            <tr class="tr-total">
+              <td class="text-left">Thành tiền</td>
+              <td><span class="price text-error">@Model.GrossTotal.ToString("N0") @Model.Currency.ToString()</span></td>
+            </tr>
           </tbody>
         </table>
         <div class="clearfix"></div>
@@ -100,22 +96,16 @@
 
                 <div class="form-group">
                   <label>Email Address <span class="required">*</span></label>
-                  <input class="form-control" type="email" name="Email Login" required>
+                  <input class="form-control" type="email" id="Login_Email" required>
                 </div>
 
                 <div class="form-group">
                   <label>Password: <span class="required">*</span></label>
-                  <input class="form-control" type="password" name="Password Login" required>
-                </div>
-
-                <div class="form-group">
-                  <label class="checkbox">
-                    <input type="checkbox"> Remember password
-                  </label>
+                  <input class="form-control" type="password" id="Login_Password" required>
                 </div>
 
                 <div class="buttons-box clearfix">
-                  <button class="btn btn-default">Login</button>
+                  <button id="btnLogin" class="btn btn-default">Login</button>
                   <button type="button" class="btn btn-info"><i class="fa fa-twitter"></i> Login with Twitter</button>
                   <a href="#" class="switch-form forgot">Forgot Your Password?</a>
                   <span class="required"><b>*</b> Required Field</span>
@@ -132,32 +122,41 @@
 
                 <div class="form-group">
                   <label>Full name: <span class="required">*</span></label>
-                  <input class="form-control" type="text" name="Full Name Register" required>
-                </div>
+                  <input class="form-control" type="text" id="Register_FullName" required>
+                </div>     
 
                 <div class="form-group">
                   <label>Username: <span class="required">*</span></label>
-                  <input class="form-control" type="text" name="Username Register" required>
+                  <input class="form-control" type="text" id="Register_Username" required>
                 </div>
 
                 <div class="form-group">
                   <label>Password: <span class="required">*</span></label>
-                  <input class="form-control" type="password" name="Password Register" required>
+                  <input class="form-control" type="password" id="Register_Password" required>
+                </div>
+              
+                <div class="form-group">
+                  <label>Confirm Password: <span class="required">*</span></label>
+                  <input class="form-control" type="password" id="Register_ConfirmPassword" required>
                 </div>
 
                 <div class="form-group">
                   <label>Email Address <span class="required">*</span></label>
-                  <input class="form-control" type="email" name="Email Register" required>
+                  <input class="form-control" type="email" id="Register_Email" required>
                 </div>
-
+              
                 <div class="form-group">
-                  <label class="checkbox">
-                    <input type="checkbox"> Sign Up for Newsletter
-                  </label>
+                  <label>Address <span class="required">*</span></label>
+                  <input class="form-control" type="email" id="Register_Address" required>
+                </div>
+              
+                <div class="form-group">
+                  <label>Phone Number <span class="required">*</span></label>
+                  <input class="form-control" type="email" id="Register_PhoneNumber" required>
                 </div>
 
                 <div class="buttons-box clearfix">
-                  <button class="btn btn-default">Create my account</button>
+                  <button id="btnRegister" class="btn btn-default">Create my account</button>
                   <span class="required"><b>*</b> Required Field</span>
                 </div>
               </form><!-- .form-box -->
@@ -188,3 +187,68 @@
     </div>
   </div>
 </div>
+
+@section scripts
+{
+  <script>
+    $(document).ready(function () {
+      $('#btnLogin').click(function (e) {
+        var email = $('#Login_Email').val();
+        var password = $('#Login_Password').val();
+
+        $.ajax({
+          url: '@Url.Action("Login", "Payment")',
+          type: "POST",
+          data: { email: email, password: password },
+          success: function (response) {
+            debugger;
+            if (!response.success) {
+              alert(response.error);
+            } else {
+              window.location.href = "/Payment/Selection";
+            }
+          },
+          error: function (xhr) {
+            alert(xhr.responseText);
+          }
+        });
+      });
+
+      $('#btnRegister').click(function (e) {
+        var email = $('#Register_Email').val();
+        var password = $('#Register_Password').val();
+        var fullName = $('#Register_FullName').val();
+        var username = $('#Register_Username').val();
+        var address = $('#Register_Address').val();
+        var phoneNumber = $('#Register_PhoneNumber').val();
+        var confirmPassword = $('#Register_ConfirmPassword').val();
+
+        var data = {
+          email: email,
+          password: password,
+          fullName: fullName,
+          username: username,
+          address: address,
+          phoneNumber: phoneNumber,
+          confirmPassword: confirmPassword
+        };
+
+        $.ajax({
+          url: '@Url.Action("Register", "Payment")',
+          type: "POST",
+          data: data,
+          success: function (response) {
+            if (!response.success) {
+              alert(response.error);
+            } else {
+              window.location.href = "/Payment/Selection";
+            }
+          },
+          error: function (xhr) {
+            alert(xhr.responseText);
+          }
+        });
+      });
+    });
+  </script>
+}

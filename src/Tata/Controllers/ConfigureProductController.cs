@@ -113,6 +113,7 @@ namespace Tata.Controllers
                             Name = selectedValue.Name,
                             Price = new ProductPriceSessionModel { Price = selectedValue.Price, Currency = selectedValue.Currency },
                             Value = selectedValue.Value,
+                            Description = selectedValue.Description,
                             Unit = selectedValue.Unit
                         };
 
@@ -123,7 +124,7 @@ namespace Tata.Controllers
 
             HttpContext.Session.Set(SessionConstants.ORDER_ITEMS_SESSION_MODEL_NAME, orderItemsSessionModel);
 
-            return RedirectToAction("PaymentCart", "Payment");
+            return RedirectToAction("Cart", "Payment");
         }
 
         private async Task LoadVpsPropertyGroups(ConfigureVpsViewModel viewModel, int productId)

@@ -12,6 +12,8 @@ namespace Tata.Models.SessionModels
     {
         public ProductSessionModel Product { get; set; }
 
+        public int Quantity { get; set; } = 1;
+
         private List<PropertySessionModel> _properties;
         public List<PropertySessionModel> Properties
         {
@@ -43,6 +45,7 @@ namespace Tata.Models.SessionModels
         public ProductPropertyGroupType Type { get; set; }
         public string Name { get; set; }
         public string Value { get; set; }
+        public string Description { get; set; }
         public ProductPriceSessionModel Price { get; set; }
         public string Unit { get; set; }
     }
