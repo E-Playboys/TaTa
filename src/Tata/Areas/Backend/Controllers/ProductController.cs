@@ -12,6 +12,7 @@ using Tata.Entities.Enums;
 using TaTa.DataAccess;
 using Tata.Helpers;
 using Microsoft.AspNetCore.Authorization;
+using Tata.Models.ProductModels;
 
 namespace Tata.Areas.Backend.Controllers
 {
@@ -58,7 +59,7 @@ namespace Tata.Areas.Backend.Controllers
                     foreach (var property in product.Properties)
                     {
                         if (group.Type == ProductPropertyGroupType.Ram
-                            || group.Type == ProductPropertyGroupType.Strorage
+                            || group.Type == ProductPropertyGroupType.Storage
                             || group.Type == ProductPropertyGroupType.Cpu
                             || group.Type == ProductPropertyGroupType.Ip)
                         {
@@ -118,7 +119,7 @@ namespace Tata.Areas.Backend.Controllers
 
                     ProductPropertyGroupValue selectedValue;
                     if (groupModel.Type == ProductPropertyGroupType.Ram
-                        || groupModel.Type == ProductPropertyGroupType.Strorage
+                        || groupModel.Type == ProductPropertyGroupType.Storage
                         || groupModel.Type == ProductPropertyGroupType.Cpu
                         || groupModel.Type == ProductPropertyGroupType.Ip)
                     {

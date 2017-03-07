@@ -135,25 +135,5 @@ namespace Tata.Controllers
         {
             return View();
         }
-
-        public IActionResult PaymentCart()
-        {
-            return View();
-        }
-
-        public IActionResult PaymentLogin()
-        {
-            return View();
-        }
-
-        public IActionResult PaymentType()
-        {
-            return View();
-        }
-
-        public IActionResult ExtendProduct()
-        {
-            return View();
-        }
     }
 }

@@ -10,7 +10,7 @@ namespace Tata.Entities.Enums
         OperatingSystem = 1,
         AdministrationService,
         Ram,
-        Strorage,
+        Storage,
         Ip,
         ControlPanel,
         EmailService,

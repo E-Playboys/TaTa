@@ -1,0 +1,152 @@
+﻿@model Tata.Models.PaymentModels.PaymentCartViewModel
+
+@{
+    ViewBag.Title = "Giỏ hàng";
+    Layout = "_Layout";
+}
+
+
+<header class="page-header">
+  <div class="container">
+    <h1 class="title">Kiểm tra giỏ hàng</h1>
+  </div>
+</header>
+
+<div class="container">
+  <div class="bottom-padding">
+    <div class="row steps steps-apart">
+      <div class="col-sm-3 col-md-3">
+        <div class="step text-center border-info bg-info white">
+          <div class="step-wrapper">
+            <span class="livicon" data-n="shopping-cart" data-c="#fff" data-s="64" data-hc="#fff"></span>
+            <div class="title-box text-center title-white">
+              <h4 class="title">Kiểm tra giỏ hàng</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-3 col-md-3">
+        <div class="step text-center border-error">
+          <div class="step-wrapper">
+            <span class="livicon" data-n="user" data-s="62" data-c="#c10841" data-hc="#d70a49"></span>
+            <div class="title-box text-center title-red">
+              <h4 class="title">Đăng nhập tài khoản</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="col-sm-3 col-md-3">
+        <div class="step text-center border-error text-error">
+          <div class="step-wrapper">
+            <span class="livicon" data-n="credit-card" data-s="62" data-c="#c10841" data-hc="#d70a49"></span>
+            <div class="title-box text-center title-red">
+              <h4 class="title">Thanh toán</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="col-sm-3 col-md-3">
+        <div class="step text-center border-error text-error">
+          <div class="step-wrapper">
+            <span class="livicon" data-n="check" data-s="62" data-c="#c10841" data-hc="#d70a49"></span>
+            <div class="title-box text-center title-red">
+              <h4 class="title">Hoàn tất</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <article class="content col-sm-12 col-md-12">
+      <table class="shopping-cart-table shopping-cart-table-button table">
+        <tbody>
+          <tr>
+            <td class="action no-border">
+              <a href="#"><i class="fa fa-angle-left"></i> Tiếp tục mua</a>
+              <a href="#" class="update-cart"><i class="fa fa-rotate-right"></i> Cập nhật giỏ hàng</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div id="cart_items_wrapper">
+        @Html.Partial("_CartItem", Model)
+      </div>
+
+      <table class="shopping-cart-table shopping-cart-table-button table">
+        <tbody>
+          <tr>
+            <td class="action no-border">
+              <a href="#"><i class="fa fa-angle-left"></i> Tiếp tục mua</a>
+              <a href="#" class="update-cart"><i class="fa fa-rotate-right"></i> Cập nhật giỏ hàng</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div id="car-bottom" class="row">
+        <div class="col-sm-12 col-md-4">
+        </div>
+
+        <div class="col-sm-12 col-md-4">
+          <div class="car-bottom-box bg">
+            <h5>Mã giảm giá</h5>
+            <p>Nhập mã giảm giá nếu có</p>
+            <input class="form-control" type="text" placeholder="Chúng tôi đang cập nhật chương trình này">
+            <button class="btn btn-default">Sử dụng</button>
+          </div>
+        </div>
+
+        <div class="col-sm-12 col-md-4">
+          <div class="car-bottom-box bg total">
+            
+            <div>
+              <a href="@Url.Action("Account", "Payment")" class="btn checkout btn-default btn-lg">Tiếp Tục</a>
+            </div>
+            <a href="" class="multiple no-border">Thanh toán với đa dạng cách thức</a>
+          </div>
+        </div>
+
+      </div>
+    </article><!-- .content -->
+  </div>
+</div>
+
+@section scripts
+{
+  <script>
+  $(document)
+    .ready(function() {
+      $('.update-cart')
+        .click(function (e) {
+          var data = '';
+          $('input[data-product-id]')
+            .each(function(index, item) {
+              var productId = parseInt($(item).attr('data-product-id'));
+              var quantity = $(item).val();
+
+              data += productId + '|' + quantity + ';';
+            });
+
+          $.ajax({
+            url: '@Url.Action("UpdateCart", "Payment")',
+            type: "GET",
+            data: { data: data },
+            success: function(data) {
+              // here comes your response after calling the server
+              $('#cart_items_wrapper').html(data);
+            },
+            error: function(obj) {
+              alert('Something happened');
+            }
+          });
+        });
+      });
+  </script>
+}

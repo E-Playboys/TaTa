@@ -28,9 +28,7 @@ namespace Tata.Areas.Backend.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var orders = await GetOrdersAsync(0, 10, x => x.Include(m => m.Billing)
-                                                           .Include(m => m.OrderItems)
-                                                           .ThenInclude(m => m.ProductPrice)
+            var orders = await GetOrdersAsync(0, 10, x => x.Include(m => m.OrderItems)
                                                            .ThenInclude(m => m.Product));
 
             var models = Mapper.Instance.Map<IEnumerable<Order>, IEnumerable<OrderModel>>(orders);

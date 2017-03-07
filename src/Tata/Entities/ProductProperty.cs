@@ -16,7 +16,7 @@ namespace Tata.Entities
         public bool IsHighlight { get; set; }
         public bool IsDisabled { get; set; }
 
-        public int ProductId { get; set; }
+        public int? ProductId { get; set; }
         public Product Product { get; set; }
     }
 }

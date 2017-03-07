@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Tata.Areas.Backend.Models.Product
+﻿namespace Tata.Models.ProductModels
 {
     public class ProductPropertyModel
     {
