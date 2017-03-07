@@ -8,9 +8,10 @@ using Tata.Data;
 namespace Tata.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170306091943_Update_Order_2")]
+    partial class Update_Order_2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.0-rtm-22752")
@@ -425,7 +426,7 @@ namespace Tata.Migrations
 
                     b.Property<int>("Priority");
 
-                    b.Property<int?>("ProductId");
+                    b.Property<int>("ProductId");
 
                     b.Property<int>("Type");
 
@@ -689,7 +690,8 @@ namespace Tata.Migrations
 
                     b.HasOne("Tata.Entities.Product", "Product")
                         .WithMany("Properties")
-                        .HasForeignKey("ProductId");
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Tata.Entities.ProductPropertyGroup", b =>

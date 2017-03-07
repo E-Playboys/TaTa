@@ -5,9 +5,11 @@ using System.Threading.Tasks;
 
 namespace Tata.Entities.Enums
 {
-    public enum Currency
+    public enum PaymentType
     {
-        VND = 1,
-        USD
+        Card = 1,
+        Transfer,
+        Office,
+        Home
     }
 }

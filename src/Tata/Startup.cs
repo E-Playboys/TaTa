@@ -17,6 +17,7 @@ using TaTa.DataAccess.Uow;
 using TaTa.DataAccess.Entities;
 using Microsoft.AspNetCore.Http;
 using Tata.Areas.Backend.Models.Setting;
+using Tata.Models.ProductModels;
 
 namespace Tata
 {
@@ -87,6 +88,10 @@ namespace Tata
                 //options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
             });
 
+            // Add session
+            services.AddDistributedMemoryCache();
+            services.AddSession();
+
             // Add application services.
             services.AddTransient<IUowProvider, UowProvider>();
             services.AddTransient<IEmailSender, AuthMessageSender>();
@@ -128,6 +133,8 @@ namespace Tata
                 AutomaticAuthenticate = true,
                 AutomaticChallenge = true
             });
+
+            app.UseSession();
 
             app.UseMvc(routes =>
             {

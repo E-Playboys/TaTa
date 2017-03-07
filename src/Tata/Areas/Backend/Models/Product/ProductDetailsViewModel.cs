@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Tata.Entities.Enums;
+using Tata.Models.ProductModels;
 
 namespace Tata.Areas.Backend.Models.Product
 {
