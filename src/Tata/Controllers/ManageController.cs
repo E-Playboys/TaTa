@@ -55,13 +55,12 @@ namespace Tata.Controllers
             {
                 return View("Error");
             }
-            var model = new IndexViewModel
+            var model = new UserInfoViewModel
             {
-                HasPassword = await _userManager.HasPasswordAsync(user),
                 PhoneNumber = await _userManager.GetPhoneNumberAsync(user),
                 TwoFactor = await _userManager.GetTwoFactorEnabledAsync(user),
-                Logins = await _userManager.GetLoginsAsync(user),
-                BrowserRemembered = await _signInManager.IsTwoFactorClientRememberedAsync(user)
+                EmailAddress = await _userManager.GetEmailAsync(user),
+                Address = ""
             };
             return View(model);
         }
