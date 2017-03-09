@@ -53,9 +53,19 @@ namespace Tata.Areas.Backend.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Details(SettingModel model)
+        public IActionResult Details(SettingModel model)
         {
-            return View();
+            using (IUnitOfWork uow = _uowProvider.CreateUnitOfWork())
+            {
+                if (ModelState.IsValid)
+                {
+                    var settingRepo = uow.GetRepository<Setting>();
+                    Setting updateSetting = Mapper.Map<SettingModel, Setting>(model);
+                    updateSetting = settingRepo.Update(updateSetting);
+                }
+
+                return RedirectToAction("Details", new { id = model.Id });
+            }
         }
     }
 }
