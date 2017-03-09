@@ -17,6 +17,11 @@ namespace Tata.Models.PaymentModels
 
         public Currency Currency { get; set; }
 
+        public string CurrencyName
+        {
+            get { return Currency == Currency.VND ? "vnđ" : "$"; }
+        }
+
         private List<PaymentCartItem> _items;
         public List<PaymentCartItem> Items
         {
