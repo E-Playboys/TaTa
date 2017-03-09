@@ -38,6 +38,8 @@ namespace Tata.Models.SessionModels
         public decimal Price { get; set; }
 
         public Currency Currency { get; set; }
+
+        public string CurrencyName => Currency == Currency.VND ? "vnđ" : "$";
     }
 
     public class PropertySessionModel
