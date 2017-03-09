@@ -16,6 +16,8 @@ namespace Tata.Models.SessionModels
 
         public Currency Currency { get; set; }
 
+        public string CurrencyName => Currency == Currency.VND ? "vnđ" : "$";
+
         public PaymentType PaymentType { get; set; }
     }
 }
