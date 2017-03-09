@@ -15,7 +15,8 @@
       <div class="list-group">
         @foreach (var value in Model.Values)
         {
-          <div class="list-group-item list-group-item-radio">
+          Model.SelectedValue = Model.SelectedValue > 0 ? Model.SelectedValue : Model.Values.FirstOrDefault().Id;
+          <div class="list-group-item list-group-item-radio" data-group-id="@Model.Id" data-value="@value.Name">
             <input id="@value.Id" asp-for="SelectedValue" type="radio" value="@value.Id"/>
             <label class="new-radio-label" for="@value.Id">@value.Name<span class="pull-right"><strong>@value.Price.ToString("N0") @value.Currency.ToString()</strong><small>/Tháng</small></span>
              <br/>  

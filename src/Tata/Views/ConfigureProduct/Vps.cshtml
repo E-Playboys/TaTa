@@ -5,6 +5,7 @@
 @{
     ViewBag.Title = "Cấu hình máy chủ";
     Layout = "_Layout";
+    var groups = Model.RequiredPropertyGroups.Concat(Model.OptionalPropertyGroups);
 }
 
 @using (Html.BeginForm(true))
@@ -47,21 +48,17 @@
         <div id="car-bottom" class="col-sm-12 col-md-4">
           <div class="car-bottom-box bg total">
             <h5 class="text-left">Cloud S1 Window</h5>
-            <p class="text-left">Cấu hình mua thêm</p>
+            <p class="text-left">Cấu hình tùy chọn</p>
             <table class="col-sm-12">
               <tbody>
-                <tr>
-                  <td class="text-left">RAM</td>
-                  <td><span id="optional_ram" class="price">0GB</span></td>
-                </tr>
-                <tr>
-                  <td class="text-left">Lưu trữ</td>
-                  <td><span id="optional_storage" class="price">0GB</span></td>
-                </tr>
-                <tr>
-                  <td class="text-left">IP</td>
-                  <td><span id="optional_ip" class="price">0IP</span></td>
-                </tr>
+                @foreach (var group in groups)
+                {
+                    var selected = group.SelectedValue > 0 ? group.Values.FirstOrDefault(v => v.Id == group.SelectedValue) : group.Values.FirstOrDefault();
+                    <tr>
+                      <td class="text-left">@group.Name</td>
+                      <td><span id="group_@group.Id" class="price">@($"{selected.Name}{selected.Value}{selected.Unit}")</span></td>
+                    </tr>
+                }
               </tbody>
             </table>
             <button type="submit" class="btn btn-default">Cho vào giỏ</button>
@@ -81,10 +78,10 @@
         var label = mySlider.bootstrapSlider('getAttribute').ticks_labels[value];
         var price = $(this).attr('data-prices').split('|')[value];
         var priceElement = $(this).attr('data-price-element');
-        var type = $(this).attr('data-group-type').toLowerCase();
+        var id = $(this).attr('data-group-id');
 
         $(priceElement).text(price);
-        $("#optional_" + type).text(label);
+        $("#group_" + id).text(label);
       });
     });
 
@@ -93,7 +90,8 @@
 
       listItemElement.siblings().removeClass('active');
       listItemElement.addClass('active');
-      debugger;
+      var id = listItemElement.attr('data-group-id');
+      $("#group_" + id).text(listItemElement.attr('data-value'));
     });
 
     $(document).on('click', '[data-toggle]', function () {
