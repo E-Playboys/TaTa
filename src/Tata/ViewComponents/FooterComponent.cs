@@ -37,6 +37,12 @@ namespace Tata.ViewComponents
                 model.CompanyTweet = commonSettings.SingleOrDefault(s => s.Name == "CompanyTweet").Value;
                 model.CompanyLinkedin = commonSettings.SingleOrDefault(s => s.Name == "CompanyLinkedin").Value;
 
+                string footerArticles = commonSettings.SingleOrDefault(s => s.Name == "FooterArticles").Value;
+                IRepository<Article> articleRepo = uow.GetRepository<Article>();
+                model.FooterArticles = (await articleRepo.QueryAsync(a => footerArticles.Contains(a.Id.ToString())))
+                                        .OrderBy(a => a.Priority)
+                                        .ToList();
+
                 return View(model);
             }
         }

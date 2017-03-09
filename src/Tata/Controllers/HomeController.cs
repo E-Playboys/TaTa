@@ -91,9 +91,18 @@ namespace Tata.Controllers
             }
         }
 
-        public IActionResult Article()
+        public async Task<IActionResult> Article(int id)
         {
-            return View();
+            using (IUnitOfWork uow = _uowProvider.CreateUnitOfWork())
+            {
+                var articleRepo = uow.GetRepository<Article>();
+                ArticleViewModel models = new ArticleViewModel();
+
+                models.CurrentArticle = await articleRepo.GetAsync(id);
+                models.RelatedArticles = (await articleRepo.QueryAsync(a => a.ArtType == models.CurrentArticle.ArtType)).ToList();
+
+                return View(models);
+            }
         }
 
         public IActionResult Contact()

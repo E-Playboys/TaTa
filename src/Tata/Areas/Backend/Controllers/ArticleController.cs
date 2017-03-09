@@ -1,12 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Tata.Areas.Backend.Models.Product;
-using Tata.Areas.Backend.Models.Setting;
+using Tata.Areas.Backend.Models.Article;
 using Tata.Entities;
 using TaTa.DataAccess;
 
@@ -14,11 +12,11 @@ namespace Tata.Areas.Backend.Controllers
 {
     [Area("Backend")]
     [Authorize(Roles = "Administrator")]
-    public class SettingController : Controller
+    public class ArticleController : Controller
     {
         private readonly IUowProvider _uowProvider;
 
-        public SettingController(IUowProvider uowProvider)
+        public ArticleController(IUowProvider uowProvider)
         {
             _uowProvider = uowProvider;
         }
@@ -32,9 +30,9 @@ namespace Tata.Areas.Backend.Controllers
         {
             using (IUnitOfWork uow = _uowProvider.CreateUnitOfWork())
             {
-                var productRepo = uow.GetRepository<Setting>();
-                IEnumerable<Setting> settings = (await productRepo.GetAllAsync()).OrderBy(s => s.Id);
-                IEnumerable<SettingModel> models = Mapper.Instance.Map<IEnumerable<Setting>,IEnumerable<SettingModel>>(settings);
+                var productRepo = uow.GetRepository<Article>();
+                IEnumerable<Article> Articles = (await productRepo.GetAllAsync()).OrderBy(s => s.Id);
+                IEnumerable<ArticleModel> models = Mapper.Instance.Map<IEnumerable<Article>,IEnumerable<ArticleModel>>(Articles);
 
                 return View(models);
             }
@@ -44,24 +42,24 @@ namespace Tata.Areas.Backend.Controllers
         {
             using (IUnitOfWork uow = _uowProvider.CreateUnitOfWork())
             {
-                var productRepo = uow.GetRepository<Setting>();
-                Setting setting = await productRepo.GetAsync(id);
-                SettingModel models = Mapper.Instance.Map<Setting, SettingModel>(setting);
+                var productRepo = uow.GetRepository<Article>();
+                Article Article = await productRepo.GetAsync(id);
+                ArticleModel models = Mapper.Instance.Map<Article, ArticleModel>(Article);
 
                 return View(models);
             }
         }
 
         [HttpPost]
-        public IActionResult Details(SettingModel model)
+        public IActionResult Details(ArticleModel model)
         {
             using (IUnitOfWork uow = _uowProvider.CreateUnitOfWork())
             {
                 if (ModelState.IsValid)
                 {
-                    var settingRepo = uow.GetRepository<Setting>();
-                    Setting updateSetting = Mapper.Map<SettingModel, Setting>(model);
-                    updateSetting = settingRepo.Update(updateSetting);
+                    var ArticleRepo = uow.GetRepository<Article>();
+                    Article updateArticle = Mapper.Map<ArticleModel, Article>(model);
+                    updateArticle = ArticleRepo.Update(updateArticle);
                 }
 
                 return RedirectToAction("Details", new { id = model.Id });
