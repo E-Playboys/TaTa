@@ -63,40 +63,14 @@
         </div>
       </div>
       <div class="row">
-        <div id="car-bottom" class="col-sm-12 col-md-4">
-          <div class="car-bottom-box bg total">
-            <h5 class="text-left">Thông tin đăng ký</h5>
-            <table class="col-sm-12">
-              <tbody>
-                <tr>
-                  <td class="text-left">Tên khách hàng</td>
-                  <td><span class="price text-error">@Model.ClientName</span></td>
-                </tr>
-                <tr>
-                  <td class="text-left">Số điện thoại</td>
-                  <td><span class="price">@Model.PhoneNumber</span></td>
-                </tr>
-                <tr>
-                  <td class="text-left">Email</td>
-                  <td><span class="price">@Model.Email</span></td>
-                </tr>
-                <tr>
-                  <td class="text-left"></td>
-                  <td><button class="btn btn-default">Thanh Toán</button></td>
-                </tr>
-              </tbody>
-            </table>
-            <div class="clearfix"></div>
-          </div>
-        </div>
         <div class="col-sm-12 col-md-8">
           <div class="filter-box accordions-filter">
             <div class="btn-group filter-buttons filter-list">
               <div class="button-list">
-                <a href="#" data-filter=".card" data-payment-type="1" class="btn btn-border btn-primary"><i class="fa fa-credit-card"></i>&nbsp; Thanh toán qua thẻ</a>
-                <a href="#" data-filter=".transfer" data-payment-type="2" class="btn btn-border btn-warning"><i class="fa fa-external-link"></i>&nbsp; Chuyển khoản</a>
-                <a href="#" data-filter=".building" data-payment-type="3" class="btn btn-border btn-danger"><i class="fa fa-building-o"></i>&nbsp; Tại văn phòng</a>
-                <a href="#" data-filter=".cod" data-payment-type="4" class="btn btn-border btn-success"><i class="fa fa-money"></i>&nbsp; Thu tiền trực tiếp</a>
+                <a href="#" data-filter=".card" data-payment-type="1" data-payment-color="primary" class="btn btn-border btn-primary"><i class="fa fa-credit-card"></i>&nbsp; Thanh toán qua thẻ</a>
+                <a href="#" data-filter=".transfer" data-payment-type="2" data-payment-color="warning" class="btn btn-border btn-warning"><i class="fa fa-external-link"></i>&nbsp; Chuyển khoản</a>
+                <a href="#" data-filter=".building" data-payment-type="3" data-payment-color="danger" class="btn btn-border btn-danger"><i class="fa fa-building-o"></i>&nbsp; Tại văn phòng</a>
+                <a href="#" data-filter=".cod" data-payment-type="4" data-payment-color="success" class="btn btn-border btn-success"><i class="fa fa-money"></i>&nbsp; Thu tiền trực tiếp</a>
               </div>
               <div class="clearfix"></div>
             </div><!-- .filter-buttons -->
@@ -112,15 +86,26 @@
                 </div>
                 <div id="collapse1" class="panel-collapse collapse in">
                   <div class="panel-body">
-                    <p>Ultrices metus et dui dictum quis elementum augue imperdiet. Nunc a turpis nec elit porttitor varius. Cras non felis eget nibh eleifend rhoncus id sit amet nisi. Cras est mi, dapibus eu dictum quis, interdum in dui. Ut lacinia accumsan libero ac semper. Sed in turpis in massa mattis blandit eget vel sem. Nullam id erat sapien, ac faucibus est. Ut eu tortor rutrum erat pellentesque iaculis. Nunc porta convallis pharetra.</p>
-                    <p>Maecenas commodo tincidunt mauris, eleifend molestie lacus congue et. Vivamus egestas hendrerit massa, ac congue ligula sollicitudin quis. Morbi aliquam nibh eget nisi rhoncus pharetra. Integer nibh dui, vehicula non iaculis at, tempus ac enim. Cras congue, elit nec ornare egestas, magna nunc sollicitudin velit, nec lobortis erat urna vitae metus. Mauris convallis faucibus pellentesque. Proin faucibus hendrerit magna, in pharetra dui varius nec.</p>
-                    <p>Mauris scelerisque posuere egestas. Nullam ut diam felis, vel faucibus sapien. Duis quam libero, mollis vel egestas eget, tristique sit amet nisi. Duis luctus rutrum sagittis. Mauris auctor purus sit amet orci pharetra vitae rhoncus libero eleifend. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. In vehicula lectus vitae nunc pretium placerat. Aenean a ante non nisi tristique luctus eu nec nunc. Aliquam lacinia elit at felis bibendum blandit. Nunc fringilla massa vel augue aliquam blandit. Phasellus eget lectus purus, non blandit enim. Etiam porta nibh nec enim pharetra et tempus mauris iaculis.</p>
-                    <ol>
-                      <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
-                      <li>Mauris dictum tempor magna, sit amet venenatis elit sodales sagittis.</li>
-                      <li>Pellentesque rhoncus arcu sed nisl vulputate ultrices.</li>
-                      <li>In eget dolor nec tortor tempor blandit.</li>
-                    </ol>
+                    <div class="row">
+                      <div class="col-md-6 col-xs-12">
+                        <h6>Thanh toán trực tuyến bằng thẻ ATM nội địa (miễn phí giao dịch)</h6>
+                        <ul>
+                          <li>Chấp nhận thanh toán các loại thẻ thanh toán nội địa (thẻ ATM) do các Ngân hàng phát hành.</li>
+                          <li>Thực hiện giao dịch thanh toán hoàn toàn trực tuyến, đơn giản thuận tiện cho khách hàng.</li>
+                          <li>An toàn bảo mật cho khách hàng trong thanh toán.</li>
+                          <li>Dịch vụ được kích hoạt ngay khi thanh toán.</li>
+                        </ul>
+                      </div>
+                      <div class="col-md-6 col-xs-12">
+                        <h6>Để đảm bảo quyền lợi, khách hàng cần lưu ý</h6>
+                        <ul>
+                          <li>Để thanh toán bằng thẻ ATM, thẻ của Quý khách phải được đăng ký và kích hoạt chức năng thanh toán trực tuyến với ngân hàng trước khi sử dụng.</li>
+                          <li>Quý khách cần điền đầy đủ thông tin thẻ bao gồm "Ngân hàng phát hành thẻ", "Tên chủ thể", "Số thẻ", "Ngày hiệu lực".</li>
+                          <li>Các thông tin thẻ tín dụng của Quý khách sẽ được bảo mật và được xác nhận với ngân hàng phát hành thẻ.</li>
+                          <li>Dịch vụ chỉ được đăng ký / gia hạn khi nhận được thanh toán và thông tin chính xác đầy đủ.</li>
+                        </ul>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -135,15 +120,30 @@
                 </div>
                 <div id="collapse2" class="panel-collapse collapse in">
                   <div class="panel-body">
-                    <p>Ultrices metus et dui dictum quis elementum augue imperdiet. Nunc a turpis nec elit porttitor varius. Cras non felis eget nibh eleifend rhoncus id sit amet nisi. Cras est mi, dapibus eu dictum quis, interdum in dui. Ut lacinia accumsan libero ac semper. Sed in turpis in massa mattis blandit eget vel sem. Nullam id erat sapien, ac faucibus est. Ut eu tortor rutrum erat pellentesque iaculis. Nunc porta convallis pharetra.</p>
-                    <p>Maecenas commodo tincidunt mauris, eleifend molestie lacus congue et. Vivamus egestas hendrerit massa, ac congue ligula sollicitudin quis. Morbi aliquam nibh eget nisi rhoncus pharetra. Integer nibh dui, vehicula non iaculis at, tempus ac enim. Cras congue, elit nec ornare egestas, magna nunc sollicitudin velit, nec lobortis erat urna vitae metus. Mauris convallis faucibus pellentesque. Proin faucibus hendrerit magna, in pharetra dui varius nec.</p>
-                    <p>Mauris scelerisque posuere egestas. Nullam ut diam felis, vel faucibus sapien. Duis quam libero, mollis vel egestas eget, tristique sit amet nisi. Duis luctus rutrum sagittis. Mauris auctor purus sit amet orci pharetra vitae rhoncus libero eleifend. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. In vehicula lectus vitae nunc pretium placerat. Aenean a ante non nisi tristique luctus eu nec nunc. Aliquam lacinia elit at felis bibendum blandit. Nunc fringilla massa vel augue aliquam blandit. Phasellus eget lectus purus, non blandit enim. Etiam porta nibh nec enim pharetra et tempus mauris iaculis.</p>
-                    <ol>
-                      <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
-                      <li>Mauris dictum tempor magna, sit amet venenatis elit sodales sagittis.</li>
-                      <li>Pellentesque rhoncus arcu sed nisl vulputate ultrices.</li>
-                      <li>In eget dolor nec tortor tempor blandit.</li>
-                    </ol>
+                    <div class="row">
+                      <div class="col-md-6 col-xs-12">
+                        <h6>Thanh toán trực tuyến bằng thẻ quốc tế (miễn phí giao dịch)</h6>
+                        <ul>
+                          <li>Chấp nhận thanh toán các loại thẻ quốc tế: MasterCard, Visa, JCB</li>
+                          <li>Thực hiện giao dịch thanh toán hoàn toàn trực tuyến, đơn giản thuận tiện cho khách hàng.</li>
+                          <li>An toàn bảo mật cho khách hàng trong thanh toán.</li>
+                          <li>Dịch vụ được kích hoạt ngay khi thanh toán.</li>
+                          <img src="https://aicthailand.files.wordpress.com/2014/07/master-visa-jcb.png">
+                        </ul>
+                      </div>
+                      <div class="col-md-6 col-xs-12 note">
+                        <h6>Để đảm bảo quyền lợi, khách hàng cần lưu ý</h6>
+                        <ul>
+                          <li>
+                            Để thanh toán bằng thẻ quốc tế, thẻ của Quý khách phải được đăng ký và kích hoạt chức năng
+                            thanh toán trực tuyến với ngân hàng trước khi sử dụng.
+                          </li>
+                          <li>Quý khách cần điền thông tin Thẻ tín dụng gồm "Loại thẻ", "Số thẻ", "Tên chủ thể", "Ngày tháng hết hạn thẻ", "Số CVC/CVV".</li>
+                          <li>Các thông tin thẻ tín dụng của Quý khách sẽ được bảo mật và được xác nhận với ngân hàng phát hành thẻ.</li>
+                          <li>Dịch vụ chỉ được đăng ký / gia hạn khi nhận được thanh toán và thông tin chính xác đầy đủ.</li>
+                        </ul>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -158,15 +158,62 @@
                 </div>
                 <div id="collapse3" class="panel-collapse collapse in">
                   <div class="panel-body">
-                    <p>Ultrices metus et dui dictum quis elementum augue imperdiet. Nunc a turpis nec elit porttitor varius. Cras non felis eget nibh eleifend rhoncus id sit amet nisi. Cras est mi, dapibus eu dictum quis, interdum in dui. Ut lacinia accumsan libero ac semper. Sed in turpis in massa mattis blandit eget vel sem. Nullam id erat sapien, ac faucibus est. Ut eu tortor rutrum erat pellentesque iaculis. Nunc porta convallis pharetra.</p>
-                    <p>Maecenas commodo tincidunt mauris, eleifend molestie lacus congue et. Vivamus egestas hendrerit massa, ac congue ligula sollicitudin quis. Morbi aliquam nibh eget nisi rhoncus pharetra. Integer nibh dui, vehicula non iaculis at, tempus ac enim. Cras congue, elit nec ornare egestas, magna nunc sollicitudin velit, nec lobortis erat urna vitae metus. Mauris convallis faucibus pellentesque. Proin faucibus hendrerit magna, in pharetra dui varius nec.</p>
-                    <p>Mauris scelerisque posuere egestas. Nullam ut diam felis, vel faucibus sapien. Duis quam libero, mollis vel egestas eget, tristique sit amet nisi. Duis luctus rutrum sagittis. Mauris auctor purus sit amet orci pharetra vitae rhoncus libero eleifend. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. In vehicula lectus vitae nunc pretium placerat. Aenean a ante non nisi tristique luctus eu nec nunc. Aliquam lacinia elit at felis bibendum blandit. Nunc fringilla massa vel augue aliquam blandit. Phasellus eget lectus purus, non blandit enim. Etiam porta nibh nec enim pharetra et tempus mauris iaculis.</p>
-                    <ol>
-                      <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
-                      <li>Mauris dictum tempor magna, sit amet venenatis elit sodales sagittis.</li>
-                      <li>Pellentesque rhoncus arcu sed nisl vulputate ultrices.</li>
-                      <li>In eget dolor nec tortor tempor blandit.</li>
-                    </ol>
+                    <div class="row">
+                      <div class="col-md-6 col-xs-12">
+                        <h6>Chuyển khoản</h6>
+                        <p>
+                          Quý khách vui lòng chuyển khoản cho chúng tôi theo thông tin sau:
+                        </p><table>
+                          <tbody>
+                            <tr>
+                              <td width="133px">Tên tài khoản</td>
+                              <td>: <strong>CÔNG TY CỔ PHẦN TATA</strong></td>
+                            </tr>
+                            <tr>
+                              <td>Số TK</td>
+                              <td>: 007 007 007 007</td>
+                            </tr>
+                            <tr>
+                              <td>Ngân hàng</td>
+                              <td>: Vietcombank - chi nhánh HCM</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <table>
+                          <tbody>
+                            <tr>
+                              <td width="133px">Tên tài khoản</td>
+                              <td>: <strong>CÔNG TY CỔ PHẦN TATA</strong></td>
+                            </tr>
+                            <tr>
+                              <td>Số TK</td>
+                              <td>: 00000 55555 66666</td>
+                            </tr>
+                            <tr>
+                              <td>Ngân hàng</td>
+                              <td>: Eximbank - PGD  Trương Định - TP.HCM</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <p></p>
+                      </div>
+                      <div class="col-md-6 col-xs-12">
+                        <h6>Để đảm bảo quyền lợi, khách hàng cần lưu ý</h6>
+                        <p>
+                        </p><p style="font-size: 14px;margin-top: 10px;font-weight: normal;">
+                          Quý khách vui lòng chuyển khoản qua ngân hàng trong phần "Nội dung thanh toán".
+                          <br>Quý khách ghi rõ mã đơn hàng cần thanh toán và số điện thoại đã dùng đặt hàng (Mã đơn hàng + Số điện thoại).
+                        </p><ul style="font-size: 16px;">
+                          <li>
+                            Sau khi thanh toán Quý khách vui lòng gởi thông báo vào
+                            <span class="cl-red">billing@tata.com.vn</span> để chúng tôi hoàn tất đơn hàng cho Quý khách.
+                          </li>
+                          <li>Dịch vụ chỉ được đăng ký / gia hạn khi nhận được thanh toán và thông tin chính xác đầy đủ.</li>
+                        </ul>
+                        <p></p>
+                        <p></p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -181,15 +228,29 @@
                 </div>
                 <div id="collapse4" class="panel-collapse collapse in">
                   <div class="panel-body">
-                    <p>Ultrices metus et dui dictum quis elementum augue imperdiet. Nunc a turpis nec elit porttitor varius. Cras non felis eget nibh eleifend rhoncus id sit amet nisi. Cras est mi, dapibus eu dictum quis, interdum in dui. Ut lacinia accumsan libero ac semper. Sed in turpis in massa mattis blandit eget vel sem. Nullam id erat sapien, ac faucibus est. Ut eu tortor rutrum erat pellentesque iaculis. Nunc porta convallis pharetra.</p>
-                    <p>Maecenas commodo tincidunt mauris, eleifend molestie lacus congue et. Vivamus egestas hendrerit massa, ac congue ligula sollicitudin quis. Morbi aliquam nibh eget nisi rhoncus pharetra. Integer nibh dui, vehicula non iaculis at, tempus ac enim. Cras congue, elit nec ornare egestas, magna nunc sollicitudin velit, nec lobortis erat urna vitae metus. Mauris convallis faucibus pellentesque. Proin faucibus hendrerit magna, in pharetra dui varius nec.</p>
-                    <p>Mauris scelerisque posuere egestas. Nullam ut diam felis, vel faucibus sapien. Duis quam libero, mollis vel egestas eget, tristique sit amet nisi. Duis luctus rutrum sagittis. Mauris auctor purus sit amet orci pharetra vitae rhoncus libero eleifend. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. In vehicula lectus vitae nunc pretium placerat. Aenean a ante non nisi tristique luctus eu nec nunc. Aliquam lacinia elit at felis bibendum blandit. Nunc fringilla massa vel augue aliquam blandit. Phasellus eget lectus purus, non blandit enim. Etiam porta nibh nec enim pharetra et tempus mauris iaculis.</p>
-                    <ol>
-                      <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
-                      <li>Mauris dictum tempor magna, sit amet venenatis elit sodales sagittis.</li>
-                      <li>Pellentesque rhoncus arcu sed nisl vulputate ultrices.</li>
-                      <li>In eget dolor nec tortor tempor blandit.</li>
-                    </ol>
+                    <div class="row">
+                      <div class="col-md-6 col-xs-12">
+                        <h6>Thanh toán tại văn phòng</h6>
+                        <p>
+                          Quý khách vui lòng đến địa chỉ văn phòng tại TP. Hồ Chí Minh để giao dịch<br>
+                          Địa chỉ: 35 NTMK, Phường 12, Quận 1, TP.HCM.
+                          (hoặc) 457 3/2, Phường 13, Quận 10, TP.HCM.<br>
+                          ĐT: (08)3699 9999 <br> Fax:(08) 3 868 0000<br>Giờ làm việc (từ thứ 2 đến thứ 6, thứ 7 làm việc buổi sáng)<br>
+                          Sáng: 8h - 11h30<br>
+                          Chiều: 13h - 17h<br>
+                        </p>
+                      </div>
+                      <div class="col-md-6 col-sm-12">
+                        <h6>Để đảm bảo quyền lợi, khách hàng cần lưu ý</h6>
+                        <ul>
+                          <li>Giao dịch tại các điểm được quy định</li>
+                          <li>Kiểm tra cẩn thận các giao dịch trước khi rời nơi giao dịch</li>
+                          <li>Khách hàng phải ký vào phiếu thu và hồ sơ đăng ký dịch vụ</li>
+                          <li>Dịch vụ chỉ được đăng ký / gia hạn khi nhận được thanh toán và thông tin chính xác đầy đủ.</li>
+                        </ul>
+                        <p></p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -204,19 +265,58 @@
                 </div>
                 <div id="collapse5" class="panel-collapse collapse in">
                   <div class="panel-body">
-                    <p>Ultrices metus et dui dictum quis elementum augue imperdiet. Nunc a turpis nec elit porttitor varius. Cras non felis eget nibh eleifend rhoncus id sit amet nisi. Cras est mi, dapibus eu dictum quis, interdum in dui. Ut lacinia accumsan libero ac semper. Sed in turpis in massa mattis blandit eget vel sem. Nullam id erat sapien, ac faucibus est. Ut eu tortor rutrum erat pellentesque iaculis. Nunc porta convallis pharetra.</p>
-                    <p>Maecenas commodo tincidunt mauris, eleifend molestie lacus congue et. Vivamus egestas hendrerit massa, ac congue ligula sollicitudin quis. Morbi aliquam nibh eget nisi rhoncus pharetra. Integer nibh dui, vehicula non iaculis at, tempus ac enim. Cras congue, elit nec ornare egestas, magna nunc sollicitudin velit, nec lobortis erat urna vitae metus. Mauris convallis faucibus pellentesque. Proin faucibus hendrerit magna, in pharetra dui varius nec.</p>
-                    <p>Mauris scelerisque posuere egestas. Nullam ut diam felis, vel faucibus sapien. Duis quam libero, mollis vel egestas eget, tristique sit amet nisi. Duis luctus rutrum sagittis. Mauris auctor purus sit amet orci pharetra vitae rhoncus libero eleifend. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. In vehicula lectus vitae nunc pretium placerat. Aenean a ante non nisi tristique luctus eu nec nunc. Aliquam lacinia elit at felis bibendum blandit. Nunc fringilla massa vel augue aliquam blandit. Phasellus eget lectus purus, non blandit enim. Etiam porta nibh nec enim pharetra et tempus mauris iaculis.</p>
-                    <ol>
-                      <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
-                      <li>Mauris dictum tempor magna, sit amet venenatis elit sodales sagittis.</li>
-                      <li>Pellentesque rhoncus arcu sed nisl vulputate ultrices.</li>
-                      <li>In eget dolor nec tortor tempor blandit.</li>
-                    </ol>
+                    <div class="row">
+                      <div class="col-md-6 col-xs-12">
+                        <h6>Thu phí tận nơi</h6>
+                        <p>
+                          Dịch vụ thu phí tận nơi chỉ áp dụng trong nội thành thành phố Hồ Chí Minh, bao gồm các quận: 1, 3, 4, 5, 10, 11, Phú Nhuận, Tân Bình, Gò Vấp, Bình Thạnh.
+                        </p>
+                        <p>Giờ làm việc (từ thứ 2 đến thứ 6, thứ 7 làm việc buổi sáng)</p>
+                        <p>Sáng: 8h - 11h30</p>
+                        <p>Chiều: 13h - 17h</p>
+                        <p>Nhân viên của chúng tôi sẽ xác nhận thời gian đến thu phí.</p>
+                      </div>
+                      <div class="col-md-6 col-xs-12">
+                        <h6>Để đảm bảo quyền lợi, khách hàng cần lưu ý</h6>
+                        <ul>
+                          <li>Nhân viên thu phí phải mặc đồng phục của Mắt Bão (áo màu đỏ có logo, nón bảo hiểm màu đỏ có logo).</li>
+                          <li>Nhân viên phải xuất trình thẻ nhân viên.</li>
+                          <li>Khách hàng phải ký vào phiếu thu.</li>
+                          <li>Dịch vụ chỉ được đăng ký / gia hạn khi nhận được thanh toán và thông tin chính xác đầy đủ.</li>
+                        </ul>
+                      </div>
+                      <div style="display:none" id="alertprice2" class="alert alert-danger" role="alert"> Đơn hàng của quý khách không được sử dụng hình thức thanh toán này </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+        <div id="car-bottom" class="col-sm-12 col-md-4">
+          <div class="car-bottom-box bg total">
+            <h5 class="text-left">Thông tin đăng ký</h5>
+            <table class="col-sm-12 no-margin">
+              <tbody>
+                <tr>
+                  <td class="text-left">Tên khách hàng</td>
+                  <td><span class="price text-error">@Model.ClientName</span></td>
+                </tr>
+                <tr>
+                  <td class="text-left">Số điện thoại</td>
+                  <td><span class="price">@Model.PhoneNumber</span></td>
+                </tr>
+                <tr>
+                  <td class="text-left">Email</td>
+                  <td><span class="price">@Model.Email</span></td>
+                </tr>
+                <tr>
+                  <td class="text-left"></td>
+                  <td><button id="pay" class="btn btn-primary">Thanh Toán</button></td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="clearfix"></div>
           </div>
         </div>
       </div>
@@ -232,6 +332,8 @@
           .click(function(e) {
             var paymentType = parseInt($(this).attr('data-payment-type'));
             $('#paymentType').val(paymentType);
+            $('#pay').removeClass($('#pay').attr('class').split(' ')[1]);
+            $('#pay').addClass('btn-' + $(this).attr('data-payment-color'));
           });
       });
   </script>
