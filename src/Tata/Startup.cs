@@ -186,6 +186,9 @@ namespace Tata
 
                 cfg.CreateMap<Article, ArticleModel>();
                 cfg.CreateMap<ArticleModel, Article>();
+
+                cfg.CreateMap<User, UserModel>();
+                cfg.CreateMap<UserModel, User>();
             });
         }
 
