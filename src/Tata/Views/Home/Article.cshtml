@@ -1,1 +1,43 @@
-﻿
+﻿@using Tata.Entities.Enums
+@model ArticleViewModel
+
+@{
+    ViewData["Title"] = Model.CurrentArticle.ArtType == ArticleType.PageContent ? "Thông tin chung" : Model.CurrentArticle.Title;
+}
+<header class="page-header">
+    <div class="container">
+        <h1 class="title">@ViewData["Title"]</h1>
+    </div>
+</header>
+<div class="container">
+    <div class="row">
+        <div class="content blog blog-post col-sm-9 col-md-9">
+            <article class="post">
+                <div class="entry-content">
+                    @Html.Raw(Model.CurrentArticle.Content)
+                </div>
+                <footer class="entry-meta">
+                    <span class="time">Đăng ngày: @Model.CurrentArticle.UpdatedDate.Value.ToString("dd/MM/yyyy")</span>
+                </footer>
+            </article>
+        </div>
+
+        <div id="sidebar" class="sidebar col-sm-3 col-md-3">
+            <aside class="widget list">
+                <header>
+                    <h3 class="title">@(Model.CurrentArticle.ArtType == ArticleType.PageContent ? "Thông tin liên quan" : "Tin tức")</h3>
+                </header>
+                <ul>
+                    @{
+                        foreach (var art in Model.RelatedArticles)
+                        {
+                            <li>
+                                @Html.ActionLink(art.Title, "Article", "Home", new { id = art.Id }, null)
+                            </li>
+                        }
+                    }
+                </ul>
+            </aside>
+        </div>
+    </div>
+</div>

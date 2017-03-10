@@ -11,7 +11,7 @@
 <div class="slider-bar-header">
   <strong class="slider-bar-name">@Model.Name</strong>
   <span class="pull-right">
-    <strong class="text-primary slider-bar-lg-text"><span id="slider_price_@(Model.Id)">0</span> @(Model.Values[0].Currency.ToString())</strong>/Tháng
+    <strong class="text-danger slider-bar-lg-text"><span id="slider_price_@(Model.Id)">0</span> @(Model.Values[0].Currency.ToString())</strong>/Tháng
 </span>
 </div>
 <div class="slider-bar">
@@ -25,6 +25,6 @@
          data-slider-tooltip="hide" 
          data-prices="@sliderTickPrices"
          data-price-element="#slider_price_@(Model.Id)"
-         data-group-type="@Model.Type.ToString()" />
+         data-group-id="@Model.Id" />
 </div>
 

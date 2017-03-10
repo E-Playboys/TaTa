@@ -1,23 +1,23 @@
-﻿using System;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Tata.Data;
-using Tata.Services;
-using Microsoft.EntityFrameworkCore.Infrastructure;
+using System;
+using Tata.Areas.Backend.Models.Article;
 using Tata.Areas.Backend.Models.Order;
 using Tata.Areas.Backend.Models.Product;
-using Tata.Entities;
-using TaTa.DataAccess;
-using TaTa.DataAccess.Uow;
-using TaTa.DataAccess.Entities;
-using Microsoft.AspNetCore.Http;
 using Tata.Areas.Backend.Models.Setting;
+using Tata.Data;
+using Tata.Entities;
 using Tata.Models.ProductModels;
+using Tata.Services;
+using TaTa.DataAccess;
+using TaTa.DataAccess.Entities;
+using TaTa.DataAccess.Uow;
 
 namespace Tata
 {
@@ -109,7 +109,6 @@ namespace Tata
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
                 app.UseBrowserLink();
             }
             else
@@ -184,6 +183,9 @@ namespace Tata
 
                 cfg.CreateMap<Setting, SettingModel>();
                 cfg.CreateMap<SettingModel, Setting>();
+
+                cfg.CreateMap<Article, ArticleModel>();
+                cfg.CreateMap<ArticleModel, Article>();
             });
         }
 

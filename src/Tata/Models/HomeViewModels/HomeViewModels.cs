@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Tata.Entities;
+using Tata.Entities.Enums;
 
 namespace Tata.Models
 {
@@ -22,6 +19,21 @@ namespace Tata.Models
         public List<Setting> AboutPartners { get; set; }
     }
 
+    public class ArticleViewModel
+    {
+        public Article CurrentArticle { get; set; }
+        public List<Article> RelatedArticles { get; set; }
+    }
+
+    public class ArticleExcertModel
+    {
+        public int Id { get; set; }
+        public int Priority { get; set; }
+        public string Title { get; set; }
+        public string Excert { get; set; }
+        public string FeatureImg { get; set; }
+    }
+
     public class FooterComponentModel
     {
         public string CompanyName { get; set; }
@@ -33,5 +45,6 @@ namespace Tata.Models
         public string CompanyYouTube { get; set; }
         public string CompanyTweet { get; set; }
         public string CompanyLinkedin { get; set; }
+        public List<Article> FooterArticles { get; set; }
     }
 }

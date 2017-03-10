@@ -2,7 +2,7 @@
 
 <input asp-for="Id" type="hidden" />
 <input asp-for="Type" type="hidden" />
-<div class="panel panel-default active">
+<div class="panel panel-primary active">
   <div class="panel-heading">
     <div class="panel-title">
       <a data-toggle="collapse" data-parent="#accordion2" href="#collapse2@(Model.Id)">
@@ -15,12 +15,15 @@
       <div class="list-group">
         @foreach (var value in Model.Values)
         {
-          <div class="list-group-item">
-            <input asp-for="SelectedValue" type="radio" value="@value.Id"/>
-            <h5 class="list-group-item-heading">@value.Name<span class="pull-right"><strong class="text-primary">@value.Price.ToString("N0") @value.Currency.ToString()</strong>/Tháng</span></h5>
-            <p class="list-group-item-text">
-              @value.Description
-            </p>
+          Model.SelectedValue = Model.SelectedValue > 0 ? Model.SelectedValue : Model.Values.FirstOrDefault().Id;
+          <div class="list-group-item list-group-item-radio" data-group-id="@Model.Id" data-value="@value.Name">
+            <input id="@value.Id" asp-for="SelectedValue" type="radio" value="@value.Id"/>
+            <label class="new-radio-label" for="@value.Id">@value.Name<span class="pull-right"><strong>@value.Price.ToString("N0") @value.Currency.ToString()</strong><small>/Tháng</small></span>
+             <br/>  
+            <span>
+                @value.Description
+              </span>
+            </label>
           </div>
         }
       </div>
