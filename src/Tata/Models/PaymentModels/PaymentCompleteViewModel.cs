@@ -4,10 +4,16 @@ using System.Linq;
 using System.Threading.Tasks;
 using Tata.Entities.Enums;
 
-namespace Tata.Models.SessionModels
+namespace Tata.Models.PaymentModels
 {
-    public class PaymentSessionModel
+    public class PaymentCompleteViewModel
     {
+        public string ClientName { get; set; }
+
+        public string PhoneNumber { get; set; }
+
+        public string Email { get; set; }
+
         public string OrderCode { get; set; }
 
         public decimal NetTotal { get; set; }
@@ -21,5 +27,12 @@ namespace Tata.Models.SessionModels
         public string CurrencyName => Currency == Currency.VND ? "vnđ" : "$";
 
         public PaymentType PaymentType { get; set; }
+
+        private List<PaymentCartItem> _items;
+        public List<PaymentCartItem> Items
+        {
+            get { return _items ?? (_items = new List<PaymentCartItem>()); }
+            set { _items = value; }
+        }
     }
 }

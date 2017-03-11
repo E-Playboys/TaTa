@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using TaTa.DataAccess.Entities;
 
 namespace Tata.Models.AccountViewModels
 {
@@ -12,6 +13,13 @@ namespace Tata.Models.AccountViewModels
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
+
+        [Required]
+        [Display(Name = "Gender")]
+        public Gender Gender { get; set; }
+        
+        [Display(Name = "Organization")]
+        public string Organization { get; set; }
 
         [Required]
         [Display(Name = "User name")]

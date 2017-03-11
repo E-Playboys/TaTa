@@ -38,6 +38,11 @@
     padding-left: 40px;
 }
 
+.list-group-item-radio.active, .list-group-item-radio.active:hover {
+    background-color: #c10841;
+    border-color: #c10841;
+}
+
 .list-group-item-radio.active .new-radio-label strong {
     color: white;
 }
