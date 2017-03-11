@@ -116,6 +116,7 @@ namespace Tata.Controllers
 
             var paymentSessionModel = new PaymentSessionModel
             {
+                OrderCode = $"TT{DateTime.Now:yyMMdd}{Guid.NewGuid().ToString().Split('-')[1].ToUpper()}",
                 GrossTotal = grossTotal,
                 Vat = vat,
                 NetTotal = netTotal,
@@ -139,6 +140,7 @@ namespace Tata.Controllers
 
             var viewModel = new PaymentAccountViewModel
             {
+                OrderCode = paymentSessionModel.OrderCode,
                 GrossTotal = paymentSessionModel.GrossTotal,
                 Vat = paymentSessionModel.Vat,
                 NetTotal = paymentSessionModel.NetTotal,
@@ -169,7 +171,7 @@ namespace Tata.Controllers
             if (!ModelState.IsValid)
                 return new BadRequestResult();
 
-            var user = new User { UserName = model.UserName, Email = model.Email, EmailConfirmed = true, FullName = model.FullName, Address = model.Address, PhoneNumber = model.PhoneNumber };
+            var user = new User { UserName = model.UserName, Email = model.Email, EmailConfirmed = true, FullName = model.FullName, Address = model.Address, PhoneNumber = model.PhoneNumber, Gender = model.Gender, Organization = model.Organization, UserType = string.IsNullOrWhiteSpace(model.Organization) ? UserType.Personal : UserType.Organization};
             var result = await _userManager.CreateAsync(user, model.Password);
             if (result.Succeeded)
             {
@@ -238,6 +240,7 @@ namespace Tata.Controllers
                     PaymentType = model.PaymentType,
                     GrossTotal = paymentSessionModel.GrossTotal,
                     NetTotal = paymentSessionModel.NetTotal,
+                    OrderCode = paymentSessionModel.OrderCode,
                     OrderItems = new List<OrderItem>()
                 };
 
@@ -279,7 +282,37 @@ namespace Tata.Controllers
 
             HttpContext.Session.Set(SessionConstants.PAYMENT_SESSION_MODEL_NAME, paymentSessionModel);
 
-            return View(model);
+            return RedirectToAction("Complete", "Payment");
+        }
+
+        #endregion
+
+        #region Payment Complete
+
+        public async Task<IActionResult> Complete()
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var orderItemsSessionModel = HttpContext.Session.Get<List<OrderItemSessionModel>>(SessionConstants.ORDER_ITEMS_SESSION_MODEL_NAME);
+            var paymentSessionModel = HttpContext.Session.Get<PaymentSessionModel>(SessionConstants.PAYMENT_SESSION_MODEL_NAME);
+            if (paymentSessionModel == null || orderItemsSessionModel == null)
+                return RedirectToActionPermanent("Index", "Home");
+
+            var orderItems = PopulateViewModel(orderItemsSessionModel);
+            var viewModel = new PaymentCompleteViewModel()
+            {
+                PhoneNumber = user.PhoneNumber,
+                Email = user.Email,
+                ClientName = user.FullName,
+                OrderCode = paymentSessionModel.OrderCode,
+                GrossTotal = paymentSessionModel.GrossTotal,
+                Vat = paymentSessionModel.Vat,
+                NetTotal = paymentSessionModel.NetTotal,
+                Currency = paymentSessionModel.Currency,
+                PaymentType = paymentSessionModel.PaymentType,
+                Items = orderItems.Items
+            };
+
+            return View(viewModel);
         }
 
         #endregion

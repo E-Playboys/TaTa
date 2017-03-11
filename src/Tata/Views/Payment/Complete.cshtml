@@ -1,0 +1,179 @@
+﻿@using Tata.Entities.Enums
+@model Tata.Models.PaymentModels.PaymentCompleteViewModel
+
+@{
+    ViewBag.Title = "Thanh toán";
+    Layout = "_Layout";
+    var paymentType = "<em class='text-primary'>Thanh toán qua thẻ</em>";
+    switch (Model.PaymentType)
+    {
+      case PaymentType.Card:
+        paymentType = "<em class='text-primary'>Thanh toán qua thẻ</em>";
+        break;
+      case PaymentType.Transfer:
+        paymentType = "<em class='text-warning'>Chuyển khoản</em>";
+        break;
+      case PaymentType.Office:
+        paymentType = "<em class='text-error'>Tại văn phòng</em>";
+        break;
+      case PaymentType.Home:
+        paymentType = "<em class='text-success'>Thu tiền tại nhà</em>";
+        break;
+      default: break;
+    }
+}
+
+
+<header class="page-header">
+  <div class="container">
+    <h1 class="title">Hoàn tất</h1>
+  </div>
+</header>
+
+<div class="container">
+  <div class="alert alert-success">
+    <div class="fa fa-volume-up alert-icon"></div>
+    <strong>Chúc mừng!</strong> <br/>
+    Bạn đã đặt mua dịch vụ thành công. Vui lòng xem chi tiết bên dưới.
+  </div>
+  <div class="bottom-padding">
+    <div class="row steps steps-apart">
+      <div class="col-sm-3 col-md-3">
+        <div class="step text-center border-error">
+          <div class="step-wrapper">
+            <span class="livicon" data-n="shopping-cart" data-s="62" data-c="#c10841" data-hc="#d70a49"></span>
+            <div class="title-box text-center title-red">
+              <h4 class="title">Kiểm tra giỏ hàng</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-3 col-md-3">
+        <div class="step text-center border-error text-error">
+          <div class="step-wrapper">
+            <span class="livicon" data-n="user" data-s="62" data-c="#c10841" data-hc="#d70a49"></span>
+            <div class="title-box text-center title-red">
+              <h4 class="title">Đăng nhập tài khoản</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-3 col-md-3">
+        <div class="step text-center border-error text-error">
+          <div class="step-wrapper">
+            <span class="livicon" data-n="credit-card" data-s="62" data-c="#c10841" data-hc="#d70a49"></span>
+            <div class="title-box text-center title-red">
+              <h4 class="title">Thanh toán</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-3 col-md-3">
+        <div class="step text-center border-info bg-info white">
+          <div class="step-wrapper">
+            <span class="livicon" data-n="check" data-c="#fff" data-s="64" data-hc="#fff"></span>
+            <div class="title-box text-center title-white">
+              <h4 class="title">Hoàn tất</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div id="car-bottom" class="col-md-12">
+      <div class="car-bottom-box bg total col-sm-6">
+        <h5 class="text-left">Thông tin khách hàng</h5>
+        <table class="col-md-12 no-margin">
+          <tbody>
+          <tr>
+            <td class="text-left">Tên khách hàng</td>
+            <td class="price text-left text-error">@Model.ClientName</td>
+          </tr>
+          <tr>
+            <td class="text-left">Số điện thoại</td>
+            <td class="price text-left">@Model.PhoneNumber</td>
+          </tr>
+          <tr>
+            <td class="text-left">Email</td>
+            <td class="price text-left">@Model.Email</td>
+          </tr>
+          </tbody>
+        </table>
+        <div class="clearfix"></div>
+      </div>
+      <div class="car-bottom-box bg total col-sm-6">
+        <h5 class="text-left">Thông tin đơn hàng</h5>
+        <table class="col-md-12 no-margin">
+          <tbody>
+          <tr>
+            <td class="text-left">Mã đơn hàng</td>
+            <td class="price text-left text-error">@Model.OrderCode</td>
+          </tr>
+          <tr>
+            <td class="text-left">Hình thức thanh toán</td>
+            <td class="price text-left">@Html.Raw(paymentType)</td>
+          </tr>
+          <tr>
+            <td class="text-left">Trạng tái</td>
+            <td class="price text-left"><strong class="text-success">Đã thanh toán</strong></td>
+          </tr>
+          </tbody>
+        </table>
+        <div class="clearfix"></div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="table-responsive col-md-12">
+      <table class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th>Gói dịch vụ</th>
+            <th>Giá cơ bản</th>
+            <th>Thời hạn (tháng)</th>
+            <th>Thành tiền</th>
+          </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model.Items)
+        {
+            <tr>
+              <td>
+                <p><strong>@item.Name</strong></p>
+                @foreach (var subItem in item.SubItems)
+                {
+                    <p>- @subItem.Description</p>
+                }
+              </td>
+              <td>@item.Price.Price.ToString("N0")</td>
+              <td>@item.Quantity</td>
+              <td>
+                <p>@((item.Price.Price*item.Quantity).ToString("N0"))</p>
+                @foreach (var subItem in item.SubItems)
+                {
+                    <p>@subItem.Price.Price.ToString("N0")</p>
+                }
+              </td>
+            </tr>
+        }
+        <tr>
+          <td colspan="3">Tổng</td>
+          <td>@Model.NetTotal.ToString("N0") @Model.CurrencyName</td>
+        </tr>
+        <tr>
+          <td colspan="3">VAT (10%)</td>
+          <td>@Model.Vat.ToString("N0") @Model.CurrencyName</td>
+        </tr>
+        <tr>
+          <td colspan="3">Tổng sau VAT</td>
+          <td class="text-error"><strong>@Model.GrossTotal.ToString("N0") @Model.CurrencyName</strong></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
