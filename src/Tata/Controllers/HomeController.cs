@@ -1,16 +1,14 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 using Tata.Entities;
-using Tata.Data;
-using TaTa.DataAccess;
+using Tata.Entities.Enums;
 using Tata.Models;
-using TaTa.DataAccess.Repositories;
+using TaTa.DataAccess;
 using TaTa.DataAccess.Query;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authorization;
+using TaTa.DataAccess.Repositories;
 
 namespace Tata.Controllers
 {
@@ -120,9 +118,15 @@ namespace Tata.Controllers
             return View();
         }
 
-        public IActionResult Promotion()
+        public async Task<IActionResult> Promotion()
         {
-            return View();
+            using (IUnitOfWork uow = _uowProvider.CreateUnitOfWork())
+            {
+                var articleRepo = uow.GetRepository<Article>();
+                IEnumerable<Article> models = await articleRepo.QueryAsync(a => a.ArtType == ArticleType.PromotionContent, a => a.OrderBy(ar => ar.Priority));
+
+                return View(models.Skip(0).Take(8).ToList());
+            }
         }
 
         public IActionResult Support()
