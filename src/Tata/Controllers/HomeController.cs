@@ -123,7 +123,8 @@ namespace Tata.Controllers
             using (IUnitOfWork uow = _uowProvider.CreateUnitOfWork())
             {
                 var articleRepo = uow.GetRepository<Article>();
-                IEnumerable<Article> models = await articleRepo.QueryAsync(a => a.ArtType == ArticleType.PromotionContent, a => a.OrderBy(ar => ar.Priority));
+                IEnumerable<Article> models = await articleRepo.QueryAsync(a => a.ArtType == ArticleType.PromotionContent, 
+                                                                           a => a.OrderBy(ar => ar.Priority));
 
                 return View(models.Skip(0).Take(8).ToList());
             }
@@ -134,9 +135,20 @@ namespace Tata.Controllers
             return View();
         }
 
-        public IActionResult VpsPage()
+        public async Task<IActionResult> VpsPage()
         {
-            return View();
+            using (IUnitOfWork uow = _uowProvider.CreateUnitOfWork())
+            {
+                IRepository<Product> productRepo = uow.GetRepository<Product>();
+                Includes<Product> productInclude = new Includes<Product>(query =>
+                {
+                    return query.Include(p => p.Properties)
+                                .Include(p => p.Prices);
+                });
+                IEnumerable<Product> allProducts = await productRepo.GetAllAsync(p => p.OrderBy(pr => pr.Priority), productInclude.Expression);
+
+                return View(allProducts.Skip(0).Take(8).ToList());
+            }
         }
 
         public IActionResult Error()
