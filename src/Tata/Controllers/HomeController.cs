@@ -130,9 +130,15 @@ namespace Tata.Controllers
             }
         }
 
-        public IActionResult Support()
+        public async Task<IActionResult> Support()
         {
-            return View();
+            using (IUnitOfWork uow = _uowProvider.CreateUnitOfWork())
+            {
+                IRepository<Setting> repo = uow.GetRepository<Setting>();
+                IEnumerable<Setting> supportQuestions = await repo.QueryAsync(s => s.Section == "SupportQuestion");
+
+                return View(supportQuestions.ToList());
+            }
         }
 
         public async Task<IActionResult> VpsPage()

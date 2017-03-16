@@ -5,53 +5,52 @@
     ViewData["Title"] = "TaTa - Virtual Private Server";
 }
 <header class="page-header">
-  <div class="container">
-    <h1 class="title">@ViewData["Title"]</h1>
-  </div>
+    <div class="container">
+        <h1 class="title">@ViewData["Title"]</h1>
+    </div>
 </header>
 <div class="container">
-  <div class="row">
-    <article class="content col-sm-12 col-md-12">
-      <p>Aenean dui tortor, cursus nec semper a, vestibulum sed arcu. Proines hendrerit vestibulum neque. Aliquam non tellus ac tortor tristique volutpat. Sed tempor, eros ac pulvinar cursus, mauris liberoty placerat nulla, non rhoncus est dui eu dui. Praesent ullamcorper dignissim libero, vitae blandit tellus consectetur vel. Donec luctus massa magna, ac tempus erat. Cras ut est volutpat arcu imperdiet luctus a in nunc. Donec id metus enim, vel iaculis diam.</p>
-      <div class="clearfix"></div>
-      <div class="pricings row clearfix">
-        <br>
-        <br>
-        <br>
-        @foreach (Product prod in Model)
-        {
-            <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="pricing">
-                    <div class="title">
-                        @Html.ActionLink(prod.Name, "VirtualPrivateServer", "Service", new { id = prod.Id })
-                        <a href="#">First Package</a>
-                    </div>
-                    <div class="price-box">
-                        <div class="icon pull-right border circle">
-                            <span class="livicon" data-n="wrench" data-s="32" data-c="#1e1e1e" data-hc="0"></span>
-                        </div>
-                        @if (prod.Prices.Count > 0)
-                        {
-                            <div class="h5">@prod.Prices.SingleOrDefault(pr => pr.IsDefault).Price.ToString("N0")<span>vnđ /tháng</span></div>
-                        }
-                    </div>
-                    @if (prod.Properties.Count > 0)
-                    {
-                        <ul class="options">
-                            @foreach (var property in prod.Properties)
+    <div class="row">
+        <article class="content col-sm-12 col-md-12">
+            <div class="clearfix"></div>
+            <div class="pricings row clearfix">
+                <br>
+                <br>
+                <br>
+                @foreach (Product prod in Model)
+                {
+                    <div class="col-sm-6 col-md-4 col-lg-3">
+                        <div class="pricing">
+                            <div class="title">
+                                @Html.ActionLink(prod.Name, "VirtualPrivateServer", "Service", new { id = prod.Id })
+                                <a href="#">First Package</a>
+                            </div>
+                            <div class="price-box">
+                                <div class="icon pull-right border circle">
+                                    <span class="livicon" data-n="wrench" data-s="32" data-c="#1e1e1e" data-hc="0"></span>
+                                </div>
+                                @if (prod.Prices.Count > 0)
+                                {
+                                    <div class="h5">@prod.Prices.SingleOrDefault(pr => pr.IsDefault).Price.ToString("N0")<span>vnđ /tháng</span></div>
+                                }
+                            </div>
+                            @if (prod.Properties.Count > 0)
                             {
-                                <li class="active"><span><i class="fa fa-check"></i></span>@property.Name</li>
+                                <ul class="options">
+                                    @foreach (var property in prod.Properties)
+                                    {
+                                        <li class="active"><span><i class="fa fa-check"></i></span>@property.Name</li>
+                                    }
+                                </ul>
                             }
-                        </ul>
-                    }
-                    <div class="bottom-box">
-                        <a href="@Url.Action("VirtualPrivateServer", "Service", new { id = prod.Id })" class="more">Chi tiết <span class="fa fa-angle-right"></span></a>
-                        <button class="btn btn-default btn-lg">Đăng ký</button>
+                            <div class="bottom-box">
+                                <a href="@Url.Action("VirtualPrivateServer", "Service", new { id = prod.Id })" class="more">Chi tiết <span class="fa fa-angle-right"></span></a>
+                                <button class="btn btn-default btn-lg">Đăng ký</button>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-        }
-      </div><!-- .pricings -->
-    </article><!-- .content -->
-  </div>
+                }
+            </div><!-- .pricings -->
+        </article><!-- .content -->
+    </div>
 </div><!-- .container -->

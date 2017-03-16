@@ -6,503 +6,503 @@
 @await Html.PartialAsync("_SliderPartial", Model)
 
 <article class="content">
-  <div class="full-width-box">
-    <div class="fwb-bg bg-info"></div>
+    <div class="full-width-box">
+        <div class="fwb-bg bg-info"></div>
 
-    <div class="container">
-      <div class="row">
-        <div class="content-box white col-sm-6 col-md-6" data-appear-animation="bounceInLeft">
-          <div>100% Network Availability</div>
-          <h2 class="title light">The best service for <strong>VPS</strong></h2>
-          <p class="description">
-            Không gian lý tưởng để lưu trữ website của bạn
-          </p>
-          <div class="check-list">
-            <ul class="options">
-              <li><span><i class="fa fa-check"></i></span>Responsive Design</li>
-              <li class="active"><span><i class="fa fa-check"></i></span>Color Customization</li>
-              <li class="active"><span><i class="fa fa-check"></i></span>HTML5 &amp; CSS3</li>
-              <li class="active"><span><i class="fa fa-check"></i></span>Styled elements</li>
-              <li><span><i class="fa fa-check"></i></span>Easy Setup</li>
-            </ul>
-          </div>
-          <button class="btn btn-white btn-default">Buy now</button>
-          <br><br>
-        </div>
-        <div class="images-box col-sm-6 col-md-6" data-appear-animation="bounceInRight">
-          <img class="replace-2x" src="http://demo.nrgthemes.com/projects/nrghostmaterial/img/slide-new-1.png" alt="">
-        </div>
-      </div>
-    </div>
-  </div><!-- .full-width-box -->
-
-  <div class="full-width-box">
-    <div class="fwb-bg fwb-fixed band-1"><div class="overlay"></div></div>
-    <div class="container">
-      <div class="row text-center">
-        @foreach (var product in Model.HomeProductFeature)
-        {
-            <div class="col-sm-6 col-md-4 col-lg-3">
-              <div class="pricing pricing-danger">
-                <div class="title">
-                  @Html.ActionLink(product.Name, "VpsPage", "Home", new { Id = product.Id }, null)
-                </div>
-                <div class="price-box">
-                  <div class="price">@product.Prices.SingleOrDefault(pr => pr.IsDefault).Price.ToString("N0")<span>vnđ /tháng</span></div>
-                </div>
-                <ul class="options">
-                  @foreach (var property in product.Properties)
-                  {
-                      <li class="active"><span><i class="fa fa-check"></i></span>@property.Name</li>
-                  }
-                  @foreach (var price in product.Prices)
-                  {
-                      if (price.IsDefault)
-                      {
-                            <li class="active"><span><i class="fa fa-check"></i></span>@price.Name - @price.Price.ToString("N0") vnđ/tháng</li>
-                      }
-                      else
-                      {
-                            <li><span><i class="fa fa-check"></i></span>@price.Name - @price.Price.ToString("N0") vnđ/tháng</li>
-                      }
-                  }
-                </ul>
-                <div class="bottom-box">
-                  <a href="@Url.Action("VirtualPrivateServer", "Service", new { Id = product.Id })" class="more">Chi tiết <span class="fa fa-angle-right"></span></a>
-                  <div class="rating-box">
-                    <div style="width: 100%" class="rating">
-                      <svg x="0" y="0" width="73px" height="12px" viewBox="0 0 73 12" enable-fwb-bg="new 0 0 73 12" xml:space="preserve">
-                      <polygon fill-rule="evenodd" clip-rule="evenodd" fill="#1e1e1e" points="6.5,0 8,5 13,5 9,7.7 10,12 6.5,9.2 3,12 4,7.7 0,5 5,5"></polygon>
-                      <polygon fill-rule="evenodd" clip-rule="evenodd" fill="#1e1e1e" points="66.5,0 68,5 73,5 69,7.7 70,12 66.5,9.2 63,12 64,7.7 60,5 65,5 "></polygon>
-                      <polygon fill-rule="evenodd" clip-rule="evenodd" fill="#1e1e1e" points="21.5,0 23,5 28,5 24,7.7 25,12 21.5,9.2 18,12 19,7.7 15,5 20,5 "></polygon>
-                      <polygon fill-rule="evenodd" clip-rule="evenodd" fill="#1e1e1e" points="51.5,0 53,5 58,5 54,7.7 55,12 51.5,9.2 48,12 49,7.7 45,5 50,5 "></polygon>
-                      <polygon fill-rule="evenodd" clip-rule="evenodd" fill="#1e1e1e" points="36.5,0 38,5 43,5 39,7.7 40,12 36.5,9.2 33,12 34,7.7 30,5 35,5 "></polygon>
-                      </svg>
+        <div class="container">
+            <div class="row">
+                <div class="content-box white col-sm-6 col-md-6" data-appear-animation="bounceInLeft">
+                    <div>100% Network Availability</div>
+                    <h2 class="title light">The best service for <strong>VPS</strong></h2>
+                    <p class="description">
+                        Không gian lý tưởng để lưu trữ website của bạn
+                    </p>
+                    <div class="check-list">
+                        <ul class="options">
+                            <li><span><i class="fa fa-check"></i></span>Responsive Design</li>
+                            <li class="active"><span><i class="fa fa-check"></i></span>Color Customization</li>
+                            <li class="active"><span><i class="fa fa-check"></i></span>HTML5 &amp; CSS3</li>
+                            <li class="active"><span><i class="fa fa-check"></i></span>Styled elements</li>
+                            <li><span><i class="fa fa-check"></i></span>Easy Setup</li>
+                        </ul>
                     </div>
-                  </div>
-                  <div class="clearfix"></div>
-                  <a class="btn btn-default btn-lg" href="@Url.Action("Vps", "ConfigureProduct", new { productId = product.Id })">Đặt mua</a>
-                </div><!-- .pricing -->
-              </div>
+                    <button class="btn btn-white btn-default">Buy now</button>
+                    <br><br>
+                </div>
+                <div class="images-box col-sm-6 col-md-6" data-appear-animation="bounceInRight">
+                    <img class="replace-2x" src="http://demo.nrgthemes.com/projects/nrghostmaterial/img/slide-new-1.png" alt="">
+                </div>
             </div>
-        }
-      </div>
-    </div>
-  </div><!-- .full-width-box -->
+        </div>
+    </div><!-- .full-width-box -->
 
-  <div class="full-width-box bottom-padding cm-padding-bottom-36">
-    <div class="fwb-bg bg-danger"></div>
+    <div class="full-width-box">
+        <div class="fwb-bg fwb-fixed band-1"><div class="overlay"></div></div>
+        <div class="container">
+            <div class="row text-center">
+                @foreach (var product in Model.HomeProductFeature)
+                {
+                    <div class="col-sm-6 col-md-4 col-lg-3">
+                        <div class="pricing pricing-danger">
+                            <div class="title">
+                                @Html.ActionLink(product.Name, "VpsPage", "Home", new { Id = product.Id }, null)
+                            </div>
+                            <div class="price-box">
+                                <div class="price">@product.Prices.SingleOrDefault(pr => pr.IsDefault).Price.ToString("N0")<span>vnđ /tháng</span></div>
+                            </div>
+                            <ul class="options">
+                                @foreach (var property in product.Properties)
+                                {
+                                    <li class="active"><span><i class="fa fa-check"></i></span>@property.Name</li>
+                                }
+                                @foreach (var price in product.Prices)
+                                {
+                                    if (price.IsDefault)
+                                    {
+                                        <li class="active"><span><i class="fa fa-check"></i></span>@price.Name - @price.Price.ToString("N0") vnđ/tháng</li>
+                                    }
+                                    else
+                                    {
+                                        <li><span><i class="fa fa-check"></i></span>@price.Name - @price.Price.ToString("N0") vnđ/tháng</li>
+                                    }
+                                }
+                            </ul>
+                            <div class="bottom-box">
+                                <a href="@Url.Action("VirtualPrivateServer", "Service", new { Id = product.Id })" class="more">Chi tiết <span class="fa fa-angle-right"></span></a>
+                                <div class="rating-box">
+                                    <div style="width: 100%" class="rating">
+                                        <svg x="0" y="0" width="73px" height="12px" viewBox="0 0 73 12" enable-fwb-bg="new 0 0 73 12" xml:space="preserve">
+                                        <polygon fill-rule="evenodd" clip-rule="evenodd" fill="#1e1e1e" points="6.5,0 8,5 13,5 9,7.7 10,12 6.5,9.2 3,12 4,7.7 0,5 5,5"></polygon>
+                                        <polygon fill-rule="evenodd" clip-rule="evenodd" fill="#1e1e1e" points="66.5,0 68,5 73,5 69,7.7 70,12 66.5,9.2 63,12 64,7.7 60,5 65,5 "></polygon>
+                                        <polygon fill-rule="evenodd" clip-rule="evenodd" fill="#1e1e1e" points="21.5,0 23,5 28,5 24,7.7 25,12 21.5,9.2 18,12 19,7.7 15,5 20,5 "></polygon>
+                                        <polygon fill-rule="evenodd" clip-rule="evenodd" fill="#1e1e1e" points="51.5,0 53,5 58,5 54,7.7 55,12 51.5,9.2 48,12 49,7.7 45,5 50,5 "></polygon>
+                                        <polygon fill-rule="evenodd" clip-rule="evenodd" fill="#1e1e1e" points="36.5,0 38,5 43,5 39,7.7 40,12 36.5,9.2 33,12 34,7.7 30,5 35,5 "></polygon>
+                      </svg>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <a class="btn btn-default btn-lg" href="@Url.Action("Vps", "ConfigureProduct", new { productId = product.Id })">Đặt mua</a>
+                            </div><!-- .pricing -->
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div><!-- .full-width-box -->
+
+    <div class="full-width-box bottom-padding cm-padding-bottom-36">
+        <div class="fwb-bg bg-danger"></div>
+
+        <div class="container">
+            <div class="row">
+                <div class="images-box col-sm-6 col-md-6" data-appear-animation="bounceInLeft">
+                    <img class="replace-2x" src="http://demo.nrgthemes.com/projects/nrghostmaterial/img/slide-new-2.png" alt="">
+                </div>
+                <div class="content-box white col-sm-6 col-md-6" data-appear-animation="bounceInRight">
+                    <div>100% Network Availability</div>
+                    <h2 class="title light">The best service for <strong>VPS</strong></h2>
+                    <p class="description">
+                        Không gian lý tưởng để lưu trữ website của bạn
+                    </p>
+                    <div class="check-list">
+                        <ul class="options">
+                            <li><span><i class="fa fa-check"></i></span>Responsive Design</li>
+                            <li class="active"><span><i class="fa fa-check"></i></span>Color Customization</li>
+                            <li class="active"><span><i class="fa fa-check"></i></span>HTML5 &amp; CSS3</li>
+                            <li class="active"><span><i class="fa fa-check"></i></span>Styled elements</li>
+                            <li><span><i class="fa fa-check"></i></span>Easy Setup</li>
+                        </ul>
+                    </div>
+                    <button class="btn btn-white btn-default">Buy now</button>
+                    <br><br>
+                </div>
+            </div>
+        </div>
+    </div><!-- .full-width-box -->
 
     <div class="container">
-      <div class="row">
-        <div class="images-box col-sm-6 col-md-6" data-appear-animation="bounceInLeft">
-          <img class="replace-2x" src="http://demo.nrgthemes.com/projects/nrghostmaterial/img/slide-new-2.png" alt="">
-        </div>
-        <div class="content-box white col-sm-6 col-md-6" data-appear-animation="bounceInRight">
-          <div>100% Network Availability</div>
-          <h2 class="title light">The best service for <strong>VPS</strong></h2>
-          <p class="description">
-            Không gian lý tưởng để lưu trữ website của bạn
-          </p>
-          <div class="check-list">
-            <ul class="options">
-              <li><span><i class="fa fa-check"></i></span>Responsive Design</li>
-              <li class="active"><span><i class="fa fa-check"></i></span>Color Customization</li>
-              <li class="active"><span><i class="fa fa-check"></i></span>HTML5 &amp; CSS3</li>
-              <li class="active"><span><i class="fa fa-check"></i></span>Styled elements</li>
-              <li><span><i class="fa fa-check"></i></span>Easy Setup</li>
-            </ul>
-          </div>
-          <button class="btn btn-white btn-default">Buy now</button>
-          <br><br>
-        </div>
-      </div>
-    </div>
-  </div><!-- .full-width-box -->
-
-  <div class="container">
-    <div class="title-box">
-      <h1 class="title">CÁC GÓI DỊCH VỤ VPS ĐÃ BAO GỒM</h1>
-    </div>
-    <div class="row">
-      <div class="col-sm-6 col-md-6 bottom-padding">
-        <p class="lead">
-          <strong>
-            Được xây dựng trên nền tảng ảo hóa đám mây theo công nghệ Virtuozzo,
-            TaTa đã đầu tư và triển khai dịch vụ Cloud Server với những cụm máy chủ cực mạnh chính hãng IBM, Dell,
-            kết hợp với công nghệ lưu trữ Virtuozzo Storage sử dụng ổ cứng SSD đảm bảo lưu trữ dữ liệu an toàn,
-            tốc độ truy suất nhanh và giảm thời gian downtime xuống mức thấp nhất.
-          </strong>
-        </p>
-        <p>
-          <ul class="list-unstyled">
-            <li><span><i class="fa fa-check"></i></span> Đội ngũ hỗ trợ kỹ thuật tiêu chuẩn 525.600.</li>
-            <li><span><i class="fa fa-check"></i></span> Toàn quyền kiểm soát, điều khiển từ xa và quản trị máy chủ.</li>
-            <li><span><i class="fa fa-check"></i></span> Sẵn sàng cho nâng cấp/ Mở rộng có hiệu lực chỉ trong 1 phút.</li>
-            <li><span><i class="fa fa-check"></i></span> Cài đặt lại hệ điều hành và hỗ trợ chuyển dữ liệu đến máy chủ miễn phí.</li>
-          </ul>
-        </p>
-        <a href="#" class="btn btn-default">Chi tiết</a>
-      </div>
-
-      <div class="col-sm-6 col-md-6 bottom-padding">
-        <div class="progress border-radius hover" data-appear-progress-animation="100%">
-          <div class="progress-bar progress-bar-info">Miễn phí một địa chỉ IP (public IP)</div>
-        </div>
-
-        <div class="progress border-radius" data-appear-progress-animation="100%">
-          <div class="progress-bar progress-bar-success">Đường truyền tốc độ cao lên tới 1Gbps trong nước và 10Mbps quốc tế.</div>
-        </div>
-
-        <div class="progress border-radius" data-appear-progress-animation="100%">
-          <div class="progress-bar progress-bar-info">Sao lưu hàng tuần - khôi phục nhanh chóng</div>
-        </div>
-
-        <div class="progress border-radius" data-appear-progress-animation="100%">
-          <div class="progress-bar progress-bar-warning">Băng thông sử dụng không giới hạn</div>
-        </div>
-
-
-        <div class="progress border-radius" data-appear-progress-animation="100%">
-          <div class="progress-bar progress-bar-danger">Máy chủ luôn hoạt động với thời gian Uptime lên đến 99.9%</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="carousel-box bottom-padding load">
-      <div class="clearfix"></div>
-
-      <div class="row">
-        <div class="carousel no-responsive gallery">
-          <div class="col-sm-4 col-md-3">
-            <a class="gallery-images" rel="fancybox" href="content/img/office-1.jpg">
-              <img class="replace-2x" src="content/img/office-1-270.jpg" width="270" height="135" alt="">
-              <span class="bg-images"><i class="fa fa-search"></i></span>
-            </a>
-          </div>
-          <div class="col-sm-4 col-md-3">
-            <a class="gallery-images" rel="fancybox" href="content/img/office-2.jpg">
-              <img class="replace-2x" src="content/img/office-2-270.jpg" width="270" height="135" alt="">
-              <span class="bg-images"><i class="fa fa-search"></i></span>
-            </a>
-          </div>
-          <div class="col-sm-4 col-md-3">
-            <a class="gallery-images" rel="fancybox" href="content/img/office-3.jpg">
-              <img class="replace-2x" src="content/img/office-3-270.jpg" width="270" height="135" alt="">
-              <span class="bg-images"><i class="fa fa-search"></i></span>
-            </a>
-          </div>
-          <div class="col-sm-4 col-md-3">
-            <a class="gallery-images" rel="fancybox" href="content/img/office-4.jpg">
-              <img class="replace-2x" src="content/img/office-4-270.jpg" width="270" height="135" alt="">
-              <span class="bg-images"><i class="fa fa-search"></i></span>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="clearfix"></div>
-  </div>
-
-  <div class="container">
-    <div class="row services">
-      <div class="col-sm-12 col-md-12">
         <div class="title-box">
-          <h1 class="title">NHANH CHÓNG - MẠNH MẼ - AN TOÀN</h1>
+            <h1 class="title">CÁC GÓI DỊCH VỤ VPS ĐÃ BAO GỒM</h1>
         </div>
-      </div>
+        <div class="row">
+            <div class="col-sm-6 col-md-6 bottom-padding">
+                <p class="lead">
+                    <strong>
+                        Được xây dựng trên nền tảng ảo hóa đám mây theo công nghệ Virtuozzo,
+                        TaTa đã đầu tư và triển khai dịch vụ Cloud Server với những cụm máy chủ cực mạnh chính hãng IBM, Dell,
+                        kết hợp với công nghệ lưu trữ Virtuozzo Storage sử dụng ổ cứng SSD đảm bảo lưu trữ dữ liệu an toàn,
+                        tốc độ truy suất nhanh và giảm thời gian downtime xuống mức thấp nhất.
+                    </strong>
+                </p>
+                <p>
+                    <ul class="list-unstyled">
+                        <li><span><i class="fa fa-check"></i></span> Đội ngũ hỗ trợ kỹ thuật tiêu chuẩn 525.600.</li>
+                        <li><span><i class="fa fa-check"></i></span> Toàn quyền kiểm soát, điều khiển từ xa và quản trị máy chủ.</li>
+                        <li><span><i class="fa fa-check"></i></span> Sẵn sàng cho nâng cấp/ Mở rộng có hiệu lực chỉ trong 1 phút.</li>
+                        <li><span><i class="fa fa-check"></i></span> Cài đặt lại hệ điều hành và hỗ trợ chuyển dữ liệu đến máy chủ miễn phí.</li>
+                    </ul>
+                </p>
+                <a href="#" class="btn btn-default">Chi tiết</a>
+            </div>
 
-      <div class="big-services-box col-sm-4 col-md-4">
-        <div>
-          <div class="big-icon bg" data-appear-animation="wobble"><i class="fa fa-space-shuttle"></i></div>
-          <h4 class="title" data-appear-animation="bounceInLeft">KHỞI TẠO MÁY CHỦ LẬP TỨC</h4>
-          <div class="text-small" data-appear-animation="bounceInLeft">
-            Khi nhận được yêu cầu, TaTa sẽ khởi tạo trong vòng 15 phút là có thể sử dụng được ngay.
-            <div class="clearfix"></div><br />
-          </div>
-        </div>
-      </div>
+            <div class="col-sm-6 col-md-6 bottom-padding">
+                <div class="progress border-radius hover" data-appear-progress-animation="100%">
+                    <div class="progress-bar progress-bar-info">Miễn phí một địa chỉ IP (public IP)</div>
+                </div>
 
-      <div class="big-services-box col-sm-4 col-md-4">
-        <div>
-          <div class="big-icon bg" data-appear-animation="wobble"><i class="fa fa-heartbeat"></i></div>
-          <h4 class="title" data-appear-animation="bounceInUp">ONLINE 99.9%</h4>
-          <div class="text-small" data-appear-animation="bounceInUp">
-            Cơ chế nhân bản (Replicas) đảm bảo cho Cloud Server luôn hoạt động ngay cả khi có sự cố bất ngờ xảy ra trên phần cứng của máy chủ vật lý.
-            Đây là điều mà các máy chủ thông thường không thể nào làm được.
-            <div class="clearfix"></div><br />
-          </div>
-        </div>
-      </div>
+                <div class="progress border-radius" data-appear-progress-animation="100%">
+                    <div class="progress-bar progress-bar-success">Đường truyền tốc độ cao lên tới 1Gbps trong nước và 10Mbps quốc tế.</div>
+                </div>
 
-      <div class="big-services-box col-sm-4 col-md-4">
-        <div>
-          <div class="big-icon bg" data-appear-animation="wobble"><i class="fa fa-flash"></i></div>
-          <h4 class="title" data-appear-animation="bounceInRight">NÂNG CẤP TỨC THÌ</h4>
-          <div class="text-small" data-appear-animation="bounceInRight">
-            Khả năng mở rộng, tùy chỉnh cấu hình Cloud server (RAM, CPU, HDD) gần như ngay lập tức có hiệu nghiệm mà không cần phải thao tác trực tiếp trên máy chủ truyền thống.
-            <div class="clearfix"></div><br />
-          </div>
+                <div class="progress border-radius" data-appear-progress-animation="100%">
+                    <div class="progress-bar progress-bar-info">Sao lưu hàng tuần - khôi phục nhanh chóng</div>
+                </div>
+
+                <div class="progress border-radius" data-appear-progress-animation="100%">
+                    <div class="progress-bar progress-bar-warning">Băng thông sử dụng không giới hạn</div>
+                </div>
+
+
+                <div class="progress border-radius" data-appear-progress-animation="100%">
+                    <div class="progress-bar progress-bar-danger">Máy chủ luôn hoạt động với thời gian Uptime lên đến 99.9%</div>
+                </div>
+            </div>
         </div>
-      </div>
+
+        <div class="carousel-box bottom-padding load">
+            <div class="clearfix"></div>
+
+            <div class="row">
+                <div class="carousel no-responsive gallery">
+                    <div class="col-sm-4 col-md-3">
+                        <a class="gallery-images" rel="fancybox" href="content/img/office-1.jpg">
+                            <img class="replace-2x" src="content/img/office-1-270.jpg" width="270" height="135" alt="">
+                            <span class="bg-images"><i class="fa fa-search"></i></span>
+                        </a>
+                    </div>
+                    <div class="col-sm-4 col-md-3">
+                        <a class="gallery-images" rel="fancybox" href="content/img/office-2.jpg">
+                            <img class="replace-2x" src="content/img/office-2-270.jpg" width="270" height="135" alt="">
+                            <span class="bg-images"><i class="fa fa-search"></i></span>
+                        </a>
+                    </div>
+                    <div class="col-sm-4 col-md-3">
+                        <a class="gallery-images" rel="fancybox" href="content/img/office-3.jpg">
+                            <img class="replace-2x" src="content/img/office-3-270.jpg" width="270" height="135" alt="">
+                            <span class="bg-images"><i class="fa fa-search"></i></span>
+                        </a>
+                    </div>
+                    <div class="col-sm-4 col-md-3">
+                        <a class="gallery-images" rel="fancybox" href="content/img/office-4.jpg">
+                            <img class="replace-2x" src="content/img/office-4-270.jpg" width="270" height="135" alt="">
+                            <span class="bg-images"><i class="fa fa-search"></i></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
     </div>
-    <div class="row services">
-      <div class="big-services-box col-sm-4 col-md-4">
-        <div>
-          <div class="big-icon bg" data-appear-animation="wobble"><i class="fa fa-support"></i></div>
-          <h4 class="title" data-appear-animation="bounceInRight">HỖ TRỢ THEO TIÊU CHUẨN 525.600</h4>
-          <div class="text-small" data-appear-animation="bounceInRight">
-            TaTa cam kết phục vụ bằng sự hiểu biết và tận tâm. Nhân viên Hỗ trợ của chúng tôi làm việc liên tục 24h/7/365 để đem lại sự an tâm cho bạn
-            <div class="clearfix"></div><br />
-          </div>
-        </div>
-      </div>
-      <div class="big-services-box col-sm-4 col-md-4">
-        <div>
-          <div class="big-icon bg" data-appear-animation="wobble"><i class="fa fa-rocket"></i></div>
-          <h4 class="title" data-appear-animation="bounceInRight">NHANH HƠN GẤP 3 LẦN</h4>
-          <div class="text-small" data-appear-animation="bounceInRight">
-            <br /><br />
-            Máy chủ nguyên bộ cùng ổ cứng SSD + tính năng SSD catching, việc truy cập website của bạn nhanh hơn đến 3 lần so với thông thường.
-            <div class="clearfix"></div><br />
-          </div>
-        </div>
-      </div>
-      <div class="big-services-box col-sm-4 col-md-4">
-        <div>
-          <div class="big-icon bg" data-appear-animation="wobble"><i class="fa fa-shield"></i></div>
-          <h4 class="title" data-appear-animation="bounceInRight">AN TOÀN VÀ BẢO MẬT CAO</h4>
-          <div class="text-small" data-appear-animation="bounceInRight">
-            <br /><br />
-            Hệ thống lưu trữ phân tán theo công nghệ Virtuozzo Storage giúp an toàn dữ liệu.
-            Hệ thống tường lửa mạnh mẽ giúp kiểm soát và ngăn chặn các truy cập trái phép.
-            <div class="clearfix"></div><br />
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 
-  <div class="container">
-    <div class="row">
-      <div class="bottom-padding col-sm-6 col-md-6">
-        <div class="carousel-box load overflow" data-carousel-pagination="true" data-carousel-nav="false" data-carousel-one="true" data-autoplay-disable="true">
-          <div class="title-box">
-            <a class="next" href="#">
-              <svg x="0" y="0" width="9px" height="16px" viewBox="0 0 9 16" enable-background="new 0 0 9 16" xml:space="preserve">
-              <polygon fill-rule="evenodd" clip-rule="evenodd" fill="#fcfcfc" points="1,0.001 0,1.001 7,8 0,14.999 1,15.999 9,8 "></polygon>
+    <div class="container">
+        <div class="row services">
+            <div class="col-sm-12 col-md-12">
+                <div class="title-box">
+                    <h1 class="title">NHANH CHÓNG - MẠNH MẼ - AN TOÀN</h1>
+                </div>
+            </div>
+
+            <div class="big-services-box col-sm-4 col-md-4">
+                <div>
+                    <div class="big-icon bg" data-appear-animation="wobble"><i class="fa fa-space-shuttle"></i></div>
+                    <h4 class="title" data-appear-animation="bounceInLeft">KHỞI TẠO MÁY CHỦ LẬP TỨC</h4>
+                    <div class="text-small" data-appear-animation="bounceInLeft">
+                        Khi nhận được yêu cầu, TaTa sẽ khởi tạo trong vòng 15 phút là có thể sử dụng được ngay.
+                        <div class="clearfix"></div><br />
+                    </div>
+                </div>
+            </div>
+
+            <div class="big-services-box col-sm-4 col-md-4">
+                <div>
+                    <div class="big-icon bg" data-appear-animation="wobble"><i class="fa fa-heartbeat"></i></div>
+                    <h4 class="title" data-appear-animation="bounceInUp">ONLINE 99.9%</h4>
+                    <div class="text-small" data-appear-animation="bounceInUp">
+                        Cơ chế nhân bản (Replicas) đảm bảo cho Cloud Server luôn hoạt động ngay cả khi có sự cố bất ngờ xảy ra trên phần cứng của máy chủ vật lý.
+                        Đây là điều mà các máy chủ thông thường không thể nào làm được.
+                        <div class="clearfix"></div><br />
+                    </div>
+                </div>
+            </div>
+
+            <div class="big-services-box col-sm-4 col-md-4">
+                <div>
+                    <div class="big-icon bg" data-appear-animation="wobble"><i class="fa fa-flash"></i></div>
+                    <h4 class="title" data-appear-animation="bounceInRight">NÂNG CẤP TỨC THÌ</h4>
+                    <div class="text-small" data-appear-animation="bounceInRight">
+                        Khả năng mở rộng, tùy chỉnh cấu hình Cloud server (RAM, CPU, HDD) gần như ngay lập tức có hiệu nghiệm mà không cần phải thao tác trực tiếp trên máy chủ truyền thống.
+                        <div class="clearfix"></div><br />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row services">
+            <div class="big-services-box col-sm-4 col-md-4">
+                <div>
+                    <div class="big-icon bg" data-appear-animation="wobble"><i class="fa fa-support"></i></div>
+                    <h4 class="title" data-appear-animation="bounceInRight">HỖ TRỢ THEO TIÊU CHUẨN 525.600</h4>
+                    <div class="text-small" data-appear-animation="bounceInRight">
+                        TaTa cam kết phục vụ bằng sự hiểu biết và tận tâm. Nhân viên Hỗ trợ của chúng tôi làm việc liên tục 24h/7/365 để đem lại sự an tâm cho bạn
+                        <div class="clearfix"></div><br />
+                    </div>
+                </div>
+            </div>
+            <div class="big-services-box col-sm-4 col-md-4">
+                <div>
+                    <div class="big-icon bg" data-appear-animation="wobble"><i class="fa fa-rocket"></i></div>
+                    <h4 class="title" data-appear-animation="bounceInRight">NHANH HƠN GẤP 3 LẦN</h4>
+                    <div class="text-small" data-appear-animation="bounceInRight">
+                        <br /><br />
+                        Máy chủ nguyên bộ cùng ổ cứng SSD + tính năng SSD catching, việc truy cập website của bạn nhanh hơn đến 3 lần so với thông thường.
+                        <div class="clearfix"></div><br />
+                    </div>
+                </div>
+            </div>
+            <div class="big-services-box col-sm-4 col-md-4">
+                <div>
+                    <div class="big-icon bg" data-appear-animation="wobble"><i class="fa fa-shield"></i></div>
+                    <h4 class="title" data-appear-animation="bounceInRight">AN TOÀN VÀ BẢO MẬT CAO</h4>
+                    <div class="text-small" data-appear-animation="bounceInRight">
+                        <br /><br />
+                        Hệ thống lưu trữ phân tán theo công nghệ Virtuozzo Storage giúp an toàn dữ liệu.
+                        Hệ thống tường lửa mạnh mẽ giúp kiểm soát và ngăn chặn các truy cập trái phép.
+                        <div class="clearfix"></div><br />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="bottom-padding col-sm-6 col-md-6">
+                <div class="carousel-box load overflow" data-carousel-pagination="true" data-carousel-nav="false" data-carousel-one="true" data-autoplay-disable="true">
+                    <div class="title-box">
+                        <a class="next" href="#">
+                            <svg x="0" y="0" width="9px" height="16px" viewBox="0 0 9 16" enable-background="new 0 0 9 16" xml:space="preserve">
+                            <polygon fill-rule="evenodd" clip-rule="evenodd" fill="#fcfcfc" points="1,0.001 0,1.001 7,8 0,14.999 1,15.999 9,8 "></polygon>
                 </svg>
-            </a>
-            <a class="prev" href="#">
-              <svg x="0" y="0" width="9px" height="16px" viewBox="0 0 9 16" enable-background="new 0 0 9 16" xml:space="preserve">
-              <polygon fill-rule="evenodd" clip-rule="evenodd" fill="#fcfcfc" points="8,15.999 9,14.999 2,8 9,1.001 8,0.001 0,8 "></polygon>
+                        </a>
+                        <a class="prev" href="#">
+                            <svg x="0" y="0" width="9px" height="16px" viewBox="0 0 9 16" enable-background="new 0 0 9 16" xml:space="preserve">
+                            <polygon fill-rule="evenodd" clip-rule="evenodd" fill="#fcfcfc" points="8,15.999 9,14.999 2,8 9,1.001 8,0.001 0,8 "></polygon>
                 </svg>
-            </a>
-            <h2 class="title">Thông tin</h2>
-          </div>
+                        </a>
+                        <h2 class="title">Thông tin</h2>
+                    </div>
 
-          <div class="clearfix"></div>
+                    <div class="clearfix"></div>
 
-          <div class="row">
-            <div class="carousel no-responsive">
-              <div class="post">
-                <h2 class="entry-title"><a href="#">CÔNG NGHỆ ẢO HÓA TỐI ƯU</a></h2>
-                <div class="entry-content">
-                  Được xây dựng trên nền tảng ảo hóa đám mây theo công nghệ Virtuozzo,
-                  TaTa đã đầu tư và triển khai dịch vụ Cloud Server với những cụm máy chủ cực mạnh chính hãng IBM, Dell,
-                  kết hợp với công nghệ lưu trữ Virtuozzo Storage sử dụng ổ cứng SSD đảm bảo lưu trữ dữ liệu an toàn,
-                  tốc độ truy suất nhanh và giảm thời gian downtime xuống mức thấp nhất.
+                    <div class="row">
+                        <div class="carousel no-responsive">
+                            <div class="post">
+                                <h2 class="entry-title"><a href="#">CÔNG NGHỆ ẢO HÓA TỐI ƯU</a></h2>
+                                <div class="entry-content">
+                                    Được xây dựng trên nền tảng ảo hóa đám mây theo công nghệ Virtuozzo,
+                                    TaTa đã đầu tư và triển khai dịch vụ Cloud Server với những cụm máy chủ cực mạnh chính hãng IBM, Dell,
+                                    kết hợp với công nghệ lưu trữ Virtuozzo Storage sử dụng ổ cứng SSD đảm bảo lưu trữ dữ liệu an toàn,
+                                    tốc độ truy suất nhanh và giảm thời gian downtime xuống mức thấp nhất.
 
-                  <ul class="list-unstyled">
-                    <li><span><i class="fa fa-check"></i></span> Tính sẵn sàng rất cao.</li>
-                    <li><span><i class="fa fa-check"></i></span> Tự động nâng cấp OS.</li>
-                    <li><span><i class="fa fa-check"></i></span> CPU intel xeon VT-x từ 6 đến 16 Core.</li>
-                    <li><span><i class="fa fa-check"></i></span> Chủ động thao tác sao lưu dữ liệu.</li>
-                  </ul>
+                                    <ul class="list-unstyled">
+                                        <li><span><i class="fa fa-check"></i></span> Tính sẵn sàng rất cao.</li>
+                                        <li><span><i class="fa fa-check"></i></span> Tự động nâng cấp OS.</li>
+                                        <li><span><i class="fa fa-check"></i></span> CPU intel xeon VT-x từ 6 đến 16 Core.</li>
+                                        <li><span><i class="fa fa-check"></i></span> Chủ động thao tác sao lưu dữ liệu.</li>
+                                    </ul>
+                                </div>
+
+                                <div class="entry-meta">
+                                    <span class="autor-name">TaTa Hosting</span>,
+                                    <span class="time">01.01.2017</span>
+                                </div>
+                            </div>
+
+                            <div class="post">
+                                <h2 class="entry-title"><a href="#">BẢNG ĐIỀU KHIỂN CHUYÊN NGHIỆP</a></h2>
+                                <div class="entry-content">
+                                    Plesk là một hệ thống quản lý máy chủ có thể hoạt động trên 2 hệ điều hành Window & Linux.
+                                    Với giao diện quản lý thân thiện trên mọi thiết bị, Plesk là lựa chọn số một trong việc quản lý hosting/máy chủ hiện nay.
+                                </div>
+
+                                <div class="entry-meta">
+                                    <span class="autor-name">TaTa Hosting</span>,
+                                    <span class="time">02.01.2017</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                    <div class="pagination switches"></div>
                 </div>
-
-                <div class="entry-meta">
-                  <span class="autor-name">TaTa Hosting</span>,
-                  <span class="time">01.01.2017</span>
-                </div>
-              </div>
-
-              <div class="post">
-                <h2 class="entry-title"><a href="#">BẢNG ĐIỀU KHIỂN CHUYÊN NGHIỆP</a></h2>
-                <div class="entry-content">
-                  Plesk là một hệ thống quản lý máy chủ có thể hoạt động trên 2 hệ điều hành Window & Linux.
-                  Với giao diện quản lý thân thiện trên mọi thiết bị, Plesk là lựa chọn số một trong việc quản lý hosting/máy chủ hiện nay.
-                </div>
-
-                <div class="entry-meta">
-                  <span class="autor-name">TaTa Hosting</span>,
-                  <span class="time">02.01.2017</span>
-                </div>
-              </div>
             </div>
-          </div>
 
-          <div class="clearfix"></div>
+            <div class="bottom-padding col-sm-6 col-md-6">
+                <div class="title-box">
+                    <h2 class="title">Dịch vụ</h2>
+                </div>
 
-          <div class="pagination switches"></div>
+                <div class="panel-group multi-collapse" id="accordion2">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion2" href="#collapse21">
+                                    CLOUD HOSTING
+                                </a>
+                            </div>
+                        </div>
+                        <div id="collapse21" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <img class="replace-2x alignright" src="images/vps.png" width="100" height="62" alt="">
+                                Bạn có thể yên tâm với hệ thống máy chủ mạnh mẽ, ổn định và bảo mật cao tại TaTa.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion2" href="#collapse22">
+                                    TÊN MIỀN
+                                </a>
+                            </div>
+                        </div>
+                        <div id="collapse22" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <img class="replace-2x alignright" src="images/domain.jpg" width="100" height="62" alt="">
+                                Đăng ký tên miền thương hiệu giúp khách hàng dễ dàng tìm thấy bạn trên Internet.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion2" href="#collapse23">
+                                    CLOUD SERVER
+                                </a>
+                            </div>
+                        </div>
+                        <div id="collapse23" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <img class="replace-2x alignleft" src="images/vps.png" width="100" height="62" alt="">
+                                TaTa cung cấp không gian lý tưởng để bạn lưu trữ và phát triển website của mình.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion2" href="#collapse24">
+                                    CHĂM SÓC KHÁCH HÀNG
+                                </a>
+                            </div>
+                        </div>
+                        <div id="collapse24" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <img class="replace-2x alignleft" src="images/customer.png" width="100" height="62" alt="">
+                                Thời gian nhanh chóng, đảm bảo độ tin cậy, chính xác chuyên nghiệp.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-
-      <div class="bottom-padding col-sm-6 col-md-6">
-        <div class="title-box">
-          <h2 class="title">Dịch vụ</h2>
-        </div>
-
-        <div class="panel-group multi-collapse" id="accordion2">
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <div class="panel-title">
-                <a data-toggle="collapse" data-parent="#accordion2" href="#collapse21">
-                  CLOUD HOSTING
-                </a>
-              </div>
-            </div>
-            <div id="collapse21" class="panel-collapse collapse">
-              <div class="panel-body">
-                <img class="replace-2x alignright" src="images/vps.png" width="100" height="62" alt="">
-                Bạn có thể yên tâm với hệ thống máy chủ mạnh mẽ, ổn định và bảo mật cao tại TaTa.
-              </div>
-            </div>
-          </div>
-
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <div class="panel-title">
-                <a data-toggle="collapse" data-parent="#accordion2" href="#collapse22">
-                  TÊN MIỀN
-                </a>
-              </div>
-            </div>
-            <div id="collapse22" class="panel-collapse collapse">
-              <div class="panel-body">
-                <img class="replace-2x alignright" src="images/domain.jpg" width="100" height="62" alt="">
-                Đăng ký tên miền thương hiệu giúp khách hàng dễ dàng tìm thấy bạn trên Internet.
-              </div>
-            </div>
-          </div>
-
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <div class="panel-title">
-                <a data-toggle="collapse" data-parent="#accordion2" href="#collapse23">
-                  CLOUD SERVER
-                </a>
-              </div>
-            </div>
-            <div id="collapse23" class="panel-collapse collapse">
-              <div class="panel-body">
-                <img class="replace-2x alignleft" src="images/vps.png" width="100" height="62" alt="">
-                TaTa cung cấp không gian lý tưởng để bạn lưu trữ và phát triển website của mình.
-              </div>
-            </div>
-          </div>
-
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <div class="panel-title">
-                <a data-toggle="collapse" data-parent="#accordion2" href="#collapse24">
-                  CHĂM SÓC KHÁCH HÀNG
-                </a>
-              </div>
-            </div>
-            <div id="collapse24" class="panel-collapse collapse">
-              <div class="panel-body">
-                <img class="replace-2x alignleft" src="images/customer.png" width="100" height="62" alt="">
-                Thời gian nhanh chóng, đảm bảo độ tin cậy, chính xác chuyên nghiệp.
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
-  </div>
 
-  <div class="container">
-    <div class="row">
-      <div class="col-sm-12 col-md-6 promo-partners bottom-padding">
-        <div class="title-box">
-          <h2 class="title">ĐỐI TÁC</h2>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-6 promo-partners bottom-padding">
+                <div class="title-box">
+                    <h2 class="title">ĐỐI TÁC</h2>
+                </div>
+                <div class="row manufactures manufactures-list">
+                    <div class="make-wrapper">
+                        <a href="#" class="make">
+                            <img class="replace-2x" src="images/icannnew-h.png" width="128" height="128" alt="">
+                        </a>
+                    </div>
+                    <!--
+
+                    -->
+                    <div class="make-wrapper">
+                        <a href="#" class="make">
+                            <img class="replace-2x" src="images/cpanel-h.png" width="128" height="128" alt="">
+                        </a>
+                    </div>
+                    <!--
+
+                    -->
+                    <div class="make-wrapper">
+                        <a href="#" class="make">
+                            <img class="replace-2x" src="images/parallels-h.png" width="128" height="128" alt="">
+                        </a>
+                    </div>
+                </div>
+                <p>TaTa cung cấp cho đối tác nền tảng quản lý ưu việt để bạn yên tâm kinh doanh. Ngoài ra, những tính năng trong hệ thống được cập nhật liên tục.</p>
+                <p>
+                    Chúng tôi rất cảm ơn mọi thông tin phản hồi của Quý khách nhằm nâng cao chất lương dịch vụ.
+                    Bộ phận kỹ thuật của chúng tôi luôn trực tại số 1900-1234, quý khách có thể gọi đến bất kỳ lúc nào.
+                    Nếu có điều gì không hài lòng, quý khách vui lòng ghi rõ vào thông tin mẫu dưới đây, ban giám đốc TaTa sẽ cố gắng giải quyết trong thời gian sớm nhất.
+                </p>
+            </div><!-- .promo-partners -->
+
+            <div class="col-sm-12 col-md-6">
+                <div class="title-box">
+                    <a href="#" class="btn btn-default">Tin mới <span class="glyphicon glyphicon-arrow-right"></span></a>
+                    <h2 class="title">TIN TỨC</h2>
+                </div>
+                <ul class="latest-posts">
+                    <li>
+                        <img class="image img-circle replace-2x" src="images/news.jpg" alt="" title="" width="84" height="84" data-appear-animation="rotateIn">
+                        <div class="meta">
+                            <span>TaTa Hosting</span>,
+                            <span class="time">03.01.2017, 10:45:</span>
+                        </div>
+                        <div class="description">
+                            <a href="#">
+                                Sau hơn 1 tháng kể từ khi Thông tư 16 của Bộ TT&TT hướng dẫn chuyển nhượng quyền sử dụng tên miền Internet được cấp không thông qua đấu giá có hiệu lực, việc chuyển nhượng tên miền “.VN” vẫn chưa thể thực hiện do thiếu hướng dẫn về thuế của Bộ Tài chính.
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <img class="image img-circle replace-2x" src="images/larrypage.jpg" alt="" title="" width="84" height="84" data-appear-animation="rotateIn">
+                        <div class="meta">
+                            <span>TaTa Hosting</span>,
+                            <span class="time">03.01.2017, 10:45:</span>
+                        </div>
+                        <div class="description">
+                            <a href="#">
+                                Ngày 21/4 tới, Google sẽ tung ra một bản cập nhất lớn mảng tìm kiếm trên di động của mình.
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <img class="image img-circle replace-2x" src="images/facebook.jpg" alt="" title="" width="84" height="84" data-appear-animation="rotateIn">
+                        <div class="meta">
+                            <span>TaTa Hosting</span>,
+                            <span class="time">03.01.2017, 10:45:</span>
+                        </div>
+                        <div class="description">
+                            <a href="#">
+                                Facebook vừa công bố 3 thay đổi lớn trong thuật toán hiển thị post trên News Feed của người dùng, và điều này sẽ thiết lập một trật tự Web mới.
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </div>
-        <div class="row manufactures manufactures-list">
-          <div class="make-wrapper">
-            <a href="#" class="make">
-              <img class="replace-2x" src="images/icannnew-h.png" width="128" height="128" alt="">
-            </a>
-          </div>
-          <!--
-
-          -->
-          <div class="make-wrapper">
-            <a href="#" class="make">
-              <img class="replace-2x" src="images/cpanel-h.png" width="128" height="128" alt="">
-            </a>
-          </div>
-          <!--
-
-          -->
-          <div class="make-wrapper">
-            <a href="#" class="make">
-              <img class="replace-2x" src="images/parallels-h.png" width="128" height="128" alt="">
-            </a>
-          </div>
-        </div>
-        <p>TaTa cung cấp cho đối tác nền tảng quản lý ưu việt để bạn yên tâm kinh doanh. Ngoài ra, những tính năng trong hệ thống được cập nhật liên tục.</p>
-        <p>
-          Chúng tôi rất cảm ơn mọi thông tin phản hồi của Quý khách nhằm nâng cao chất lương dịch vụ.
-          Bộ phận kỹ thuật của chúng tôi luôn trực tại số 1900-1234, quý khách có thể gọi đến bất kỳ lúc nào.
-          Nếu có điều gì không hài lòng, quý khách vui lòng ghi rõ vào thông tin mẫu dưới đây, ban giám đốc TaTa sẽ cố gắng giải quyết trong thời gian sớm nhất.
-        </p>
-      </div><!-- .promo-partners -->
-
-      <div class="col-sm-12 col-md-6">
-        <div class="title-box">
-          <a href="#" class="btn btn-default">Tin mới <span class="glyphicon glyphicon-arrow-right"></span></a>
-          <h2 class="title">TIN TỨC</h2>
-        </div>
-        <ul class="latest-posts">
-          <li>
-            <img class="image img-circle replace-2x" src="images/news.jpg" alt="" title="" width="84" height="84" data-appear-animation="rotateIn">
-            <div class="meta">
-              <span>TaTa Hosting</span>,
-              <span class="time">03.01.2017, 10:45:</span>
-            </div>
-            <div class="description">
-              <a href="#">
-                Sau hơn 1 tháng kể từ khi Thông tư 16 của Bộ TT&TT hướng dẫn chuyển nhượng quyền sử dụng tên miền Internet được cấp không thông qua đấu giá có hiệu lực, việc chuyển nhượng tên miền “.VN” vẫn chưa thể thực hiện do thiếu hướng dẫn về thuế của Bộ Tài chính.
-              </a>
-            </div>
-          </li>
-          <li>
-            <img class="image img-circle replace-2x" src="images/larrypage.jpg" alt="" title="" width="84" height="84" data-appear-animation="rotateIn">
-            <div class="meta">
-              <span>TaTa Hosting</span>,
-              <span class="time">03.01.2017, 10:45:</span>
-            </div>
-            <div class="description">
-              <a href="#">
-                Ngày 21/4 tới, Google sẽ tung ra một bản cập nhất lớn mảng tìm kiếm trên di động của mình.
-              </a>
-            </div>
-          </li>
-          <li>
-            <img class="image img-circle replace-2x" src="images/facebook.jpg" alt="" title="" width="84" height="84" data-appear-animation="rotateIn">
-            <div class="meta">
-              <span>TaTa Hosting</span>,
-              <span class="time">03.01.2017, 10:45:</span>
-            </div>
-            <div class="description">
-              <a href="#">
-                Facebook vừa công bố 3 thay đổi lớn trong thuật toán hiển thị post trên News Feed của người dùng, và điều này sẽ thiết lập một trật tự Web mới.
-              </a>
-            </div>
-          </li>
-        </ul>
-      </div>
     </div>
-  </div>
 </article>
