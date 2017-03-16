@@ -8,6 +8,7 @@ namespace Tata.Entities.Enums
     public enum ArticleType
     {
         PageContent,
-        News
+        News,
+        PromotionContent
     }
 }
