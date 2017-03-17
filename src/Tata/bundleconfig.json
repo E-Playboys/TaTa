@@ -16,13 +16,15 @@
       "wwwroot/css/royalslider/royalslider.css",
       "wwwroot/css/royalslider/skins/minimal-white/rs-minimal-white.css",
       "wwwroot/css/layerslider/css/layerslider.css",
+      "wwwroot/lib/seiyria-bootstrap-slider/dist/css/bootstrap-slider.css",
       "wwwroot/css/ladda.min.css",
       "wwwroot/css/datepicker.css",
       "wwwroot/css/jquery.scrollbar.css",
       "wwwroot/css/style.css",
       "wwwroot/css/customizer/pages.css",
       "wwwroot/css/customizer/home-pages-customizer.css",
-      "wwwroot/css/ie/ie.css"
+      "wwwroot/css/ie/ie.css",
+      "wwwroot/css/site.css"
     ]
   },
   {
@@ -78,6 +80,9 @@
       "wwwroot/js/jplayer/jquery.jplayer.min.js",
       "wwwroot/js/jplayer/jplayer.playlist.min.js",
       "wwwroot/js/jquery.scrollbar.min.js",
+
+      "wwwroot/lib/seiyria-bootstrap-slider/dist/bootstrap-slider.js",
+
       "wwwroot/js/main.js",
       "wwwroot/js/site.js"
     ],
