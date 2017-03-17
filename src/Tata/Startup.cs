@@ -173,7 +173,8 @@ namespace Tata
                 cfg.CreateMap<ProductCategory, ProductCategoryModel>();
                 cfg.CreateMap<ProductCategoryModel, ProductCategory>();
 
-                cfg.CreateMap<Order, OrderModel>();
+                cfg.CreateMap<Order, OrderModel>().ForMember(x => x.ClientName, o => o.MapFrom(m => m.CreatedUser.FullName))
+                                                  .ForMember(x => x.ClientAddress, o => o.MapFrom(m => m.CreatedUser.Address));
                 cfg.CreateMap<OrderModel, Order>();
 
                 cfg.CreateMap<OrderItem, OrderItemModel>();

@@ -85,6 +85,7 @@
         <div class="clearfix"></div>
       </div>
     </div>
+
     <div class="col-sm-12 col-md-8 login-register">
       <div data-appear-animation="bounceInDown">
         <div class="rotation">
@@ -92,24 +93,35 @@
             <div class="form-content vertical-align-top">
               <form class="form-box login-form form-validator">
                 <h3 class="title">Đăng nhập <small>hoặc <a href="#" class="switch-form sing-up">Đăng ký</a></small></h3>
-                <p>Nếu bạn đã có tài khoản, vui lòng đăng nhập.</p>
 
-                <div class="form-group">
-                  <label>Email: <span class="required">*</span></label>
-                  <input class="form-control" type="email" id="Login_Email" required>
-                </div>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <p>Bạn đang đăng nhập với tài khoản <strong class="text-danger">@Model.LoggedInEmail</strong></p>
+                    <a id="btnChangeLogin" href="#">Bạn có muốn dùng tài khoản khác?</a>
+                }
+                else
+                {
+                    <p>Nếu bạn đã có tài khoản, vui lòng đăng nhập.</p>
+                }
 
-                <div class="form-group">
-                  <label>Mật khẩu: <span class="required">*</span></label>
-                  <input class="form-control" type="password" id="Login_Password" required>
-                </div>
+                <div id="frmLogin" class="@(User.Identity.IsAuthenticated ? "hidden" : "")">
+                  <div class="form-group">
+                    <label>Email: <span class="required">*</span></label>
+                    <input class="form-control" type="email" id="Login_Email" required>
+                  </div>
 
-                <div class="buttons-box clearfix">
-                  <button id="btnLogin" class="btn btn-default">Đăng nhập</button>
-                  <button type="button" class="btn btn-primary"><i class="fa fa-facebook"></i> Facebook</button>
-                  <button type="button" class="btn btn-red"><i class="fa fa-google"></i> Google</button>
-                  <a href="#" class="switch-form forgot">Quên mật khẩu?</a>
-                  <span class="required"><b>*</b> Không được trống</span>
+                  <div class="form-group">
+                    <label>Mật khẩu: <span class="required">*</span></label>
+                    <input class="form-control" type="password" id="Login_Password" required>
+                  </div>
+
+                  <div class="buttons-box clearfix">
+                    <button id="btnLogin" class="btn btn-default">Đăng nhập</button>
+                    <button type="button" class="btn btn-primary"><i class="fa fa-facebook"></i> Facebook</button>
+                    <button type="button" class="btn btn-red"><i class="fa fa-google"></i> Google</button>
+                    <a href="#" class="switch-form forgot">Quên mật khẩu?</a>
+                    <span class="required"><b>*</b> Không được trống</span>
+                  </div>
                 </div>
               </form><!-- .form-box -->
             </div>
@@ -120,7 +132,7 @@
               <form class="form-box register-form form-validator">
                 <h3 class="title">Đăng ký <small>hoặc <a href="#" class="switch-form sing-in">Đăng nhập</a></small></h3>
                 <p>Nếu bạn đã có tài khoản, vui lòng đăng nhập.</p>
-              
+
                 <div class="row">
                   <div class="form-group col-md-12">
                     <label class="radio-inline">
@@ -129,16 +141,16 @@
                     <label class="radio-inline">
                       <input type="radio" name="Register_Gender" id="Register_Gender_Female" value="1"> Bà
                     </label>
-                  </div> 
+                  </div>
                 </div>
 
                 <div class="row">
                   <div class="form-group col-md-12">
                     <label>Họ và tên: <span class="required">*</span></label>
                     <input class="form-control" type="text" id="Register_FullName" required>
-                  </div>     
+                  </div>
                 </div>
-              
+
                 <div class="row">
                   <div class="form-group col-md-4">
                     <label>Tên đăng nhập: <span class="required">*</span></label>
@@ -149,13 +161,13 @@
                     <label>Mật khẩu: <span class="required">*</span></label>
                     <input class="form-control" type="password" id="Register_Password" required>
                   </div>
-              
+
                   <div class="form-group col-md-4">
                     <label>Nhập lại mật khẩu: <span class="required">*</span></label>
                     <input class="form-control" type="password" id="Register_ConfirmPassword" required>
                   </div>
                 </div>
-              
+
                 <div class="row">
                   <div class="form-group col-md-6">
                     <label>Email: <span class="required">*</span></label>
@@ -167,7 +179,7 @@
                     <input class="form-control" type="text" id="Register_PhoneNumber" required>
                   </div>
                 </div>
-              
+
                 <div class="row">
                   <div class="form-group col-md-12">
                     <label>Tổ chức (Bỏ trống nếu là cá nhân): </label>
@@ -219,6 +231,12 @@
 {
   <script>
     $(document).ready(function () {
+
+      $('#btnChangeLogin').click(function (e) {
+        $('#frmLogin').removeClass("hidden");
+        $(this).addClass("hidden");
+      });
+
       $('#btnLogin').click(function (e) {
         var email = $('#Login_Email').val();
         var password = $('#Login_Password').val();

@@ -28,12 +28,28 @@ namespace Tata.Areas.Backend.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var orders = await GetOrdersAsync(0, 10, x => x.Include(m => m.OrderItems)
+            var orders = await GetOrdersAsync(0, 10, x => x.Include(m => m.CreatedUser).Include(m => m.OrderItems)
                                                            .ThenInclude(m => m.Product));
 
             var models = Mapper.Instance.Map<IEnumerable<Order>, IEnumerable<OrderModel>>(orders);
 
             return View(models);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Details(int id)
+        {
+            var model = new OrderDetailsViewModel();
+            if (id > 0)
+            {
+                var order = await GetOrderAsync(id, x => x.Include(m => m.CreatedUser)
+                                                    .Include(m => m.OrderItems).ThenInclude(m => m.Product)
+                                                    .Include(m => m.OrderItems).ThenInclude(m => m.ExtraProperties));
+
+                model.Order = Mapper.Instance.Map<Order, OrderModel>(order);
+            }
+
+            return View(model);
         }
 
         [HttpPut]
@@ -64,6 +80,18 @@ namespace Tata.Areas.Backend.Controllers
 
                 // TODO: get all for demo, fix the client side later
                 var result = await orderRepo.GetAllAsync(includes: includes);
+
+                return result;
+            }
+        }
+
+        private async Task<Order> GetOrderAsync(int id, Func<IQueryable<Order>, IQueryable<Order>> includes = null)
+        {
+            using (IUnitOfWork uow = _uowProvider.CreateUnitOfWork())
+            {
+                var orderRepo = uow.GetRepository<Order>();
+
+                var result = await orderRepo.GetAsync(id, includes);
 
                 return result;
             }

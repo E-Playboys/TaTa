@@ -132,7 +132,7 @@ namespace Tata.Controllers
 
         #region Login
 
-        public IActionResult Account()
+        public async Task<IActionResult> Account()
         {
             var paymentSessionModel = HttpContext.Session.Get<PaymentSessionModel>(SessionConstants.PAYMENT_SESSION_MODEL_NAME);
             if (paymentSessionModel == null)
@@ -144,8 +144,13 @@ namespace Tata.Controllers
                 GrossTotal = paymentSessionModel.GrossTotal,
                 Vat = paymentSessionModel.Vat,
                 NetTotal = paymentSessionModel.NetTotal,
-                Currency = paymentSessionModel.Currency
+                Currency = paymentSessionModel.Currency,
             };
+            if (HttpContext.User.Identity.IsAuthenticated)
+            {
+                var user = await _userManager.GetUserAsync(HttpContext.User);
+                viewModel.LoggedInEmail = user.Email;
+            }
 
             return View(viewModel);
         }
