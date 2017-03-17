@@ -25,15 +25,15 @@ namespace Tata.Models.ProductModels
         {
             get
             {
-                if(_properties == null)
-                    _properties = new List<ProductPropertyModel>();
+                //if(_properties == null)
+                //    _properties = new List<ProductPropertyModel>();
 
-                // Always have an empty row here for the user to input 
-                // and Add More button can also leverage this empty row to clone a new row
-                if (_properties.All(x => x.Id != 0))
-                {
-                    _properties.Add(new ProductPropertyModel());
-                }
+                //// Always have an empty row here for the user to input 
+                //// and Add More button can also leverage this empty row to clone a new row
+                //if (_properties.All(x => x.Id != 0))
+                //{
+                //    _properties.Add(new ProductPropertyModel());
+                //}
                 
                 return _properties;
             }

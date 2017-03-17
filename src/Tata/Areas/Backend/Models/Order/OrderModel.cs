@@ -10,8 +10,14 @@ namespace Tata.Areas.Backend.Models.Order
         public string OrderCode { get; set; }
         public OrderStatus OrderStatus { get; set; }
 
-        public int BillingId { get; set; }
-        public BillingModel Billing { get; set; }
+        public decimal GrossTotal { get; set; }
+        public decimal NetTotal { get; set; }
+        public PaymentType PaymentType { get; set; }
+
+        public string ClientName { get; set; }
+        public string ClientAddress { get; set; }
         public List<OrderItemModel> OrderItems { get; set; }
+
+        public string CurrencyName => OrderItems[0].Currency == Currency.VND ? "vnđ" : "$";
     }
 }

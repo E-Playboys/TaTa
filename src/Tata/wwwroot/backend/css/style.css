@@ -8551,3 +8551,71 @@ body.md-skin {
     margin: 0;
   }
 }
+
+#car-bottom {
+  margin-bottom: 40px;
+}
+/* line 1328, ../sass/_shop.scss */
+#car-bottom .car-bottom-box {
+  font-size: 12px;
+  line-height: 18px;
+  margin: 0 auto 40px;
+  padding: 27px 30px 30px;
+}
+/* line 1335, ../sass/_shop.scss */
+#car-bottom .car-bottom-box h5 {
+  margin: 0 0 17px;
+}
+/* line 1338, ../sass/_shop.scss */
+#car-bottom .car-bottom-box p {
+  line-height: 18px;
+  margin: 0 0 18px;
+}
+/* line 1342, ../sass/_shop.scss */
+#car-bottom .car-bottom-box label {
+  line-height: 20px;
+}
+/* line 1345, ../sass/_shop.scss */
+#car-bottom .car-bottom-box .btn {
+  margin: 8px 0 0;
+}
+/* line 1349, ../sass/_shop.scss */
+#car-bottom .total {
+  padding-bottom: 26px;
+  text-align: right;
+}
+/* line 1353, ../sass/_shop.scss */
+#car-bottom .total table {
+  margin: 0 0 32px auto;
+}
+/* line 1356, ../sass/_shop.scss */
+#car-bottom .total table td {
+  font-size: 13px;
+  height: 35px;
+  line-height: 24px;
+  padding: 0 0 0 5px;
+  vertical-align: top;
+}
+/* line 1363, ../sass/_shop.scss */
+#car-bottom .total table .price {
+  font-size: 18px;
+}
+/* line 1367, ../sass/_shop.scss */
+#car-bottom .total table .tr-total td {
+  font-size: 18px;
+  line-height: 30px;
+}
+/* line 1371, ../sass/_shop.scss */
+#car-bottom .total table .tr-total td:first-child {
+  padding-right: 12px;
+}
+/* line 1375, ../sass/_shop.scss */
+#car-bottom .total table .tr-total .price {
+  font-size: 30px;
+}
+/* line 1380, ../sass/_shop.scss */
+#car-bottom .total .checkout {
+  font-weight: bold;
+  margin: 0 0 19px;
+  text-transform: uppercase;
+}
