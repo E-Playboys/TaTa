@@ -1,16 +1,14 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 using Tata.Entities;
-using Tata.Data;
-using TaTa.DataAccess;
+using Tata.Entities.Enums;
 using Tata.Models;
-using TaTa.DataAccess.Repositories;
+using TaTa.DataAccess;
 using TaTa.DataAccess.Query;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authorization;
+using TaTa.DataAccess.Repositories;
 
 namespace Tata.Controllers
 {
@@ -120,19 +118,43 @@ namespace Tata.Controllers
             return View();
         }
 
-        public IActionResult Promotion()
+        public async Task<IActionResult> Promotion()
         {
-            return View();
+            using (IUnitOfWork uow = _uowProvider.CreateUnitOfWork())
+            {
+                var articleRepo = uow.GetRepository<Article>();
+                IEnumerable<Article> models = await articleRepo.QueryAsync(a => a.ArtType == ArticleType.PromotionContent, 
+                                                                           a => a.OrderBy(ar => ar.Priority));
+
+                return View(models.Skip(0).Take(8).ToList());
+            }
         }
 
-        public IActionResult Support()
+        public async Task<IActionResult> Support()
         {
-            return View();
+            using (IUnitOfWork uow = _uowProvider.CreateUnitOfWork())
+            {
+                IRepository<Setting> repo = uow.GetRepository<Setting>();
+                IEnumerable<Setting> supportQuestions = await repo.QueryAsync(s => s.Section == "SupportQuestion");
+
+                return View(supportQuestions.ToList());
+            }
         }
 
-        public IActionResult VpsPage()
+        public async Task<IActionResult> VpsPage()
         {
-            return View();
+            using (IUnitOfWork uow = _uowProvider.CreateUnitOfWork())
+            {
+                IRepository<Product> productRepo = uow.GetRepository<Product>();
+                Includes<Product> productInclude = new Includes<Product>(query =>
+                {
+                    return query.Include(p => p.Properties)
+                                .Include(p => p.Prices);
+                });
+                IEnumerable<Product> allProducts = await productRepo.GetAllAsync(p => p.OrderBy(pr => pr.Priority), productInclude.Expression);
+
+                return View(allProducts.Skip(0).Take(8).ToList());
+            }
         }
 
         public IActionResult Error()
