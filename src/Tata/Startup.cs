@@ -11,6 +11,7 @@ using Tata.Areas.Backend.Models.Article;
 using Tata.Areas.Backend.Models.Order;
 using Tata.Areas.Backend.Models.Product;
 using Tata.Areas.Backend.Models.Setting;
+using Tata.Areas.Backend.Models.Users;
 using Tata.Data;
 using Tata.Entities;
 using Tata.Models.ProductModels;

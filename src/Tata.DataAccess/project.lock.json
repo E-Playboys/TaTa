@@ -358,10 +358,10 @@
           "lib/netstandard1.0/Microsoft.Extensions.Configuration.Abstractions.dll": {}
         }
       },
-      "Microsoft.Extensions.Configuration.FileExtensions/1.1.0": {
+      "Microsoft.Extensions.Configuration.FileExtensions/1.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Extensions.Configuration": "1.1.0",
+          "Microsoft.Extensions.Configuration": "1.1.1",
           "Microsoft.Extensions.FileProviders.Physical": "1.1.0",
           "NETStandard.Library": "1.6.1",
           "System.Threading.Thread": "4.3.0"
@@ -373,11 +373,11 @@
           "lib/netstandard1.3/Microsoft.Extensions.Configuration.FileExtensions.dll": {}
         }
       },
-      "Microsoft.Extensions.Configuration.Json/1.1.0": {
+      "Microsoft.Extensions.Configuration.Json/1.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Extensions.Configuration": "1.1.0",
-          "Microsoft.Extensions.Configuration.FileExtensions": "1.1.0",
+          "Microsoft.Extensions.Configuration": "1.1.1",
+          "Microsoft.Extensions.Configuration.FileExtensions": "1.1.1",
           "NETStandard.Library": "1.6.1",
           "Newtonsoft.Json": "9.0.1",
           "System.Dynamic.Runtime": "4.3.0",
@@ -2567,12 +2567,12 @@
         "lib/netstandard1.0/Microsoft.Extensions.Configuration.Abstractions.xml"
       ]
     },
-    "Microsoft.Extensions.Configuration.FileExtensions/1.1.0": {
-      "sha512": "jZRdMHops4npC8qKFEmqw6QODfA5h50sUYBIyB31DICzYSp+IQyvf5yb1zwW2x1EFuUEMv+aWZi1WDDc7JPdqA==",
+    "Microsoft.Extensions.Configuration.FileExtensions/1.1.1": {
+      "sha512": "phXZGvs8+O8sc0dop4/CfW0AJZbOscsqkw2AM/oItNSuwe5qNMtZlavAiz9pnRLKTP2VqBtI4pYjaDobAgECIA==",
       "type": "package",
-      "path": "Microsoft.Extensions.Configuration.FileExtensions/1.1.0",
+      "path": "Microsoft.Extensions.Configuration.FileExtensions/1.1.1",
       "files": [
-        "Microsoft.Extensions.Configuration.FileExtensions.1.1.0.nupkg.sha512",
+        "Microsoft.Extensions.Configuration.FileExtensions.1.1.1.nupkg.sha512",
         "Microsoft.Extensions.Configuration.FileExtensions.nuspec",
         "lib/net451/Microsoft.Extensions.Configuration.FileExtensions.dll",
         "lib/net451/Microsoft.Extensions.Configuration.FileExtensions.xml",
@@ -2580,12 +2580,12 @@
         "lib/netstandard1.3/Microsoft.Extensions.Configuration.FileExtensions.xml"
       ]
     },
-    "Microsoft.Extensions.Configuration.Json/1.1.0": {
-      "sha512": "QmHQbrOoVxXblM2x9NzGPbX3XpQGTCXiO6jZghx4KqUxPfJMS0VgBlgOUnLAz7sJyx3GvhUG6SEX6Xz70dpwDw==",
+    "Microsoft.Extensions.Configuration.Json/1.1.1": {
+      "sha512": "blWKZSsNKtToH5ApwIIbctMTwrGucrTG4nsVSqosgDHm5UawE1I1/jP0UdhbICxPGTv8D+2ruKaqUK7/6In1qQ==",
       "type": "package",
-      "path": "Microsoft.Extensions.Configuration.Json/1.1.0",
+      "path": "Microsoft.Extensions.Configuration.Json/1.1.1",
       "files": [
-        "Microsoft.Extensions.Configuration.Json.1.1.0.nupkg.sha512",
+        "Microsoft.Extensions.Configuration.Json.1.1.1.nupkg.sha512",
         "Microsoft.Extensions.Configuration.Json.nuspec",
         "lib/net451/Microsoft.Extensions.Configuration.Json.dll",
         "lib/net451/Microsoft.Extensions.Configuration.Json.xml",
@@ -6851,7 +6851,7 @@
       "Microsoft.EntityFrameworkCore >= 1.1.1",
       "Microsoft.EntityFrameworkCore.Relational >= 1.1.1",
       "Microsoft.Extensions.Configuration >= 1.1.1",
-      "Microsoft.Extensions.Configuration.Json >= 1.1.0",
+      "Microsoft.Extensions.Configuration.Json >= 1.1.1",
       "Microsoft.Extensions.DependencyInjection.Abstractions >= 1.1.0",
       "NETStandard.Library >= 1.6.*"
     ],
