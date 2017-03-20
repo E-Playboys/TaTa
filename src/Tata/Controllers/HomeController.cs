@@ -7,7 +7,6 @@ using Tata.Entities;
 using Tata.Entities.Enums;
 using Tata.Models;
 using TaTa.DataAccess;
-using TaTa.DataAccess.Query;
 using TaTa.DataAccess.Repositories;
 
 namespace Tata.Controllers
@@ -27,9 +26,11 @@ namespace Tata.Controllers
             {
                 IRepository<Setting> settingRepo = uow.GetRepository<Setting>();
                 IRepository<Product> productRepo = uow.GetRepository<Product>();
+                IRepository<Article> articleRepo = uow.GetRepository<Article>();
                 HomeViewModels model = new HomeViewModels();
                 IEnumerable<Setting> homeSettings = await settingRepo.QueryAsync(s => s.Section == "Home");
-                string productFeatureIds;
+                string[] productFeatureIds;
+                string[] serviceArticleIds;
 
                 if (homeSettings.Any())
                 {
@@ -45,25 +46,42 @@ namespace Tata.Controllers
                         .OrderBy(s => s.Priority)
                         .ToList();
 
-                    productFeatureIds = homeSettings.SingleOrDefault(s => s.Name == "HomeProductFeature").Value;
-                    Includes<Product> productInclude = new Includes<Product>(query =>
-                    {
-                        return query.Include(p => p.Properties)
-                                    .Include(p => p.Prices);
-                    });
+                    model.HomeServiceFeature = homeSettings.Where(s => s.Name == "HomeServiceFeature")
+                        .OrderBy(s => s.Priority)
+                        .ToList();
 
-                    model.HomeProductFeature = (await productRepo.QueryAsync(p => productFeatureIds.Contains(p.Id.ToString()),
+                    model.HomeServiceIntro = homeSettings.Where(s => s.Name == "HomeServiceIntro")
+                        .OrderBy(s => s.Priority)
+                        .ToList();
+
+                    model.HomeBanner = homeSettings.Where(s => s.Name == "HomeBanner")
+                        .OrderBy(s => s.Priority)
+                        .ToList();
+
+                    model.HomeServiceTitle = homeSettings.SingleOrDefault(s => s.Name == "HomeServiceTitle").Value;
+                    model.HomePartnerIntro = homeSettings.SingleOrDefault(s => s.Name == "HomePartnerIntro").Value;
+                    model.HomeServiceProperties = homeSettings.SingleOrDefault(s => s.Name == "HomeServiceProperties").Value;
+
+                    serviceArticleIds = homeSettings.SingleOrDefault(s => s.Name == "HomeServiceArticles").Value.Split(',');
+                    productFeatureIds = homeSettings.SingleOrDefault(s => s.Name == "HomeProductFeature").Value.Split(',');
+
+                    model.HomeServiceArticle = (await articleRepo.QueryAsync(a => serviceArticleIds.Any(s => s.Equals(a.Id.ToString())),
                                                                             null,
-                                                                            productInclude.Expression)).ToList();
+                                                                            a => a.Include(ar => ar.CreatedUser))).ToList();
+
+                    model.HomeNewsArticle = (await articleRepo.QueryAsync(a => a.ArtType == ArticleType.News,
+                                                        a => a.OrderBy(ar => ar.Priority),
+                                                        a => a.Include(ar => ar.CreatedUser)))
+                                                        .Skip(0).Take(3).ToList();
+
+                    model.HomeProductFeature = (await productRepo.QueryAsync(p => productFeatureIds.Any(s => s.Equals(p.Id.ToString())),
+                                                                            null,
+                                                                            p => p.Include(pr => pr.Properties)
+                                                                                  .Include(pr => pr.Prices))).ToList();
                 }
 
                 return View(model);
             }
-        }
-
-        public IActionResult DomainPriceList()
-        {
-            return View();
         }
 
         public async Task<IActionResult> About()
@@ -97,15 +115,37 @@ namespace Tata.Controllers
                 ArticleViewModel models = new ArticleViewModel();
 
                 models.CurrentArticle = await articleRepo.GetAsync(id);
-                models.RelatedArticles = (await articleRepo.QueryAsync(a => a.ArtType == models.CurrentArticle.ArtType)).ToList();
+                models.RelatedArticles = (await articleRepo.QueryAsync(a => a.ArtType == models.CurrentArticle.ArtType,
+                                                                        null,
+                                                                        a => a.Include(ar => ar.CreatedUser))).ToList();
 
                 return View(models);
             }
         }
 
-        public IActionResult Contact()
+        public async Task<IActionResult> Contact()
         {
-            return View();
+            using (IUnitOfWork uow = _uowProvider.CreateUnitOfWork())
+            {
+                IRepository<Setting> repo = uow.GetRepository<Setting>();
+                ContactViewModel model = new ContactViewModel();
+                IEnumerable<Setting> aboutSettings = await repo.QueryAsync(s => s.Section == "Contact");
+
+                if (aboutSettings.Any())
+                {
+                    model.ContactSalesTel = aboutSettings.SingleOrDefault(s => s.Name == "ContactSalesTel").Value;
+                    model.ContactSupportTel = aboutSettings.SingleOrDefault(s => s.Name == "ContactSupportTel").Value;
+                    model.ContactDirectorTel = aboutSettings.SingleOrDefault(s => s.Name == "ContactDirectorTel").Value;
+                    model.ContactAddress = aboutSettings.SingleOrDefault(s => s.Name == "ContactAddress").Value;
+                    model.ContactSalesEmail = aboutSettings.SingleOrDefault(s => s.Name == "ContactSalesEmail").Value;
+                    model.ContactSupportEmail = aboutSettings.SingleOrDefault(s => s.Name == "ContactSupportEmail").Value;
+                    model.ContactDirectorEmail = aboutSettings.SingleOrDefault(s => s.Name == "ContactDirectorEmail").Value;
+                    model.ContactLongitude = aboutSettings.SingleOrDefault(s => s.Name == "ContactLongitude").Value;
+                    model.ContactLatitude = aboutSettings.SingleOrDefault(s => s.Name == "ContactLatitude").Value;
+                }
+
+                return View(model);
+            }
         }
 
         public IActionResult Domain()
@@ -113,9 +153,29 @@ namespace Tata.Controllers
             return View();
         }
 
-        public IActionResult Partner()
+        public IActionResult DomainPriceList()
         {
             return View();
+        }
+
+        public async Task<IActionResult> Partner()
+        {
+            using (IUnitOfWork uow = _uowProvider.CreateUnitOfWork())
+            {
+                IRepository<Setting> repo = uow.GetRepository<Setting>();
+                PartnerViewModel model = new PartnerViewModel();
+                IEnumerable<Setting> aboutSettings = await repo.QueryAsync(s => s.Section == "Partner");
+
+                if (aboutSettings.Any())
+                {
+                    model.PartnerExcert = aboutSettings.SingleOrDefault(s => s.Name == "PartnerExcert").Value;
+                    model.Partners = aboutSettings.Where(s => s.Name == "PartnerInfo")
+                        .OrderBy(s => s.Priority)
+                        .ToList();
+                }
+
+                return View(model);
+            }
         }
 
         public async Task<IActionResult> Promotion()
@@ -146,12 +206,9 @@ namespace Tata.Controllers
             using (IUnitOfWork uow = _uowProvider.CreateUnitOfWork())
             {
                 IRepository<Product> productRepo = uow.GetRepository<Product>();
-                Includes<Product> productInclude = new Includes<Product>(query =>
-                {
-                    return query.Include(p => p.Properties)
-                                .Include(p => p.Prices);
-                });
-                IEnumerable<Product> allProducts = await productRepo.GetAllAsync(p => p.OrderBy(pr => pr.Priority), productInclude.Expression);
+                IEnumerable<Product> allProducts = await productRepo.GetAllAsync(p => p.OrderBy(pr => pr.Priority), 
+                                                                                 p => p.Include(pr => pr.Properties)
+                                                                                       .Include(pr => pr.Prices));
 
                 return View(allProducts.Skip(0).Take(8).ToList());
             }

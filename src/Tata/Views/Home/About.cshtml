@@ -1,11 +1,11 @@
 ﻿@model AboutViewModel
 @{
-    ViewData["Title"] = "Giới thiệu";
+    ViewData["Title"] = "TaTa Hosting";
 }
 
 <header class="page-header">
   <div class="container">
-    <h1 class="title">TaTa Hosting</h1>
+    <h1 class="title">@ViewData["Title"]</h1>
   </div>
 </header>
 <div class="container">
@@ -21,7 +21,7 @@
           <div class="panel-group one-open" id="accordion">
             @foreach (var service in Model.AboutServices)
             {
-                Html.Raw(service.Value);
+                @Html.Raw(service.Value);
             }
           </div>
         </div>

@@ -1,15 +1,22 @@
 ﻿using System.Collections.Generic;
 using Tata.Entities;
-using Tata.Entities.Enums;
 
 namespace Tata.Models
 {
     public class HomeViewModels
     {
         public List<Product> HomeProductFeature { get; set; }
+        public List<Article> HomeServiceArticle { get; set; }
+        public List<Article> HomeNewsArticle { get; set; }
         public List<Setting> HomeSliderBox { get; set; }
         public List<Setting> HomeSliderBanner { get; set; }
         public List<Setting> HomeSliderLink { get; set; }
+        public List<Setting> HomeServiceFeature { get; set; }
+        public List<Setting> HomeServiceIntro { get; set; }
+        public List<Setting> HomeBanner { get; set; }
+        public string HomeServiceTitle { get; set; }
+        public string HomeServiceProperties { get; set; }
+        public string HomePartnerIntro { get; set; }
     }
 
     public class AboutViewModel
@@ -25,13 +32,23 @@ namespace Tata.Models
         public List<Article> RelatedArticles { get; set; }
     }
 
-    public class ArticleExcertModel
+    public class PartnerViewModel
     {
-        public int Id { get; set; }
-        public int Priority { get; set; }
-        public string Title { get; set; }
-        public string Excert { get; set; }
-        public string FeatureImg { get; set; }
+        public string PartnerExcert { get; set; }
+        public List<Setting> Partners { get; set; }
+    }
+
+    public class ContactViewModel
+    {
+        public string ContactSalesTel { get; set; }
+        public string ContactSupportTel { get; set; }
+        public string ContactDirectorTel { get; set; }
+        public string ContactAddress { get; set; }
+        public string ContactSalesEmail { get; set; }
+        public string ContactSupportEmail { get; set; }
+        public string ContactDirectorEmail { get; set; }
+        public string ContactLongitude { get; set; }
+        public string ContactLatitude { get; set; }
     }
 
     public class FooterComponentModel
