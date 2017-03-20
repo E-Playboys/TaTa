@@ -10,24 +10,13 @@ namespace Tata.Areas.Backend.Models.Product
     public class ProductPriceModel
     {
         public int Id { get; set; }
-
-        [Required]
         public string Name { get; set; }
-
-        [Required]
         [DataType(DataType.Currency)]
         public decimal Price { get; set; }
-
-        [Required]
         public Currency Currency { get; set; }
-
-        [Required]
         [Range(0, int.MaxValue, ErrorMessage = "Please enter valid integer Number")]
         public int Quantity { get; set; }
-
-        [Required]
         public string Unit { get; set; }
-
         [Range(0, int.MaxValue, ErrorMessage = "Please enter valid integer Number")]
         public int Priority { get; set; }
 

@@ -31,7 +31,25 @@ namespace Tata.Areas.Backend.Models.Product
         public ProductStatus Status { get; set; }
         public int CategoryId { get; set; }
 
-        public List<ProductPropertyGroupModel> PropertyGroups { get; set; }
+        private List<ProductPropertyModel> _properties;
+        public List<ProductPropertyModel> Properties
+        {
+            get
+            {
+                if (_properties == null)
+                    _properties = new List<ProductPropertyModel>();
+
+                // Always have an empty row here for the user to input 
+                // and Add More button can also leverage this empty row to clone a new row
+                if (_properties.All(x => x.Id != 0))
+                {
+                    _properties.Add(new ProductPropertyModel());
+                }
+
+                return _properties;
+            }
+            set { _properties = value; }
+        }
 
         private List<ProductPriceModel> _prices;
         public List<ProductPriceModel> Prices
