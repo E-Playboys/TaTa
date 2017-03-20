@@ -42,47 +42,8 @@ namespace Tata.Areas.Backend.Controllers
             var model = new ProductDetailsViewModel();
             if (id > 0)
             {
-                // get product
                 var product = await GetProductAsync(id);
                 model = Mapper.Instance.Map<Product, ProductDetailsViewModel>(product);
-
-                // get property groups of product
-                var category = await GetCategoryAsync(model.CategoryId);
-                model.PropertyGroups = Mapper.Instance.Map<List<ProductPropertyGroup>, List<ProductPropertyGroupModel>>(category.PropertyGroups);
-
-                // set selected value for property groups base on product properties
-                foreach (var group in model.PropertyGroups)
-                {
-                    if(!group.ForDefaultSetup)
-                        continue;
-
-                    foreach (var property in product.Properties)
-                    {
-                        if (group.Type == ProductPropertyGroupType.Ram
-                            || group.Type == ProductPropertyGroupType.Storage
-                            || group.Type == ProductPropertyGroupType.Cpu
-                            || group.Type == ProductPropertyGroupType.Ip)
-                        {
-                            if (property.Type == group.Type)
-                            {
-                                var selectedValue = group.Values.SingleOrDefault(x => x.Value == property.Value);
-                                group.SelectedValue = group.Values.IndexOf(selectedValue);
-                            }
-                        }
-                    }
-                }
-            }
-            else
-            {
-                if (categoryId.HasValue)
-                {
-                    var category = await GetCategoryAsync(categoryId.Value);
-                    if (category != null)
-                    {
-                        model.CategoryId = categoryId.Value;
-                        model.PropertyGroups = Mapper.Instance.Map<List<ProductPropertyGroup>, List<ProductPropertyGroupModel>>(category.PropertyGroups);
-                    }
-                }
             }
 
             ViewBag.Categories = await BuildProductCategoriesSelectList();
@@ -95,11 +56,16 @@ namespace Tata.Areas.Backend.Controllers
         public async Task<IActionResult> Details(ProductDetailsViewModel model)
         {
             if (!ModelState.IsValid)
+            {
+                ViewBag.Categories = await BuildProductCategoriesSelectList();
+                ViewBag.Currencies = BuildCurrenciesSelectList();
                 return View(model);
+            }
 
             var product = Mapper.Instance.Map<ProductDetailsViewModel, Product>(model);
 
-            // clean the dummy product prices placeholder row
+            // clear the placeholder rows
+            product.Properties.RemoveAll(x => string.IsNullOrEmpty(x.Name));
             product.Prices.RemoveAll(x => string.IsNullOrEmpty(x.Name));
 
             using (IUnitOfWork uow = _uowProvider.CreateUnitOfWork())
@@ -107,61 +73,22 @@ namespace Tata.Areas.Backend.Controllers
                 var propertyRepo = uow.GetRepository<ProductProperty>();
                 var priceRepo = uow.GetRepository<ProductPrice>();
                 var productRepo = uow.GetRepository<Product>();
-                var propertyGroupRepo = uow.GetRepository<ProductPropertyGroup>();
 
-                // create list of new product properties
-                var newProperties = new List<ProductProperty>();
-                foreach (var groupModel in model.PropertyGroups)
-                {
-                    var group = await propertyGroupRepo.GetAsync(groupModel.Id, x => x.Include(m => m.Values));
-                    if (!group.ForDefaultSetup)
-                        continue;
-
-                    ProductPropertyGroupValue selectedValue;
-                    if (groupModel.Type == ProductPropertyGroupType.Ram
-                        || groupModel.Type == ProductPropertyGroupType.Storage
-                        || groupModel.Type == ProductPropertyGroupType.Cpu
-                        || groupModel.Type == ProductPropertyGroupType.Ip)
-                    {
-                        selectedValue = group.Values.ElementAtOrDefault(groupModel.SelectedValue);
-                    }
-                    else
-                    {
-                        selectedValue = group.Values.SingleOrDefault(x => x.Id == groupModel.SelectedValue);
-                    }
-
-                    if (selectedValue != null)
-                    {
-                        var property = new ProductProperty
-                        {
-                            CreatedDate = DateTime.Now,
-                            Name = selectedValue.Name,
-                            Description = selectedValue.Description,
-                            Value = selectedValue.Value,
-                            Price = selectedValue.Price,
-                            Currency = selectedValue.Currency,
-                            Unit = selectedValue.Unit,
-                            Type = group.Type
-                        };
-
-                        newProperties.Add(property);
-                    }
-                }
-
-                // add or update product with the list of new properties
                 if (product.Id > 0)
                 {
-                    // update the new properties
-                    product.Properties.Clear();
-                    var properties = await propertyRepo.QueryAsync(x => x.ProductId == product.Id);
-                    foreach (var property in properties)
+                    foreach (var propertyModel in model.Properties)
                     {
-                        propertyRepo.Remove(property);
+                        if (propertyModel.NeedDelete)
+                        {
+                            product.Properties.Remove(product.Properties.SingleOrDefault(x => x.Id == propertyModel.Id));
+                            var property = await propertyRepo.GetAsync(propertyModel.Id);
+                            if (property != null)
+                            {
+                                propertyRepo.Remove(property);
+                            }
+                        }
                     }
 
-                    product.Properties.AddRange(newProperties);
-
-                    // update the prices
                     foreach (var priceModel in model.Prices)
                     {
                         if (priceModel.NeedDelete)
@@ -179,7 +106,6 @@ namespace Tata.Areas.Backend.Controllers
                 }
                 else
                 {
-                    product.Properties.AddRange(newProperties);
                     productRepo.Add(product);
                 }
 
