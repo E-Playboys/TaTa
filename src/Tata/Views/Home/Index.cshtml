@@ -3,7 +3,7 @@
 @inject IViewLocalizer StringRes
 @model HomeViewModels
 @{
-    ViewData["Title"] = "Nhà cung cấp VPS";
+    ViewData["Title"] = StringRes["HomePageTitle"];
 }
 
 @await Html.PartialAsync("_SliderPartial", Model)
@@ -42,16 +42,16 @@
                                 {
                                     if (price.IsDefault)
                                     {
-                                        <li class="active"><span><i class="fa fa-check"></i></span>@price.Name - @price.Price.ToString("N0") vnđ/tháng</li>
+                                        <li class="active"><span><i class="fa fa-check"></i></span>@price.Name - @price.Price.ToString("N0") @StringRes["ProductPlanUnit"]</li>
                                     }
                                     else
                                     {
-                                        <li><span><i class="fa fa-check"></i></span>@price.Name - @price.Price.ToString("N0") vnđ/tháng</li>
+                                        <li><span><i class="fa fa-check"></i></span>@price.Name - @price.Price.ToString("N0") @StringRes["ProductPlanUnit"]</li>
                                     }
                                 }
                             </ul>
                             <div class="bottom-box">
-                                <a href="@Url.Action("VirtualPrivateServer", "Service", new { Id = product.Id })" class="more">Chi tiết <span class="fa fa-angle-right"></span></a>
+                                <a href="@Url.Action("VirtualPrivateServer", "Service", new { Id = product.Id })" class="more">@StringRes["DetailLabel"] <span class="fa fa-angle-right"></span></a>
                                 <div class="rating-box">
                                     <div style="width: 100%" class="rating">
                                         <svg x="0" y="0" width="73px" height="12px" viewBox="0 0 73 12" enable-fwb-bg="new 0 0 73 12" xml:space="preserve">
@@ -65,7 +65,7 @@
                                 </div>
                                 <div class="clearfix"></div>
                                 <a class="btn btn-default btn-lg" href="@Url.Action("Vps", "ConfigureProduct", new { productId = product.Id })">Đặt mua</a>
-                            </div><!-- .pricing -->
+                            </div>
                         </div>
                     </div>
                 }

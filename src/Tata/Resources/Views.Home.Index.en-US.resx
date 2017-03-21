@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="DetailLabel" xml:space="preserve">
+    <value>Detail</value>
+  </data>
+  <data name="HomePageTitle" xml:space="preserve">
+    <value>Nhà cung cấp VPS</value>
+  </data>
   <data name="ProductPlanUnit" xml:space="preserve">
     <value>$/month</value>
   </data>
