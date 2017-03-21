@@ -1,6 +1,8 @@
 ﻿@using System.Threading.Tasks
+@using Microsoft.AspNetCore.Mvc.Localization
 @using Tata.Helpers
 @using Tata.Models.SessionModels
+@inject IViewLocalizer StringRes
 @{
     var orderItemsSessionModel = Context.Session.Get<List<OrderItemSessionModel>>(SessionConstants.ORDER_ITEMS_SESSION_MODEL_NAME) ?? new List<OrderItemSessionModel>();
     var paymentSessionModel = Context.Session.Get<PaymentSessionModel>(SessionConstants.PAYMENT_SESSION_MODEL_NAME) ?? new PaymentSessionModel();
@@ -74,7 +76,7 @@
                         @if (User.Identity.IsAuthenticated)
                         {
                             <li>
-                                @Html.ActionLink("Tài khoản", "Index", "Manage", null)
+                                @Html.ActionLink(StringRes["AccountLabel"].Value, "Index", "Manage", null)
                             </li>
                             <li><a href="@Url.Action("Wishlist", "Manage", null)"><i class="fa fa-heart"></i> Wishlist</a></li>
                             <li>
@@ -87,7 +89,7 @@
                         }
                         else
                         {
-                            <li><a href="@Url.Action("Login", "Account", new { returnUrl = Context.Request.Host.Value + Context.Request.Path.Value })">Đăng nhập <i class="fa fa-sign-in after"></i></a></li>
+                            <li><a href="@Url.Action("Login", "Account", new { returnUrl = Context.Request.Host.Value + Context.Request.Path.Value })">@StringRes["LoginLabel"] <i class="fa fa-sign-in after"></i></a></li>
                         }
                     </ul>
                   </nav>

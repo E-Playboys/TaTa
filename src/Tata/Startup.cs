@@ -1,12 +1,16 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
+using System.Globalization;
 using Tata.Areas.Backend.Models.Article;
 using Tata.Areas.Backend.Models.Order;
 using Tata.Areas.Backend.Models.Product;
@@ -84,10 +88,14 @@ namespace Tata
 
             services.AddDataAccess<ApplicationDbContext>();
 
+            // Add localization
+            services.AddLocalization(options => options.ResourcesPath = "Resources");
+
             services.AddMvc(options =>
             {
                 //options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
-            });
+            }).AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
+              .AddDataAnnotationsLocalization();
 
             // Add session
             services.AddDistributedMemoryCache();
@@ -116,6 +124,36 @@ namespace Tata
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+
+            List<CultureInfo> supportCultures = new List<CultureInfo>
+            {
+                new CultureInfo("en-US"),
+                new CultureInfo("en"),
+                new CultureInfo("vi-VN"),
+                new CultureInfo("vi")
+            };
+
+            app.UseRequestLocalization(new RequestLocalizationOptions()
+            {
+                DefaultRequestCulture = new RequestCulture("vi-VN"),
+                SupportedCultures = supportCultures,
+                SupportedUICultures = supportCultures
+            });
+
+            app.Use((context, next) =>
+            {
+                string cultureQuery = string.IsNullOrEmpty(context.Request.Query["culture"]) ? "vi-VN" : context.Request.Query["culture"].ToString();
+
+                if (!string.IsNullOrEmpty(cultureQuery))
+                {
+                    CultureInfo culture = new CultureInfo(cultureQuery);
+
+                    CultureInfo.CurrentCulture = culture;
+                    CultureInfo.CurrentUICulture = culture;
+                }
+
+                return next();
+            });
 
             app.UseApplicationInsightsExceptionTelemetry();
 

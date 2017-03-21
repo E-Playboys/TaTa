@@ -1,4 +1,7 @@
-﻿@model HomeViewModels
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IViewLocalizer StringRes
+@model HomeViewModels
 @{
     ViewData["Title"] = "Nhà cung cấp VPS";
 }
@@ -28,7 +31,7 @@
                                 @Html.ActionLink(product.Name, "Vps", "ConfigureProduct", new { productId = product.Id }, null)
                             </div>
                             <div class="price-box">
-                                <div class="price">@product.Prices.SingleOrDefault(pr => pr.IsDefault).Price.ToString("N0")<span>vnđ /tháng</span></div>
+                                <div class="price">@product.Prices.SingleOrDefault(pr => pr.IsDefault).Price.ToString("N0")<span> @StringRes["ProductPlanUnit"]</span></div>
                             </div>
                             <ul class="options">
                                 @foreach (var property in product.Properties)
