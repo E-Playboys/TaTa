@@ -146,6 +146,7 @@ namespace Tata.Controllers
                 NetTotal = paymentSessionModel.NetTotal,
                 Currency = paymentSessionModel.Currency,
             };
+
             if (HttpContext.User.Identity.IsAuthenticated)
             {
                 var user = await _userManager.GetUserAsync(HttpContext.User);
@@ -157,6 +158,7 @@ namespace Tata.Controllers
 
         public async Task<IActionResult> Login(LoginViewModel model)
         {
+
             if (!ModelState.IsValid)
                 return new BadRequestResult();
 
@@ -176,7 +178,18 @@ namespace Tata.Controllers
             if (!ModelState.IsValid)
                 return new BadRequestResult();
 
-            var user = new User { UserName = model.UserName, Email = model.Email, EmailConfirmed = true, FullName = model.FullName, Address = model.Address, PhoneNumber = model.PhoneNumber, Gender = model.Gender, Organization = model.Organization, UserType = string.IsNullOrWhiteSpace(model.Organization) ? UserType.Personal : UserType.Organization};
+            var user = new User
+            {
+                UserName = model.UserName,
+                Email = model.Email, EmailConfirmed = true,
+                FullName = model.FullName,
+                Address = model.Address,
+                PhoneNumber = model.PhoneNumber,
+                Gender = model.Gender,
+                Organization = model.Organization,
+                UserType = string.IsNullOrWhiteSpace(model.Organization) ? UserType.Personal : UserType.Organization
+            };
+
             var result = await _userManager.CreateAsync(user, model.Password);
             if (result.Succeeded)
             {
@@ -215,7 +228,7 @@ namespace Tata.Controllers
         [HttpGet]
         public async Task<IActionResult> Selection()
         {
-            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var user = await _userManager.GetUserAsync(User);
 
             var viewModel = new PaymentSelectionViewModel
             {
@@ -232,6 +245,7 @@ namespace Tata.Controllers
         {
             var orderItemsSessionModel = HttpContext.Session.Get<List<OrderItemSessionModel>>(SessionConstants.ORDER_ITEMS_SESSION_MODEL_NAME);
             var paymentSessionModel = HttpContext.Session.Get<PaymentSessionModel>(SessionConstants.PAYMENT_SESSION_MODEL_NAME);
+            string userId = (await _userManager.GetUserAsync(User)).Id;
 
             if (paymentSessionModel == null || orderItemsSessionModel == null)
                 return RedirectToActionPermanent("Index", "Home");
@@ -239,10 +253,11 @@ namespace Tata.Controllers
             using (IUnitOfWork uow = _uowProvider.CreateUnitOfWork())
             {
                 var orderRepo = uow.GetRepository<Order>();
-
+                
                 var order = new Order
                 {
                     PaymentType = model.PaymentType,
+                    CreatedUserId = userId,
                     GrossTotal = paymentSessionModel.GrossTotal,
                     NetTotal = paymentSessionModel.NetTotal,
                     OrderCode = paymentSessionModel.OrderCode,
@@ -257,6 +272,7 @@ namespace Tata.Controllers
                         Currency = item.Product.Price.Currency,
                         Price = item.Product.Price.Price,
                         Quantity = item.Quantity,
+                        CreatedUserId = userId,
                         ExtraProperties = new List<ProductProperty>()
                     };
 
@@ -270,7 +286,8 @@ namespace Tata.Controllers
                             Name = extraProperty.Name,
                             Type = extraProperty.Type,
                             Value = extraProperty.Value,
-                            Unit = extraProperty.Unit
+                            Unit = extraProperty.Unit,
+                            CreatedUserId = userId
                         };
 
                         orderItem.ExtraProperties.Add(productProperty);
