@@ -7,6 +7,6 @@ namespace Tata.Entities.Enums
 {
     public enum ProductStatus
     {
-        Enable, Disabled, LowStock
+        Enable, Disabled, Processing
     }
 }

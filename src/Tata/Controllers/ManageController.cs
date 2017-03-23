@@ -50,18 +50,19 @@ namespace Tata.Controllers
                 : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
                 : "";
 
-            var user = await GetCurrentUserAsync();
+            User user = await GetCurrentUserAsync();
+
             if (user == null)
+            { return View("Error"); }
+
+            UserInfoViewModel model = new UserInfoViewModel
             {
-                return View("Error");
-            }
-            var model = new UserInfoViewModel
-            {
-                PhoneNumber = await _userManager.GetPhoneNumberAsync(user),
+                PhoneNumber = user.PhoneNumber,
                 TwoFactor = await _userManager.GetTwoFactorEnabledAsync(user),
-                EmailAddress = await _userManager.GetEmailAsync(user),
-                Address = ""
+                EmailAddress = user.Email,
+                Address = user.Address
             };
+
             return View(model);
         }
 

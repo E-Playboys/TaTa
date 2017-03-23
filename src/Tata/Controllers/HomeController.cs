@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,10 +15,12 @@ namespace Tata.Controllers
     public class HomeController : BaseController
     {
         private readonly IUowProvider _uowProvider;
+        private readonly IStringLocalizer<HomeController> _stringres;
 
-        public HomeController(IUowProvider uowProvider)
+        public HomeController(IUowProvider uowProvider, IStringLocalizer<HomeController> localizer)
         {
             _uowProvider = uowProvider;
+            _stringres = localizer;
         }
 
         public async Task<IActionResult> Index()

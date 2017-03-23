@@ -3,7 +3,7 @@
 
   "dependencies": {
     "Microsoft.NETCore.App": {
-      "version": "1.0.1",
+      "version": "1.1.0",
       "type": "platform"
     },
     "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "1.1.*",
@@ -47,7 +47,10 @@
     "Microsoft.AspNetCore.Diagnostics": "1.1.0",
     "Tata.DataAccess": "2.5.1-*",
     "AutoMapper": "5.2.0",
-    "Microsoft.AspNetCore.Session": "1.1.0"
+    "Microsoft.AspNetCore.Session": "1.1.0",
+    "Microsoft.Extensions.Localization": "1.1.1",
+    "Microsoft.AspNetCore.Localization": "1.1.1",
+    "BundlerMinifier.Core": "2.4.337"
   },
 
   "tools": {
