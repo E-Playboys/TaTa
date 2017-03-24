@@ -50,7 +50,8 @@
     "Microsoft.AspNetCore.Session": "1.1.0",
     "Microsoft.Extensions.Localization": "1.1.1",
     "Microsoft.AspNetCore.Localization": "1.1.1",
-    "BundlerMinifier.Core": "2.4.337"
+    "BundlerMinifier.Core": "2.4.337",
+    "MailKit": "1.12.0"
   },
 
   "tools": {

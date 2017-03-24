@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
+using System.Reflection;
 
 namespace Tata.Helpers
 {
@@ -70,6 +71,23 @@ namespace Tata.Helpers
             var value = session.GetString(key);
             return value == null ? default(T) :
                                   JsonConvert.DeserializeObject<T>(value);
+        }
+
+        #endregion
+
+        #region Enum
+
+        /// <summary>
+        ///     A generic extension method that aids in reflecting 
+        ///     and retrieving any attribute that is applied to an `Enum`.
+        /// </summary>
+        public static TAttribute GetAttribute<TAttribute>(this Enum enumValue)
+                where TAttribute : Attribute
+        {
+            return enumValue.GetType()
+                            .GetMember(enumValue.ToString())
+                            .First()
+                            .GetCustomAttribute<TAttribute>();
         }
 
         #endregion

@@ -97,6 +97,7 @@
                 @if (User.Identity.IsAuthenticated)
                 {
                     <p>Bạn đang đăng nhập với tài khoản <strong class="text-danger">@Model.LoggedInEmail</strong></p>
+                    <button id="btnNext" class="btn btn-default">Tiếp tục</button>
                     <a id="btnChangeLogin" href="#">Bạn có muốn dùng tài khoản khác?</a>
                 }
                 else
@@ -232,6 +233,10 @@
   <script>
     $(document).ready(function () {
 
+      $('#btnNext').click(function (e) {
+        window.location.href = "/Payment/Selection";
+      });
+
       $('#btnChangeLogin').click(function (e) {
         $('#frmLogin').removeClass("hidden");
         $(this).addClass("hidden");
@@ -246,7 +251,6 @@
           type: "POST",
           data: { email: email, password: password },
           success: function (response) {
-            debugger;
             if (!response.success) {
               alert(response.error);
             } else {

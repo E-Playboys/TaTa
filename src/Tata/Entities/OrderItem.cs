@@ -11,7 +11,7 @@ namespace Tata.Entities
         public int Quantity { get; set; }
         public decimal Price { get; set; }
         public Currency Currency { get; set; }
-
+        public OrderItemStatus Status { get; set; }
 
         public int ProductId { get; set; }
         public Product Product { get; set; }

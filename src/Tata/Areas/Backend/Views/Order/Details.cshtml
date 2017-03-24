@@ -1,4 +1,9 @@
-﻿@model OrderDetailsViewModel
+﻿@using System.ComponentModel.DataAnnotations
+@using System.Threading.Tasks
+@using Tata.Areas.Backend.Helpers
+@using Tata.Entities.Enums
+@using Tata.Helpers
+@model OrderDetailsViewModel
 
 @{
     ViewData["Title"] = "Orders Details";
@@ -13,54 +18,14 @@
       <th class="td-price">Giá cơ bản</th>
       <th class="td-qty">Thời hạn (tháng)</th>
       <th class="td-total">Thành tiền</th>
-      <th class="td-remove"></th>
+      <th data-hide="phone">Status</th>
     </tr>
     </thead>
     <tbody>
     @foreach (var item in Model.Order.OrderItems)
     {
-      <tr>
-        <td class="td-images">
-          <a href="shop-product-view.html" class="product-image">
-            <img class="replace-2x" src="content/img/product-1.jpg" alt="" title="" width="70" height="70">
-          </a>
-        </td>
-        <td class="td-name">
-          <p class="product-name">
-            <strong>@item.Product.Name</strong>
-          </p>
-          @foreach (var subItem in item.ExtraProperties)
-          {
-            <p>- @($"{subItem.Type} - {subItem.Name} {subItem.Value} {subItem.Unit}")</p>
-          }
-        </td>
-        <td class="td-price">
-          <div class="price">@item.Price.ToString("N0")</div>
-        </td>
-        <td class="td-qty">
-          @item.Quantity
-        </td>
-        <td class="td-total">
-          <div class="price">@((item.Price * item.Quantity).ToString("N0"))</div>
-          <br />
-          @foreach (var subItem in item.ExtraProperties)
-          {
-            <p>@subItem.Price.ToString("N0")</p>
-          }
-        </td>
-        <td class="td-remove">
-          <a href="#" class="product-remove">
-            <svg x="0" y="0" width="16px" height="16px" viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve">
-              <g>
-                <path fill="#7f7f7f" d="M6,13c0.553,0,1-0.447,1-1V7c0-0.553-0.447-1-1-1S5,6.447,5,7v5C5,12.553,5.447,13,6,13z"></path>
-                <path fill="#7f7f7f" d="M10,13c0.553,0,1-0.447,1-1V7c0-0.553-0.447-1-1-1S9,6.447,9,7v5C9,12.553,9.447,13,10,13z"></path>
-                <path fill="#7f7f7f" d="M14,3h-1V1c0-0.552-0.447-1-1-1H4C3.448,0,3,0.448,3,1v2H2C1.447,3,1,3.447,1,4s0.447,1,1,1
-						c0,0.273,0,8.727,0,9c0,1.104,0.896,2,2,2h8c1.104,0,2-0.896,2-2c0-0.273,0-8.727,0-9c0.553,0,1-0.447,1-1S14.553,3,14,3z M5,2h6v1
-						H5V2z M12,14H4V5h8V14z"></path>
-              </g>
-            </svg>
-          </a><!-- .product-remove -->
-        </td>
+      <tr id="orderItemWrapper_@(item.Id)">
+        @Html.Partial("_OrderItem", item)
       </tr>
     }
     </tbody>
@@ -79,17 +44,58 @@
     <div class="car-bottom-box bg total">
       <table>
         <tbody>
-          <tr>
-            <td>Tổng</td>
-            <td><span class="price">@Model.Order.NetTotal.ToString("N0") @Model.Order.CurrencyName</span></td>
-          </tr>
-          <tr class="tr-total">
-            <td>Tổng sau VAT</td>
-            <td><span class="price">@Model.Order.GrossTotal.ToString("N0") @Model.Order.CurrencyName</span></td>
-          </tr>
+        <tr>
+          <td>Tổng</td>
+          <td><span class="price">@Model.Order.NetTotal.ToString("N0") @Model.Order.CurrencyName</span></td>
+        </tr>
+        <tr class="tr-total">
+          <td>Tổng sau VAT</td>
+          <td><span class="price">@Model.Order.GrossTotal.ToString("N0") @Model.Order.CurrencyName</span></td>
+        </tr>
         </tbody>
       </table>
     </div>
   </div>
 </div>
+
+@section Scripts {
+  <script type="text/javascript">
+    function UpdateOrderItemStatus(orderItemId, currentStatus, sendEmail) {
+      var rq = { orderItemId: orderItemId, currentStatus: currentStatus };
+      if (sendEmail) {
+        var ipAddressFieldId = "#txtIpAddress_" + orderItemId;
+        var usernameFieldId = "#txtUsername_" + orderItemId;
+        var passwordFieldId = "#txtPassword_" + orderItemId;
+
+        if ($(ipAddressFieldId)[0].checkValidity() === false ||
+          $(usernameFieldId)[0].checkValidity() === false ||
+          $(passwordFieldId)[0].checkValidity() === false) {
+          $("#validationVps_" + orderItemId).removeClass("hidden");
+          return;
+        }
+
+        var ipAddress = $(ipAddressFieldId).val();
+        var username = $(usernameFieldId).val();
+        var password = $(passwordFieldId).val();
+
+        rq.vpsIpAddress = ipAddress;
+        rq.vpsUsername = username;
+        rq.vpsPassword = password;
+      }
+
+      $.ajax({
+        type: 'POST',
+        url: '@Url.Action("UpdateOrderItemStatus", "Order")',
+        contentType: "application/json; charset=utf-8",
+        dataType: "html",
+        data: JSON.stringify(rq),
+        success: function (resp) {
+          $("#categoryModal_" + orderItemId).modal('toggle');
+          $("#orderItemWrapper_" + orderItemId).html(resp);
+        },
+        error: function () { alert('Error happened'); }
+      });
+    }
+</script>
+}
 

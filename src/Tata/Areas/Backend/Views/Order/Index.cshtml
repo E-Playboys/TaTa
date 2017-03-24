@@ -49,51 +49,9 @@
             <tbody>
               @foreach (var model in Model)
               {
-                  <tr>
-                    <td>
-                      @(model.OrderCode)
-                    </td>
-                    <td>
-                      <ul>
-                        <li>@(model.ClientName)</li>
-                        <li>@(model.ClientAddress)</li>
-                      </ul>
-                    </td>
-                    <td>
-                      <ul>
-                        @foreach (var item in model.OrderItems)
-                        {
-                            <li>@(item.Product.Name)</li>
-                        }
-                      </ul>
-                    </td>
-                    <td>
-                      <span class="btn label label-@Html.GetStatusClass(model.OrderStatus.ToString())" data-toggle="modal" data-target="#categoryModal_@(model.Id)">@(model.OrderStatus.ToString())</span>
-
-                      <div class="modal inmodal" id="categoryModal_@(model.Id)" tabindex="-1" role="dialog" aria-hidden="true">
-                        <div class="modal-dialog">
-                          <div class="modal-content animated bounceInRight">
-                            <div class="modal-header">
-                              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                              <h4 class="modal-title">Confirmation</h4>
-                            </div>
-                            <div class="modal-body">
-                              Do you want to change order status to @(model.OrderStatus == OrderStatus.Paid ? "UNPAID" : "PAID")?
-                            </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-white" data-dismiss="modal">No</button>
-                              <button type="button" class="btn btn-primary" onclick="javascript:updateOrderStatus(@(model.Id),@((int)model.OrderStatus)); return false;">Yes</button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                    <td class="text-right">
-                      <div class="btn-group">
-                        <a class="btn-primary btn btn-xs" href="@Url.Action("Details", "Order", new {id = @model.Id})">View</a>
-                      </div>
-                    </td>
-                  </tr>
+                <tr id="orderWrapper_@(model.Id)">
+                  @Html.Partial("_Order", model)
+                </tr>
               }
             </tbody>
             <tfoot>
@@ -144,15 +102,17 @@
       headers['__RequestVerificationToken'] = gettoken();
 
       $.ajax({
-        type: 'PUT',
+        type: 'POST',
         url: '@Url.Action("UpdateOrderStatus", "Order")',
         //headers: headers,
         contentType: "application/json; charset=utf-8",
-        dataType: "json",
+        dataType: "html",
         data: JSON.stringify({ orderId: orderId, currentStatus: currentStatus }),
-        success: function () {
-          // TODO: implement ajax reload
-          window.location.reload();
+        success: function (resp) {
+          $("#categoryModal_" + orderId).modal('toggle');
+          $("#orderWrapper_" + orderId).html(resp);
+
+          $('.footable').footable();
         },
         error: function () { alert('Error happened'); }
       });

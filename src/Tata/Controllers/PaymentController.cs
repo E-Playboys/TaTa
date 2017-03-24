@@ -232,6 +232,7 @@ namespace Tata.Controllers
         {
             var orderItemsSessionModel = HttpContext.Session.Get<List<OrderItemSessionModel>>(SessionConstants.ORDER_ITEMS_SESSION_MODEL_NAME);
             var paymentSessionModel = HttpContext.Session.Get<PaymentSessionModel>(SessionConstants.PAYMENT_SESSION_MODEL_NAME);
+            var user = await _userManager.GetUserAsync(HttpContext.User);
 
             if (paymentSessionModel == null || orderItemsSessionModel == null)
                 return RedirectToActionPermanent("Index", "Home");
@@ -246,6 +247,7 @@ namespace Tata.Controllers
                     GrossTotal = paymentSessionModel.GrossTotal,
                     NetTotal = paymentSessionModel.NetTotal,
                     OrderCode = paymentSessionModel.OrderCode,
+                    CreatedUserId = user.Id,
                     OrderItems = new List<OrderItem>()
                 };
 
@@ -257,6 +259,7 @@ namespace Tata.Controllers
                         Currency = item.Product.Price.Currency,
                         Price = item.Product.Price.Price,
                         Quantity = item.Quantity,
+                        CreatedUserId = user.Id,
                         ExtraProperties = new List<ProductProperty>()
                     };
 
@@ -270,7 +273,8 @@ namespace Tata.Controllers
                             Name = extraProperty.Name,
                             Type = extraProperty.Type,
                             Value = extraProperty.Value,
-                            Unit = extraProperty.Unit
+                            Unit = extraProperty.Unit,
+                            CreatedUserId = user.Id
                         };
 
                         orderItem.ExtraProperties.Add(productProperty);

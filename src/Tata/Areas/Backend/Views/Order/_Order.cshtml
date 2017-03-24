@@ -1,0 +1,48 @@
+﻿@using System.Threading.Tasks
+@using Tata.Areas.Backend.Helpers
+@using Tata.Entities.Enums
+@model OrderModel
+
+  <td>
+    @(Model.OrderCode)
+  </td>
+  <td>
+    <ul>
+      <li>@(Model.ClientName)</li>
+      <li>@(Model.ClientAddress)</li>
+    </ul>
+  </td>
+  <td>
+    <ul>
+      @foreach (var item in Model.OrderItems)
+      {
+          <li>@(item.Product.Name)</li>
+      }
+    </ul>
+  </td>
+  <td>
+    <span class="btn label label-@Html.GetStatusClass(Model.OrderStatus.ToString())" data-toggle="modal" data-target="#categoryModal_@(Model.Id)">@(Model.OrderStatus.ToString())</span>
+
+    <div class="modal inmodal" id="categoryModal_@(Model.Id)" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title">Confirmation</h4>
+          </div>
+          <div class="modal-body">
+            Do you want to change order status to @(Model.OrderStatus == OrderStatus.Paid ? "UNPAID" : "PAID")?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-white" data-dismiss="modal">No</button>
+            <button type="button" class="btn btn-primary" onclick="javascript:updateOrderStatus(@(Model.Id),@((int)Model.OrderStatus)); return false;">Yes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </td>
+  <td class="text-right">
+    <div class="btn-group">
+      <a class="btn-primary btn btn-xs" href="@Url.Action("Details", "Order", new {id = @Model.Id})">View</a>
+    </div>
+  </td>

@@ -36,8 +36,10 @@ namespace Tata.Areas.Backend.Helpers
             {
                 case "Enable":
                 case "Paid":
+                case "Done":
                     return "primary";
                 case "LowStock":
+                case "Processing":
                     return "warning";
                 default:
                     return "danger";
