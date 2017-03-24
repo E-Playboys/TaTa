@@ -1,0 +1,112 @@
+﻿@using System.ComponentModel.DataAnnotations
+@using System.Threading.Tasks
+@using Tata.Areas.Backend.Helpers
+@using Tata.Entities.Enums
+@using Tata.Helpers
+@model OrderItemModel
+
+<td class="td-images">
+  <a href="shop-product-view.html" class="product-image">
+    <img class="replace-2x" src="content/img/product-1.jpg" alt="" title="" width="70" height="70">
+  </a>
+</td>
+<td class="td-name">
+  <p class="product-name">
+    <strong>@Model.Product.Name</strong>
+  </p>
+  @foreach (var subItem in Model.ExtraProperties)
+  {
+      <p>- @($"{subItem.Type} - {subItem.Name} {subItem.Value} {subItem.Unit}")</p>
+  }
+</td>
+<td class="td-price">
+  <div class="price">@Model.Price.ToString("N0")</div>
+</td>
+<td class="td-qty">
+  @Model.Quantity
+</td>
+<td class="td-total">
+  <div class="price">@((Model.Price * Model.Quantity).ToString("N0"))</div>
+  <br />
+  @foreach (var subItem in Model.ExtraProperties)
+  {
+      <p>@subItem.Price.ToString("N0")</p>
+  }
+</td>
+<td>
+  @if (Model.Status == OrderItemStatus.Done)
+  {
+      <span class="label label-@Html.GetStatusClass(Model.Status.ToString())">@(Model.Status.ToString())</span>
+  }
+  else if (Model.Status == OrderItemStatus.NotProcess)
+  {
+      <span class="btn label label-@Html.GetStatusClass(Model.Status.ToString())" data-toggle="modal" data-target="#categoryModal_@(Model.Id)">@(Model.Status.GetAttribute<DisplayAttribute>().Name)</span>
+
+      <div class="modal inmodal" id="categoryModal_@(Model.Id)" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+              <h4 class="modal-title">Confirmation</h4>
+            </div>
+            <div class="modal-body">
+              Do you want to change status to <strong>Processing</strong>?
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-white" data-dismiss="modal">No</button>
+              <button type="button" class="btn btn-primary" onclick="javascript:UpdateOrderItemStatus(@(Model.Id), @((int) Model.Status));return false;">Yes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+  }
+  else
+  {
+      <span class="btn label label-@Html.GetStatusClass(Model.Status.ToString())" data-toggle="modal" data-target="#categoryModal_@(Model.Id)">@(Model.Status.GetAttribute<DisplayAttribute>().Name)</span>
+
+      <div class="modal inmodal" id="categoryModal_@(Model.Id)" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+              <h4 class="modal-title">Confirmation</h4>
+            </div>
+            <div class="modal-body">
+              Do you want to change status to <strong>Done</strong>?
+              
+              <p></p>
+
+              <p><strong>VPS information</strong></p>
+              <p id="validationVps_@(Model.Id)" class="text-danger hidden">Please enter VPS information</p>
+              <div>
+                <fieldset class="form-horizontal">
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label">VPS IP:</label>
+                    <div class="col-sm-9">
+                      <input id="txtIpAddress_@(Model.Id)" class="form-control" placeholder="IP Address" required/>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label">VPS Username:</label>
+                    <div class="col-sm-9">
+                      <input id="txtUsername_@(Model.Id)" class="form-control" placeholder="Username"  required/>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label">VPS Password:</label>
+                    <div class="col-sm-9">
+                      <input id="txtPassword_@(Model.Id)" class="form-control" placeholder="Password"  required/>
+                    </div>
+                  </div>
+                </fieldset>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-white" data-dismiss="modal">No</button>
+              <button type="button" class="btn btn-primary" onclick="javascript:UpdateOrderItemStatus(@(Model.Id), @((int) Model.Status), true);return false;">Yes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+  }
+</td>

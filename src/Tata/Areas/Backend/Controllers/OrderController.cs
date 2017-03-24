@@ -11,6 +11,8 @@ using Tata.Entities;
 using Tata.Entities.Enums;
 using TaTa.DataAccess;
 using Microsoft.AspNetCore.Authorization;
+using MimeKit;
+using Tata.Helpers;
 
 namespace Tata.Areas.Backend.Controllers
 {
@@ -19,10 +21,12 @@ namespace Tata.Areas.Backend.Controllers
     public class OrderController : Controller
     {
         private readonly IUowProvider _uowProvider;
+        private readonly IEmailHelper _emailHelper;
 
-        public OrderController(IUowProvider uowProvider)
+        public OrderController(IUowProvider uowProvider, IEmailHelper emailHelper)
         {
             _uowProvider = uowProvider;
+            _emailHelper = emailHelper;
         }
 
         [HttpGet]
@@ -52,23 +56,87 @@ namespace Tata.Areas.Backend.Controllers
             return View(model);
         }
 
-        [HttpPut]
+        [HttpPost]
         public async Task<IActionResult> UpdateOrderStatus([FromBody]UpdateOrderStatusModel model)
         {
             using (IUnitOfWork uow = _uowProvider.CreateUnitOfWork())
             {
                 var orderRepo = uow.GetRepository<Order>();
-                var order = await orderRepo.GetAsync(model.OrderId);
+                var userProductRepo = uow.GetRepository<UserProduct>();
+
+                var order = await orderRepo.GetAsync(model.OrderId, x => x.Include(m => m.CreatedUser)
+                                                    .Include(m => m.OrderItems).ThenInclude(m => m.Product)
+                                                    .Include(m => m.OrderItems).ThenInclude(m => m.ExtraProperties));
                 if (order != null)
                 {
                     order.OrderStatus = model.CurrentStatus == OrderStatus.Paid ? OrderStatus.Unpaid : OrderStatus.Paid;
-
                     orderRepo.Update(order);
+
+                    // TODO: user product here
+                    //var userProduct = new UserProduct
+                    //{
+
+                    //};
+
+                    //userProductRepo.Add(userProduct);
+
                     await uow.SaveChangesAsync();
                 }
 
                 var returnModel = Mapper.Instance.Map<Order, OrderModel>(order);
-                return Json(returnModel);
+                return PartialView("_Order", returnModel);
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateOrderItemStatus([FromBody]UpdateOrderItemStatusModel model)
+        {
+            using (IUnitOfWork uow = _uowProvider.CreateUnitOfWork())
+            {
+                var orderItemRepo = uow.GetRepository<OrderItem>();
+
+                var orderItem = await orderItemRepo.GetAsync(model.OrderItemId, x => x.Include(m => m.Order).ThenInclude(m =>m .CreatedUser).Include(m => m.Product)
+                                                                                .Include(m => m.ExtraProperties));
+                if (orderItem != null)
+                {
+                    switch (model.CurrentStatus)
+                    {
+                        case OrderItemStatus.NotProcess:
+                            orderItem.Status = OrderItemStatus.Processing;
+                            break;
+                        case OrderItemStatus.Processing:
+                            orderItem.Status = OrderItemStatus.Done;
+                            break;
+                    }
+
+                    orderItemRepo.Update(orderItem);
+
+                    //await uow.SaveChangesAsync();
+
+                    if (orderItem.Status == OrderItemStatus.Done)
+                    {
+                        // email vps info
+                        var recipientName = orderItem.Order.CreatedUser.FullName;
+                        var recipientAddress = orderItem.Order.CreatedUser.Email;
+
+                        var bodyBuilder = new BodyBuilder
+                        {
+                            HtmlBody = 
+$@"<p><strong>VPS Information</strong></p>
+<ul>
+<li>IP: {model.VpsIpAddress}</li>
+<li>Username: {model.VpsUsername}</li>
+<li>Password: {model.VpsPassword}</li>
+</ul>"
+                        };
+                        var body = bodyBuilder.ToMessageBody();
+
+                        await _emailHelper.SendEmailAsync(recipientName, recipientAddress, "VPS Information", body);
+                    }
+                }
+
+                var returnModel = Mapper.Instance.Map<OrderItem, OrderItemModel>(orderItem);
+                return PartialView("_OrderItem", returnModel);
             }
         }
 
