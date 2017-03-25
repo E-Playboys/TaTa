@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Tata.Entities.Enums;
 using TaTa.DataAccess.Entities;
 
 namespace Tata.Entities
@@ -13,6 +14,8 @@ namespace Tata.Entities
         public string OrderCode { get; set; }
         public string IpAdress { get; set; }
         public string VpsUsername { get; set; }
+
+        public UserProductStatus Status { get; set; }
 
         public int ProductId { get; set; }
         public Product Product { get; set; }

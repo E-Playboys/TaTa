@@ -11,8 +11,10 @@ using Tata.Entities;
 using Tata.Entities.Enums;
 using TaTa.DataAccess;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using MimeKit;
 using Tata.Helpers;
+using TaTa.DataAccess.Entities;
 
 namespace Tata.Areas.Backend.Controllers
 {
@@ -22,11 +24,13 @@ namespace Tata.Areas.Backend.Controllers
     {
         private readonly IUowProvider _uowProvider;
         private readonly IEmailHelper _emailHelper;
+        private readonly UserManager<User> _userManager;
 
-        public OrderController(IUowProvider uowProvider, IEmailHelper emailHelper)
+        public OrderController(IUowProvider uowProvider, IEmailHelper emailHelper, UserManager<User> userManager)
         {
             _uowProvider = uowProvider;
             _emailHelper = emailHelper;
+            _userManager = userManager;
         }
 
         [HttpGet]
@@ -59,6 +63,8 @@ namespace Tata.Areas.Backend.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateOrderStatus([FromBody]UpdateOrderStatusModel model)
         {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+
             using (IUnitOfWork uow = _uowProvider.CreateUnitOfWork())
             {
                 var orderRepo = uow.GetRepository<Order>();
@@ -72,13 +78,19 @@ namespace Tata.Areas.Backend.Controllers
                     order.OrderStatus = model.CurrentStatus == OrderStatus.Paid ? OrderStatus.Unpaid : OrderStatus.Paid;
                     orderRepo.Update(order);
 
-                    // TODO: user product here
-                    //var userProduct = new UserProduct
-                    //{
+                    foreach (var item in order.OrderItems)
+                    {
+                        var userProduct = new UserProduct
+                        {
+                            CreatedUserId = user.Id,
+                            OrderCode = order.OrderCode,
+                            Status = UserProductStatus.Processing,
+                            UserId = order.CreatedUserId,
+                            ProductId = item.ProductId
+                        };
 
-                    //};
-
-                    //userProductRepo.Add(userProduct);
+                        userProductRepo.Add(userProduct);
+                    }
 
                     await uow.SaveChangesAsync();
                 }
@@ -95,7 +107,7 @@ namespace Tata.Areas.Backend.Controllers
             {
                 var orderItemRepo = uow.GetRepository<OrderItem>();
 
-                var orderItem = await orderItemRepo.GetAsync(model.OrderItemId, x => x.Include(m => m.Order).ThenInclude(m =>m .CreatedUser).Include(m => m.Product)
+                var orderItem = await orderItemRepo.GetAsync(model.OrderItemId, x => x.Include(m => m.Order).ThenInclude(m => m.CreatedUser).Include(m => m.Product)
                                                                                 .Include(m => m.ExtraProperties));
                 if (orderItem != null)
                 {
@@ -121,7 +133,7 @@ namespace Tata.Areas.Backend.Controllers
 
                         var bodyBuilder = new BodyBuilder
                         {
-                            HtmlBody = 
+                            HtmlBody =
 $@"<p><strong>VPS Information</strong></p>
 <ul>
 <li>IP: {model.VpsIpAddress}</li>
