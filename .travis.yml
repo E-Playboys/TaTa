@@ -1,4 +1,7 @@
 language: csharp
+dist: trusty
+sudo: required
 mono: none
 dotnet: 1.0.1
-solution: TaTa.sln
+script:
+  - ./build.sh --quiet verify
