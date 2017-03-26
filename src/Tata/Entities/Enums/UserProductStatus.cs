@@ -1,13 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Tata.Entities.Enums
 {
-    public enum OrderStatus
-    {
-        Unpaid, Paid
-    }
-
-    public enum OrderItemStatus
+    public enum UserProductStatus
     {
         [Display(Name = "Not Process")]
         NotProcess,

@@ -18,6 +18,7 @@ using Tata.Areas.Backend.Models.Setting;
 using Tata.Areas.Backend.Models.Users;
 using Tata.Data;
 using Tata.Entities;
+using Tata.Helpers;
 using Tata.Models.ProductModels;
 using Tata.Services;
 using TaTa.DataAccess;
@@ -91,6 +92,11 @@ namespace Tata
             // Add localization
             services.AddLocalization(options => options.ResourcesPath = "Resources");
 
+            // Adds services required for using options.
+            services.AddOptions();
+
+            services.Configure<SmtpInfo>(Configuration.GetSection("SmtpInfo"));
+
             services.AddMvc(options =>
             {
                 //options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
@@ -102,6 +108,7 @@ namespace Tata
             services.AddSession();
 
             // Add application services.
+            services.AddTransient<IEmailHelper, EmailHelper>();
             services.AddTransient<IUowProvider, UowProvider>();
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();

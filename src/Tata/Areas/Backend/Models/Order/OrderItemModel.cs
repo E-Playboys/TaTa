@@ -15,6 +15,7 @@ namespace Tata.Areas.Backend.Models.Order
         public int Quantity { get; set; }
         public decimal Price { get; set; }
         public Currency Currency { get; set; }
+        public OrderItemStatus Status { get; set; }
 
         public ProductModel Product { get; set; }
 
