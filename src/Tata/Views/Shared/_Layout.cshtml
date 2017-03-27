@@ -61,6 +61,28 @@
           <div class="container">
             <div class="row">
               <div class="col-xs-9 col-sm-5">
+                  <div class="btn-group language btn-select">
+                    <a class="btn dropdown-toggle btn-default" role="button" data-toggle="dropdown" href="#">
+                      <span class="hidden-xs">Ngôn ngữ</span><span class="visible-xs">Lang</span>
+                      : Vietnamese
+                      <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                      <li><a href="#"><img src="images/eng-flag.png" alt="">English</a></li>
+                      <li><a href="#"><img src="images/vi-flag.png" alt="">Vietnamese</a></li>
+                    </ul>
+                  </div>
+                  <div class="btn-group currency btn-select">
+                    <a class="btn dropdown-toggle btn-default" role="button" data-toggle="dropdown" href="#">
+                      <span class="hidden-xs">Đơn vị tiền</span><span class="visible-xs">Curr</span>
+                      : VND
+                      <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                      <li><a href="#">USD</a></li>
+                      <li><a href="#">VND</a></li>
+                    </ul>
+                  </div>
               </div>
 
               <div class="col-xs-3 col-sm-7">
@@ -75,17 +97,28 @@
                     <ul class="nav navbar-nav navbar-right">
                         @if (User.Identity.IsAuthenticated)
                         {
+                            if (User.IsInRole("Administrator"))
+                            {
+                                  <li>
+                                    @Html.ActionLink(StringRes["AdminLabel"].Value, "Index", "Backend/Setting", null)
+                                  </li>
+                            }
+                            else
+                            {
+                              <li>
+                                  @Html.ActionLink(StringRes["AccountLabel"].Value, "Index", "Manage", null)
+                              </li>
+                              <li><a href="@Url.Action("Wishlist", "Manage", null)"><i class="fa fa-heart"></i> Wishlist</a></li>
+                              <li>
+                                  @Html.ActionLink("Giỏ hàng", "Cart", "Home", null)
+                              </li>
+                              <li>
+                                  @Html.ActionLink("Checkout", "Checkout", "Manage", null)
+                              </li>
+                            }
                             <li>
-                                @Html.ActionLink(StringRes["AccountLabel"].Value, "Index", "Manage", null)
+                              @Html.ActionLink("Thoát", "Logoff", "Account", null)
                             </li>
-                            <li><a href="@Url.Action("Wishlist", "Manage", null)"><i class="fa fa-heart"></i> Wishlist</a></li>
-                            <li>
-                                @Html.ActionLink("Giỏ hàng", "Cart", "Home", null)
-                            </li>
-                            <li>
-                                @Html.ActionLink("Checkout", "Checkout", "Manage", null)
-                            </li>
-                            <li><a href="@Url.Action("Logoff", "Account", null)">Thoát <i class="fa fa-sign-out after"></i></a></li>
                         }
                         else
                         {

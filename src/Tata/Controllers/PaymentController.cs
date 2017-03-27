@@ -171,32 +171,6 @@ namespace Tata.Controllers
             return new JsonResult(new { success = false, error = "Username or password is incorrect" });
         }
 
-        public async Task<IActionResult> Register(RegisterViewModel model)
-        {
-            if (!ModelState.IsValid)
-                return new BadRequestResult();
-
-            var user = new User { UserName = model.UserName, Email = model.Email, EmailConfirmed = true, FullName = model.FullName, Address = model.Address, PhoneNumber = model.PhoneNumber, Gender = model.Gender, Organization = model.Organization, UserType = string.IsNullOrWhiteSpace(model.Organization) ? UserType.Personal : UserType.Organization};
-            var result = await _userManager.CreateAsync(user, model.Password);
-            if (result.Succeeded)
-            {
-                // By default all user is standard user
-                await _userManager.AddToRoleAsync(user, UserRoles.Standard);
-                await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, UserRoles.Standard));
-
-                // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=532713
-                // Send an email with this link
-                //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                //var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
-                //await _emailSender.SendEmailAsync(model.Email, "Confirm your account",
-                //    $"Please confirm your account by clicking this link: <a href='{callbackUrl}'>link</a>");
-                await _signInManager.SignInAsync(user, isPersistent: false);
-                return new JsonResult(new { success = true });
-            }
-
-            return new JsonResult(new { success = false, error = GetErrors(result) });
-        }
-
         private string GetErrors(IdentityResult result)
         {
             var errorString = "";
