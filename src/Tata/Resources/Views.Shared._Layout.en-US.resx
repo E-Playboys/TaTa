@@ -120,6 +120,9 @@
   <data name="AccountLabel" xml:space="preserve">
     <value>Account</value>
   </data>
+  <data name="AdminLabel" xml:space="preserve">
+    <value>Admin Page</value>
+  </data>
   <data name="LoginLabel" xml:space="preserve">
     <value>Login</value>
   </data>

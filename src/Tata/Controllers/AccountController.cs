@@ -62,27 +62,31 @@ namespace Tata.Controllers
             {
                 // This doesn't count login failures towards account Logoff
                 // To enable password failures to trigger account Logoff, set lockoutOnFailure: true
-                var user = await _userManager.FindByEmailAsync(model.Email);
-                var result = await _signInManager.PasswordSignInAsync(user.UserName, model.Password, model.RememberMe, lockoutOnFailure: false);
+                User user = await _userManager.FindByEmailAsync(model.Email);
 
-                if (result.Succeeded)
+                if (user != null)
                 {
-                    _logger.LogInformation(1, "User logged in.");
-                    return RedirectToLocal(returnUrl);
-                }
-                if (result.RequiresTwoFactor)
-                {
-                    return RedirectToAction(nameof(SendCode), new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
-                }
-                if (result.IsLockedOut)
-                {
-                    _logger.LogWarning(2, "User account locked out.");
-                    return View("Logoff");
-                }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                    return View(model);
+                    var result = await _signInManager.PasswordSignInAsync(user.UserName, model.Password, model.RememberMe, lockoutOnFailure: false);
+
+                    if (result.Succeeded)
+                    {
+                        _logger.LogInformation(1, "User logged in.");
+                        return RedirectToLocal(returnUrl);
+                    }
+                    if (result.RequiresTwoFactor)
+                    {
+                        return RedirectToAction(nameof(SendCode), new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+                    }
+                    if (result.IsLockedOut)
+                    {
+                        _logger.LogWarning(2, "User account locked out.");
+                        return View("Logoff");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                        return View(model);
+                    }
                 }
             }
 
@@ -104,35 +108,30 @@ namespace Tata.Controllers
         // POST: /Account/Register
         [HttpPost]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null)
+        public async Task<IActionResult> Register(RegisterViewModel model)
         {
-            ViewData["ReturnUrl"] = returnUrl;
-            if (ModelState.IsValid)
-            {
-                var user = new User { UserName = model.UserName, Email = model.Email, EmailConfirmed = true };
-                var result = await _userManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
-                {
-                    // By default all user is standard user
-                    await _userManager.AddToRoleAsync(user, UserRoles.Standard);
-                    await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, UserRoles.Standard));
+            if (!ModelState.IsValid)
+                return new BadRequestResult();
 
-                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=532713
-                    // Send an email with this link
-                    //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    //var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
-                    //await _emailSender.SendEmailAsync(model.Email, "Confirm your account",
-                    //    $"Please confirm your account by clicking this link: <a href='{callbackUrl}'>link</a>");
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                    _logger.LogInformation(3, "User created a new account with password.");
-                    return RedirectToLocal(returnUrl);
-                }
-                AddErrors(result);
+            var user = new User { UserName = model.UserName, Email = model.Email, EmailConfirmed = true, FullName = model.FullName, Address = model.Address, PhoneNumber = model.PhoneNumber, Gender = model.Gender, Organization = model.Organization, UserType = string.IsNullOrWhiteSpace(model.Organization) ? UserType.Personal : UserType.Organization };
+            var result = await _userManager.CreateAsync(user, model.Password);
+            if (result.Succeeded)
+            {
+                // By default all user is standard user
+                await _userManager.AddToRoleAsync(user, UserRoles.Standard);
+                await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, UserRoles.Standard));
+
+                // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=532713
+                // Send an email with this link
+                //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                //var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
+                //await _emailSender.SendEmailAsync(model.Email, "Confirm your account",
+                //    $"Please confirm your account by clicking this link: <a href='{callbackUrl}'>link</a>");
+                await _signInManager.SignInAsync(user, isPersistent: false);
+                return new JsonResult(new { success = true });
             }
 
-            // If we got this far, something failed, redisplay form
-            return View(model);
+            return new JsonResult(new { success = false, error = result.Errors.SingleOrDefault().Description });
         }
 
         //
