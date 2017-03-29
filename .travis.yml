@@ -20,4 +20,4 @@ branches:
     - dev
     - /^(.*\/)?ci-.*$/
 script:
-  - ./build.sh
+  - build.sh
