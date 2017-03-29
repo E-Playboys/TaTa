@@ -9,7 +9,7 @@ mono: none
 os:
   - linux
 before_install:
-  - ln -s /usr/local/opt/openssl/lib/libcrypto.1.0.0.dylib /usr/local/lib/; ln -s /usr/local/opt/openssl/lib/libssl.1.0.0.dylib /usr/local/lib/; else ./install-nginx.sh; fi
+  - ./install-nginx.sh; fi
 install:
   - export PATH="$PATH:$HOME/nginxinstall/sbin/"
 before_script:
