@@ -7,7 +7,7 @@ if [ ! -z $tataBUILD_ZIP ]; then
     tataBuildZip=$tataBUILD_ZIP
 fi
 
-buildFolder=".build"
+buildFolder="./"
 buildFile="$buildFolder/build.sh"
 
 if test ! -d $buildFolder; then
