@@ -123,6 +123,12 @@
   <data name="AdminLabel" xml:space="preserve">
     <value>Admin Page</value>
   </data>
+  <data name="CurrentLanguageName" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="LanguageLabel" xml:space="preserve">
+    <value>Language</value>
+  </data>
   <data name="LoginLabel" xml:space="preserve">
     <value>Login</value>
   </data>
