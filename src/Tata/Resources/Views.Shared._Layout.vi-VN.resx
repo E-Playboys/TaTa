@@ -123,6 +123,12 @@
   <data name="AdminLabel" xml:space="preserve">
     <value>Trang Quản Trị</value>
   </data>
+  <data name="CurrentLanguageName" xml:space="preserve">
+    <value>Vietnamese</value>
+  </data>
+  <data name="LanguageLabel" xml:space="preserve">
+    <value>Ngôn ngữ</value>
+  </data>
   <data name="LoginLabel" xml:space="preserve">
     <value>Đăng nhập</value>
   </data>

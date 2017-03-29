@@ -13,5 +13,6 @@ namespace Tata.Controllers
 {
     public class BaseController : Controller
     {
+
     }
 }
