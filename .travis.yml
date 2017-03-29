@@ -19,5 +19,3 @@ branches:
     - release
     - dev
     - /^(.*\/)?ci-.*$/
-script:
-  - build.sh
