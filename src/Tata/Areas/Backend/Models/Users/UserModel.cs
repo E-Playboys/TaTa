@@ -1,22 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Tata.Entities.Enums;
+using TaTa.DataAccess.Entities;
 
 namespace Tata.Areas.Backend.Models.Users
 {
     public class UserModel
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Value { get; set; }
+        public string Id { get; set; }
+        public int AccessFailedCount { get; set; }
+        public string Email { get; set; }
+        public bool EmailConfirmed { get; set; }
+        public string PhoneNumber { get; set; }
+        public bool PhoneNumberConfirmed { get; set; }
+        public bool TwoFactorEnabled { get; set; }
+        public string UserName { get; set; }
+        public string FullName { get; set; }
+        public string Address { get; set; }
+        public Gender Gender { get; set; }
+        public UserType UserType { get; set; }
+        public string Organization { get; set; }
         public SettingValueType TypeValue { get; set; }
-        public string Section { get; set; }
-        public int Priority { get; set; }
-        public string CreatedUserId { get; set; }
-        public string CreatedUser { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public DateTime? UpdatedDate { get; set; }
+        public ICollection<string> Roles { get; set; }
+        public ICollection<string> Claims { get; set; }
     }
 }
