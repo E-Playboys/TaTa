@@ -1,12 +1,16 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Tata.Areas.Backend.Models.Users;
+using Tata.Data;
 using TaTa.DataAccess;
 using TaTa.DataAccess.Entities;
+using TaTa.DataAccess.Repositories;
 
 namespace Tata.Areas.Backend.Controllers
 {
@@ -14,11 +18,11 @@ namespace Tata.Areas.Backend.Controllers
     [Authorize(Roles = "Administrator")]
     public class UsersController : Controller
     {
-        private readonly IUowProvider _uowProvider;
+        private readonly UserManager<User> _userManager;
 
-        public UsersController(IUowProvider uowProvider)
+        public UsersController(UserManager<User> userManager)
         {
-            _uowProvider = uowProvider;
+            _userManager = userManager;
         }
 
         public IActionResult Index()
@@ -26,44 +30,27 @@ namespace Tata.Areas.Backend.Controllers
             return RedirectToAction("List");
         }
 
-        public async Task<IActionResult> List(int skip = 0, int take = 10)
+        public async Task<IActionResult> List()
         {
-            using (IUnitOfWork uow = _uowProvider.CreateUnitOfWork())
-            {
-                var productRepo = uow.GetRepository<User>();
-                IEnumerable<User> user = (await productRepo.GetAllAsync()).OrderBy(s => s.Id);
-                IEnumerable<UserModel> models = Mapper.Instance.Map<IEnumerable<User>, IEnumerable<UserModel>>(user);
+            List<User> users = await _userManager.Users.ToListAsync();
+            List<UserModel> models = Mapper.Instance.Map<List<User>, List<UserModel>>(users);
 
-                return View(models);
-            }
+            return View(users);
         }
 
-        public async Task<IActionResult> Details(int id)
+        public async Task<IActionResult> Details(string id)
         {
-            using (IUnitOfWork uow = _uowProvider.CreateUnitOfWork())
-            {
-                var productRepo = uow.GetRepository<User>();
-                User user = await productRepo.GetAsync(id);
-                UserModel models = Mapper.Instance.Map<User, UserModel>(user);
-
-                return View(models);
-            }
+            User user = await _userManager.Users.SingleOrDefaultAsync(u => u.Id == id);
+            return View(user);
         }
 
         [HttpPost]
-        public IActionResult Details(UserModel model)
+        public async Task<IActionResult> Details(UserModel model)
         {
-            using (IUnitOfWork uow = _uowProvider.CreateUnitOfWork())
-            {
-                if (ModelState.IsValid)
-                {
-                    var UsersRepo = uow.GetRepository<User>();
-                    User updateUser = Mapper.Map<UserModel, User>(model);
-                    updateUser = UsersRepo.Update(updateUser);
-                }
+            User updateUser = Mapper.Map<UserModel, User>(model);
+            var result = await _userManager.UpdateAsync(updateUser);
+            return RedirectToAction("Details", new { id = model.Id });
 
-                return RedirectToAction("Details", new { id = model.Id });
-            }
         }
     }
 }
