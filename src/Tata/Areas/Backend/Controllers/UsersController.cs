@@ -1,16 +1,13 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Tata.Areas.Backend.Models.Users;
-using Tata.Data;
-using TaTa.DataAccess;
 using TaTa.DataAccess.Entities;
-using TaTa.DataAccess.Repositories;
 
 namespace Tata.Areas.Backend.Controllers
 {
@@ -33,15 +30,27 @@ namespace Tata.Areas.Backend.Controllers
         public async Task<IActionResult> List()
         {
             List<User> users = await _userManager.Users.ToListAsync();
-            List<UserModel> models = Mapper.Instance.Map<List<User>, List<UserModel>>(users);
+            List<UserModel> models = Mapper.Map<List<User>, List<UserModel>>(users);
 
-            return View(users);
+            for (int i = 0; i < users.Count; i++)
+            {
+                models[i].Roles = await _userManager.GetRolesAsync(users[i]);
+            }
+
+            return View(models);
         }
 
         public async Task<IActionResult> Details(string id)
         {
             User user = await _userManager.Users.SingleOrDefaultAsync(u => u.Id == id);
-            return View(user);
+            UserModel model = Mapper.Map<User, UserModel>(user);
+
+            if (user != null)
+            {
+                model.Roles = await _userManager.GetRolesAsync(user);
+            }
+
+            return View(model);
         }
 
         [HttpPost]

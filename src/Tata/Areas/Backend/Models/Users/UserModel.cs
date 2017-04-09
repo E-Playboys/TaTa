@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Tata.Entities.Enums;
 using TaTa.DataAccess.Entities;
 
 namespace Tata.Areas.Backend.Models.Users
@@ -19,7 +18,6 @@ namespace Tata.Areas.Backend.Models.Users
         public Gender Gender { get; set; }
         public UserType UserType { get; set; }
         public string Organization { get; set; }
-        public SettingValueType TypeValue { get; set; }
         public ICollection<string> Roles { get; set; }
         public ICollection<string> Claims { get; set; }
     }
