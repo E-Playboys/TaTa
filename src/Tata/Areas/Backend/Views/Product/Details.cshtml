@@ -1,4 +1,5 @@
-﻿@model ProductDetailsViewModel
+﻿@using Tata.Entities.Enums
+@model ProductDetailsViewModel
 
 @{
     ViewData["Title"] = "Product Details";
@@ -51,6 +52,12 @@
                       <div class="col-sm-10">
                         <input asp-for="Name" class="form-control" placeholder="Product name" />
                         <span asp-validation-for="Name" class="text-danger"></span>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">Product Status:</label>
+                      <div class="col-sm-10">
+                        @Html.DropDownListFor(m => m.Status, Html.GetEnumSelectList<ProductStatus>(), null, new { Class = "form-control" })
                       </div>
                     </div>
                     <div class="form-group">

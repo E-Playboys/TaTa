@@ -36,6 +36,20 @@ namespace Tata.Areas.Backend.Controllers
             return View(models);
         }
 
+        public IActionResult Delete(int id)
+        {
+            if (id > 0)
+            {
+                using (IUnitOfWork uow = _uowProvider.CreateUnitOfWork())
+                {
+                    var productRepo = uow.GetRepository<Product>();
+                    productRepo.Remove(id);
+                }
+            }
+
+            return RedirectToAction("Index");
+        }
+
         [HttpGet]
         public async Task<IActionResult> Details(int id, int? categoryId = null)
         {
