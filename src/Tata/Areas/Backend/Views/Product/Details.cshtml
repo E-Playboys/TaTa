@@ -126,7 +126,7 @@
                     </table>
                   </div>
 
-                  <inline-add-button class="btn btn-primary col-md-12 addMore" asp-container-element="#productPropertiesContainer" asp-for="Properties" asp-content="@Html.EditorFor(m => m.Properties[0])"><i class="fa fa-plus"></i> Add more</inline-add-button>
+                  <inline-add-button class="btn btn-primary col-md-12 addMore" asp-container-element="#productPropertiesContainer" asp-for="Properties" asp-content="@Html.EditorFor(m => m.Properties[Model.Properties.Count - 1])"><i class="fa fa-plus"></i> Add more</inline-add-button>
                 </div>
               </div>
               <div id="tab-3" class="tab-pane">
@@ -170,7 +170,7 @@
                     </table>
                   </div>
 
-                  <inline-add-button class="btn btn-primary col-md-12 addMore" asp-container-element="#productPricesContainer" asp-for="Prices" asp-content="@Html.EditorFor(m => m.Prices[0])"><i class="fa fa-plus"></i> Add more</inline-add-button>
+                  <inline-add-button class="btn btn-primary col-md-12 addMore" asp-container-element="#productPricesContainer" asp-for="Prices" asp-content="@Html.EditorFor(m => m.Prices[Model.Prices.Count - 1])"><i class="fa fa-plus"></i> Add more</inline-add-button>
                 </div>
               </div>
 
